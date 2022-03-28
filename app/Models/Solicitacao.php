@@ -15,6 +15,21 @@ class Solicitacao extends Model
      */
     protected $table = 'solicitacoes';
     public $timestamps = false;
+
+    /**
+     * Override ao método find()
+     * 
+     * @var string
+     */
+    public static function find($key){
+        $obj = Solicitacao::where('solicitacao_id', $key);
+
+        if ($obj->count() == 0)
+            return null;
+
+        $solicitacao = $obj->first();
+        return $solicitacao;
+    }
     
     /**
      * Define os Enums necessários para a DB e outras funcionalidades
@@ -24,7 +39,7 @@ class Solicitacao extends Model
     /**
      * Atributos que suportam mass assignment
      *
-     * @var array<string, string, string>
+     * @var array<SITUACAO_ACADEMICA, int, string, string, int, text>
      */
     protected $fillable = [
         'situacao_academica',
@@ -40,6 +55,6 @@ class Solicitacao extends Model
      * Uma solicitação apenas pertence a um utilizador
      */
     public function utilizador(){
-        return $this->hasOne(Utilizador::class);
+        return $this->belongsTo(Utilizador::class, 'utilizador_id');
     }
 }
