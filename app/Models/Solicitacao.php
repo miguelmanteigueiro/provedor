@@ -55,6 +55,55 @@ class Solicitacao extends Model
      * Uma solicitação apenas pertence a um utilizador
      */
     public function utilizador(){
-        return $this->belongsTo(Utilizador::class, 'utilizador_id');
+        return $this->belongsTo(Utilizador::class);
     }
+
+    /**
+     * Define uma relação entre Solicitação e Comentário 
+     * Uma solicitação pode ter vários comentários
+     */
+    public function comentario(){
+        return $this->hasMany(Comentario::class);
+    }
+
+    /**
+     * Define uma relação entre Solicitação e AnexoSolicitação.
+     * Uma solicitação pode ter vários anexos.
+     */
+    public function anexo_solicitacao(){
+        return $this->hasMany(AnexosSolicitacao::class);
+    }
+
+    /**
+     * Define uma relação entre Solicitação e AnexoSolicitação.
+     * Uma solicitação pode ter vários anexos.
+     */
+    public function analitica(){
+        return $this->hasOne(Analitica::class);
+    }
+
+    /**
+     * Define uma relação entre Solicitação e EstadoSolicitação.
+     * Uma solicitação tem apenas um estado.
+     */
+    public function estado_solicitacao(){
+        return $this->hasOne(EstadoSolicitacao::class);
+    }
+
+    /**
+     * Define uma relação entre Solicitação e Log.
+     * Uma solicitação pode ter vários logs.
+     */
+    public function log(){
+        return $this->hasMany(Log::class);
+    }
+
+    /**
+     * Define uma relação entre Solicitacao e SolicitacaoAssunto 
+     * Uma solicitação pode ter vários assuntos.
+     */
+    public function solicitacao_assunto(){
+        return $this->hasMany(SolicitacaoAssunto::class);
+    }
+
 }

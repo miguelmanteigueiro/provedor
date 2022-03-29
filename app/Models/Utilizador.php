@@ -31,22 +31,45 @@ class Utilizador extends Model
         return $utilizador;
     }
 
-    /**
-     * Atributos que suportam mass assignment
-     *
-     * @var array<string, string, string>
-     */
-    protected $fillable = [
-        'nome',
-        'email',
-        'senha',
-    ];
+    protected $guarded = [];
 
     /**
-     * Define uma relação entre Utilizador e Solicitação 
+     * Capitalizar o nome do utilizador
+     */
+    public function setNomeAttribute($nome)
+    {
+        $this->attributes['nome'] = ucwords($nome);
+    }
+
+    /**
+     * Utilizar uma função de Hash para a senha
+     */
+    public function setSenhaAttribute($senha)
+    {
+        $this->attributes['senha'] = bcrypt($senha);
+    }
+
+    /**
+     * Define uma relação entre Utilizador e Solicitação.
      * Um utilizador pode ter várias solicitações
      */
     public function solicitacao(){
         return $this->hasMany(Solicitacao::class);
+    }
+
+    /**
+     * Define uma relação entre Utilizador e InfoUtilizador.
+     * Um utilizador tem apenas uma informação (ID, data de criação, superadmin, conta ativa e último login)
+     */
+    public function informacao(){
+        return $this->hasOne(InfoUtilizador::class);
+    }
+
+    /**
+     * Define uma relação entre Utilizador e Comentário.
+     * Um utilizador pode fazer vários comentários.
+     */
+    public function comentario(){
+        return $this->hasMany(Comentario::class);
     }
 }

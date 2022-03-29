@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+# Página de Autenticação
 Route::get('/', [LoginController::class, 'homepage'])->name('login');
 
-Route::get('/dashboard', [DashboardController::class, 'main'])->name('dashboard');
+# Utilizador geral
+Route::get('/dashboard', [DashboardController::class, 'dashboard']);
+
+# Administração
+Route::get('/admin', [AdminController::class, 'admin_dashboard']);
+
+Route::get('/admin/register', [AdminController::class, 'register']);
+Route::post('/admin/register', [AdminController::class, 'store']);
