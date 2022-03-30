@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/W3.css">
     <link rel="stylesheet" href="/css/ThemeUBI.css">
     <link rel="stylesheet" href="/css/all.css">
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <title>Provedor do Estudante</title>
 </head>

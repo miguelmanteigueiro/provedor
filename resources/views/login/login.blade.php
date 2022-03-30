@@ -13,6 +13,11 @@
         
         <button class="w3-btn w3-block w3-theme-l2 w3-round w3-section" type="submit">Autenticar-se</button>
     </form>
+    @if(session()->has('contaRegistada'))
+       <div>
+              <p>{{ session('contaRegistada') }}</p>
+       </div>
+    @endif
 </body>
 
 @include('login._footer')

@@ -25,6 +25,8 @@ class AdminController extends Controller
 
         Utilizador::create($atributos);
 
+        session()->flash('contaRegistada', 'Conta registada com sucesso.');
+
         return redirect('/');
     }
 }
