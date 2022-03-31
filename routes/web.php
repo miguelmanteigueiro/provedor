@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 # Página de Autenticação
-Route::get('/', [LoginController::class, 'homepage'])->name('login');
+Route::redirect('/', 'login');
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+Route::post('verify', [SessionsController::class, 'store'])->middleware('guest');
+
+Route::post('logout', [SessionsController::class, 'destroy'])->name('logout')->middleware('auth');
 
 # Utilizador geral
-Route::get('/dashboard', [DashboardController::class, 'dashboard']);
+Route::get('dashboard', [DashboardController::class, 'dashboard']);#->middleware('auth');
 
 # Administração
-Route::get('/admin', [AdminController::class, 'admin_dashboard']);
+Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');
 
-Route::get('/admin/register', [AdminController::class, 'register']);
-Route::post('/admin/register', [AdminController::class, 'store']);
+Route::get('/admin/register', [AdminController::class, 'register']);#->middleware('auth');
+Route::post('/admin/register', [AdminController::class, 'store']);#->middleware('auth');
