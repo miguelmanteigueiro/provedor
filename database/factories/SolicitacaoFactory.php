@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Utilizador;
+use App\Models\User;
 use App\Models\Solicitacao;
 
 class SolicitacaoFactory extends Factory
@@ -16,7 +16,7 @@ class SolicitacaoFactory extends Factory
     public function definition()
     {
         return [
-            'utilizador_id' => $this->faker->randomElement(Utilizador::pluck('utilizador_id')),
+            'utilizador_id' => $this->faker->randomElement(User::pluck('id')),
             'situacao_academica' => $this->faker->randomElement(Solicitacao::SITUACAO_ACADEMICA),
             'estudante_id' => $this->faker->numberBetween(15000, 50000),
             'estudante_nome' => $this->faker->name(),

@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-# Página de Autenticação
+# Página de Autenticação e Controlo de Sessões
 Route::redirect('/', 'login');
-Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest')->name('login');
 Route::post('verify', [SessionsController::class, 'store'])->middleware('guest');
-
-Route::post('logout', [SessionsController::class, 'destroy'])->name('logout')->middleware('auth');
+Route::get('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
 # Utilizador geral
-Route::get('dashboard', [DashboardController::class, 'dashboard']);#->middleware('auth');
+Route::get('dashboard', [DashboardController::class, 'show'])->middleware('auth');
+Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

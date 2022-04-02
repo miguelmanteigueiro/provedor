@@ -16,7 +16,7 @@ class CreateComentariosTable extends Migration
         Schema::create('comentarios', function (Blueprint $table) {
             $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
             $table->id('comentario_id');
-            $table->foreignId('utilizador_id')->constrained('utilizadores')->references('utilizador_id');
+            $table->foreignId('utilizador_id')->constrained('users')->references('id');
             $table->date('data_comentario')->default(now());
         });
     }

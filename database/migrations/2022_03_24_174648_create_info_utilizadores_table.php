@@ -14,7 +14,7 @@ class CreateInfoUtilizadoresTable extends Migration
     public function up()
     {
         Schema::create('info_utilizadores', function (Blueprint $table) {
-            $table->foreignId('utilizador_id')->constrained('utilizadores')->references('utilizador_id');
+            $table->foreignId('utilizador_id')->constrained('users')->references('id');
             $table->timestamp('data_criacao')->useCurrent();
             $table->boolean('administrador')->default(false);
             $table->boolean('conta_ativa')->default(true);

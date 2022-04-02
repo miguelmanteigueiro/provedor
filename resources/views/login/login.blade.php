@@ -18,8 +18,8 @@
 
         <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="password" 
-                name="senha" 
-                id="senha"
+                name="password" 
+                id="password"
                 placeholder="Palavra-passe" 
                 autocomplete="off" 
                 required>

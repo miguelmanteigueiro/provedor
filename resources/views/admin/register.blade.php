@@ -31,12 +31,12 @@
 
        <input class="w3-input w3-border w3-round w3-margin-bottom" 
               type="password" 
-              name="senha" 
-              id="senha" 
+              name="password" 
+              id="password" 
               placeholder="Palavra-passe" 
               autocomplete="off" 
               required>
-       @error('senha')
+       @error('password')
               <p class="w3-text-red w3-center">{{ $message }}</p>
        @enderror
        

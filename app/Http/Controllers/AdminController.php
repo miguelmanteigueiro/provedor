@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Utilizador;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Symfony\Component\VarDumper\Caster\RedisCaster;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -20,10 +17,10 @@ class AdminController extends Controller
         $atributos = request()->validate([
             'nome' => 'required|max:255',
             'email' => 'required|email|unique:utilizadores,email|max:255',
-            'senha' => 'required|min:10|max:255',
+            'password' => 'required|min:10|max:255',
         ]);
 
-        Utilizador::create($atributos);
+        User::create($atributos);
 
         return redirect('/')->with('sucesso', 'Conta registada com sucesso.');
     }

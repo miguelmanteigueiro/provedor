@@ -3,10 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class UtilizadorFactory extends Factory
+class UserFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +17,7 @@ class UtilizadorFactory extends Factory
         return [
             'nome' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'senha' => Hash::make('password')
+            'password' => Hash::make('password')
         ];
     }
 }

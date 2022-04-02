@@ -17,7 +17,7 @@ class CreateSolicitacoesTable extends Migration
     {
         Schema::create('solicitacoes', function (Blueprint $table) {
             $table->id('solicitacao_id');
-            $table->foreignId('utilizador_id')->constrained('utilizadores')->references('utilizador_id');
+            $table->foreignId('utilizador_id')->constrained('users')->references('id');
             $table->enum('situacao_academica', Solicitacao::SITUACAO_ACADEMICA)->nullable();
             $table->integer('estudante_id')->nullable();
             $table->string('estudante_nome');

@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Utilizador extends Model
+class User extends Authenticatable
 {
     use HasFactory;
     /**
@@ -13,23 +14,8 @@ class Utilizador extends Model
      *
      * @var string
      */
-    protected $table = 'utilizadores';
+    protected $table = 'users';
     public $timestamps = false;
-
-    /**
-     * Override ao método find()
-     * 
-     * @var string
-     */
-    public static function find($key){
-        $obj = Utilizador::where('utilizador_id', $key);
-
-        if ($obj->count() == 0)
-            return null;
-
-        $utilizador = $obj->first();
-        return $utilizador;
-    }
 
     protected $guarded = [];
 
@@ -44,9 +30,9 @@ class Utilizador extends Model
     /**
      * Utilizar uma função de Hash para a senha
      */
-    public function setSenhaAttribute($senha)
+    public function setPasswordAttribute($password)
     {
-        $this->attributes['senha'] = bcrypt($senha);
+        $this->attributes['password'] = bcrypt($password);
     }
 
     /**
