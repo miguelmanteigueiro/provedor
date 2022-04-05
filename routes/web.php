@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\SolicitacaoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,10 @@ Route::get('logout', [SessionsController::class, 'destroy'])->middleware('auth')
 
 # Utilizador geral
 Route::get('dashboard', [DashboardController::class, 'show'])->middleware('auth');
+
+Route::get('/solicitacao/criar', [SolicitacaoController::class, 'store'])->middleware('auth');
+Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'show'])->middleware('auth');
+
 Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
 
 # Administração

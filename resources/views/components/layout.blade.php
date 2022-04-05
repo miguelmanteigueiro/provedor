@@ -4,7 +4,7 @@
     <x-dashboard-header/>
 
     <section class="w3-container dashboard-content">
-        <x-solicitacoes/>
+        {{ $slot }}
     </section>
 
     <x-footer/>

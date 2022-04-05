@@ -54,8 +54,8 @@ class Solicitacao extends Model
      * Define uma relação entre Solicitação e Utilizador 
      * Uma solicitação apenas pertence a um utilizador
      */
-    public function utilizador(){
-        return $this->belongsTo(Utilizador::class);
+    public function user(){
+        return $this->belongsTo(User::class, 'utilizador_id', 'id');
     }
 
     /**
