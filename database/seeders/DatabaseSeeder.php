@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $USER_SEED_QUANTITY = 15;
         $SEED_QUANTITY = 33;
-        
+
         \App\Models\User::factory($USER_SEED_QUANTITY)->create();
         \App\Models\Solicitacao::factory($SEED_QUANTITY)->create();
         #\App\Models\Assunto::factory()->create();
