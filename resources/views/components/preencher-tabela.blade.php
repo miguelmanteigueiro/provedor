@@ -1,6 +1,4 @@
-@props(['solicitacao'])
-
-{{-- {{ dd($solicitacao->user) }} --}}
+@props(['solicitacao', 'nomes'])
 
 <tr>
     <td> {{ $solicitacao->solicitacao_id }} </td>

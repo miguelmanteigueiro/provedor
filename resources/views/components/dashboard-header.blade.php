@@ -7,7 +7,7 @@
     <div class="w3-dropdown-hover w3-right">
         <button class="w3-button">
             <i class="fa fa-user-circle"></i> 
-            {{ explode(' ', Auth::user()->nome)[0] }}
+            {{ Auth::user()->primeiro_nome }}
         </button>
         <div class="w3-dropdown-content w3-bar-block w3-border"  style="right:0">
             <a href="/definicoes" class="w3-bar-item w3-button">

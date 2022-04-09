@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,19 +23,21 @@ class User extends Authenticatable
     protected $hidden = ['password'];
 
     /**
-     * Capitalizar o nome do utilizador
-     */
-    public function setNomeAttribute($nome)
-    {
-        $this->attributes['nome'] = ucwords($nome);
-    }
-
-    /**
      * Utilizar uma função de Hash para a senha
      */
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+    * Get the user's full name.
+    *
+    * @return string
+    */
+    public function getNomeAttribute()
+    {
+        return "{$this->primeiro_nome} {$this->ultimo_nome}";
     }
 
     /**
