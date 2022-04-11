@@ -25,11 +25,14 @@ Route::get('logout', [SessionsController::class, 'destroy'])->middleware('auth')
 
 # Utilizador geral
 Route::get('dashboard', [DashboardController::class, 'show'])->middleware('auth');
+Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
 
-Route::get('/solicitacao/criar', [SolicitacaoController::class, 'store'])->middleware('auth');
+# Solicitações
+Route::get('/solicitacao/novo', [SolicitacaoController::class, 'showForm'])->middleware('auth');
+Route::post('/solicitacao/guardar', [SolicitacaoController::class, 'storeForm'])->middleware('auth');
+
 Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'show'])->middleware('auth');
 
-Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

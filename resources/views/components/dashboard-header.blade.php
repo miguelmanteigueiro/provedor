@@ -1,6 +1,6 @@
 <header class="w3-bar w3-theme">
     <a href="/dashboard" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i> Início</a>
-    <a href="/solicitacao/criar" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-file-alt"></i> Nova Solicitação</a>
+    <a href="/solicitacao/novo" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-file-alt"></i> Nova Solicitação</a>
     <a href="#" class="w3-bar-item w3-button w3-mobile">Link 2</a>
     <a href="#" class="w3-bar-item w3-button w3-mobile">Link 3</a>
 

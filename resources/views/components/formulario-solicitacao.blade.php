@@ -1,4 +1,5 @@
-<form id="novoPedido" method="POST" action="">
+<form id="novoPedido" method="POST" action="/solicitacao/guardar">
+    @csrf
     <div class="w3-row-padding">
         <div class="w3-third">
             <label>
@@ -6,14 +7,11 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="text" 
-                name="referencia" 
-                id="referencia" 
-                value="{{ old('referencia')}}" 
+                name="referencia_interna" 
+                id="referencia_interna" 
+                value="{{ old('referencia_interna') }}" 
                 autocomplete="off" 
             >
-            @error('referencia')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
 
         <div class="w3-third">
@@ -22,14 +20,12 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="text" 
-                name="funcionario" 
-                id="funcionario" 
+                name="utilizador_id" 
+                id="utilizador_id" 
                 autocomplete="off" 
+                value="{{ Auth::user()->nome }}" 
                 disabled
             >
-            @error('funcionario')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
 
         <div class="w3-third">
@@ -38,15 +34,12 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="date" 
-                name="date" 
-                id="date" 
-                value="{{ old('date')}}" 
+                name="data_inicio" 
+                id="data_inicio" 
+                value="{{ old('data_inicio')}}" 
                 autocomplete="off" 
                 required
             >
-            @error('date')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
     </div>
 
@@ -59,16 +52,13 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="text" 
-                name="nome" 
-                id="nome" 
+                name="estudante_nome" 
+                id="estudante_nome" 
                 placeholder="Fernando Pessoa"
-                value="{{ old('nome')}}" 
+                value="{{ old('estudante_nome')}}" 
                 autocomplete="off" 
                 required
             >
-            @error('nome')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
 
         <div class="w3-half">
@@ -77,16 +67,13 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="email" 
-                name="email" 
-                id="email" 
+                name="estudante_email" 
+                id="estudante_email" 
                 placeholder="fernando.pessoa@email.com"
-                value="{{ old('email')}}" 
+                value="{{ old('estudante_email')}}" 
                 autocomplete="off" 
                 required
             >
-            @error('email')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
     </div>
 
@@ -97,14 +84,11 @@
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="number" 
-                name="telefone" 
-                id="telefone" 
-                value="{{ old('telefone')}}" 
+                name="estudante_telefone" 
+                id="estudante_telefone" 
+                value="{{ old('estudante_telefone')}}" 
                 autocomplete="off" 
             >
-            @error('nome')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
 
         <div class="w3-third">
@@ -112,9 +96,9 @@
                 <b>Situação Académica <span style="color:red">*</span></b>
             </label>
             <select class="w3-select w3-border w3-round w3-margin-bottom" 
-                    name="situacaoAcad" 
-                    id="situacaoAcad" 
-                    value="{{ old('situacaoAcad')}}" 
+                    name="situacao_academica" 
+                    id="situacao_academica" 
+                    value="{{ old('situacao_academica')}}" 
                     autocomplete="off" 
                     required>
                 <option value="nenhum">Não se aplica</option>
@@ -123,26 +107,20 @@
                 <option value="candidato">Candidato</option>
                 <option value="outro">Outro</option>
             </select>
-            @error('situacaoAcad')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
 
         <div class="w3-third">
             <label>
-                <b>Número TODO COM BASE NA SIT ACAD<!-- <span style="color:red">*</span> --></b>
+                <b>Número <!-- <span style="color:red">*</span> --></b>
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="number" 
-                name="numEstudante" 
-                id="numEstudante" 
+                name="estudante_id" 
+                id="estudante_id" 
                 placeholder="12345"
-                value="{{ old('numEstudante')}}" 
+                value="{{ old('estudante_id')}}" 
                 autocomplete="off" 
             >
-            @error('numEstudante')
-                <p class="w3-text-red w3-center">{{ $message }}</p>
-            @enderror
         </div>
     </div>
 
@@ -154,13 +132,9 @@
             rows="10" 
             name="descricao" 
             id="descricao" 
-            value="{{ old('nome')}}" 
             autocomplete="off" 
             required
-        ></textarea>
-        @error('nome')
-            <p class="w3-text-red w3-center">{{ $message }}</p>
-        @enderror
+        >{{ old('descricao')}}</textarea>
     </div>
 
     <div class="w3-container">
@@ -174,8 +148,18 @@
             autocomplete="off" 
             multiple
         >
-        @error('ficheiros')
-            <p class="w3-text-red w3-center">{{ $message }}</p>
-        @enderror
+    </div>
+
+    {{-- Botões --}}
+    <div class="w3-bar w3-container w3-margin-top">
+        <button class="w3-button w3-right w3-green w3-round w3-margin-left" type="submit">
+            Registar
+        </button>
+
+        <a href="/dashboard">
+            <button class="w3-button w3-red w3-round" type="button">
+                Cancelar
+            </button>
+        </a>
     </div>
 </form>

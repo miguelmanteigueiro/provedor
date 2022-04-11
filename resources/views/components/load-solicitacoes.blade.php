@@ -1,4 +1,4 @@
-@props(['solicitacoes', 'users'])
+@props(['solicitacoes'])
 
 <div class="w3-responsive w3-section">
     <table class="w3-table-all">

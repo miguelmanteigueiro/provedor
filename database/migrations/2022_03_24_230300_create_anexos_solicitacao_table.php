@@ -14,9 +14,9 @@ class CreateAnexosSolicitacaoTable extends Migration
     public function up()
     {
         Schema::create('anexos_solicitacao', function (Blueprint $table) {
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
             $table->id('anexo_solicitacao_id');
-            $table->binary('anexo');
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
+            $table->string('path');
         });
     }
 

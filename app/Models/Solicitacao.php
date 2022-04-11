@@ -32,23 +32,9 @@ class Solicitacao extends Model
     }
     
     /**
-     * Define os Enums necessários para a DB e outras funcionalidades
+     * Define os Enums necessários para a DB
      */
-    public const SITUACAO_ACADEMICA = ['estudante', 'ex_estudante', 'candidato', 'outro'];
-
-    /**
-     * Atributos que suportam mass assignment
-     *
-     * @var array<SITUACAO_ACADEMICA, int, string, string, int, text>
-     */
-    protected $fillable = [
-        'situacao_academica',
-        'estudante_id',
-        'estudante_nome',
-        'estudante_email',
-        'estudante_telefone',
-        'descricao'
-    ];
+    public const SITUACAO_ACADEMICA = ['nenhum', 'estudante', 'ex_estudante', 'candidato', 'outro'];
 
     /**
      * Define uma relação entre Solicitação e Utilizador 

@@ -14,9 +14,9 @@ class CreateAnexosComentarioTable extends Migration
     public function up()
     {
         Schema::create('anexos_comentario', function (Blueprint $table) {
-            $table->foreignId('comentario_id')->constrained('comentarios')->references('comentario_id');
             $table->id('anexo_comentario_id');
-            $table->binary('anexo');
+            $table->foreignId('comentario_id')->constrained('comentarios')->references('comentario_id');
+            $table->string('path');
         });
     }
 

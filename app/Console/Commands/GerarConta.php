@@ -38,7 +38,8 @@ class GerarConta extends Command
      */
     public function handle()
     {
-        $nome= $this->ask('Nome do Utilizador?');
+        $primeiro_nome = $this->ask('Primeiro Nome?');
+        $ultimo_nome = $this->ask('Último Nome?');
         $email = $this->ask('Endereço de Email?');
         $password = $this->secret('Palavra-passe?');
         $confirmarPassword = $this->secret('Confirme a Palavra-passe');
@@ -49,14 +50,13 @@ class GerarConta extends Command
             $confirmarPassword = $this->secret('Confirme a Palavra-passe');
         }
 
-        $this->info($password);
-
-        User::create([
-            'nome' => $nome,
+        $user = User::create([
+            'primeiro_nome' => $primeiro_nome,
+            'ultimo_nome' => $ultimo_nome,
             'email' => $email,
             'password' => $password
         ]);
 
-        $this->info("Foi criado o utilizador $nome");
+        $this->info("Foi criado o utilizador $user->nome");
     }
 }
