@@ -16,6 +16,8 @@ class Solicitacao extends Model
     protected $table = 'solicitacoes';
     public $timestamps = false;
 
+    protected $guarded = [];
+
     /**
      * Override ao método find()
      * 

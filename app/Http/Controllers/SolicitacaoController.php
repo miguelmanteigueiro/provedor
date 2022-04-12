@@ -42,18 +42,12 @@ class SolicitacaoController extends Controller
         }
 
         // Guardar solicitação em caso de sucesso
-
-        $solicitacao = new Solicitacao();
-        
+        $solicitacao = new Solicitacao($request->except('_token', 'data_inicio', 'ficheiros'));
         $solicitacao->utilizador_id = Auth::user()->id;
-        $solicitacao->referencia_interna = $request->referencia_interna;
-        $solicitacao->situacao_academica = $request->situacao_academica;
-        $solicitacao->estudante_id = $request->estudante_id;
-        $solicitacao->estudante_nome = $request->estudante_nome;
-        $solicitacao->estudante_email = $request->estudante_email;
-        $solicitacao->estudante_telefone = $request->estudante_telefone;
-        $solicitacao->descricao = $request->descricao;
-
         $solicitacao->save();
+
+        dd($solicitacao->id);
+
+        // Adicionar o estado da solicitação
     }
 }
