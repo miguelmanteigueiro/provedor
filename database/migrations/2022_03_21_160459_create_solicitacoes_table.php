@@ -19,11 +19,11 @@ class CreateSolicitacoesTable extends Migration
             $table->id('solicitacao_id');
             $table->foreignId('utilizador_id')->constrained('users')->references('id');
             $table->string('referencia_interna')->nullable();
-            $table->enum('situacao_academica', Solicitacao::SITUACAO_ACADEMICA)->nullable();
+            $table->enum('situacao_academica', Solicitacao::SITUACAO_ACADEMICA);
             $table->integer('estudante_id')->nullable();
             $table->string('estudante_nome');
             $table->string('estudante_email');
-            $table->integer('estudante_telefone')->nullable();
+            $table->string('estudante_telefone')->nullable();
             $table->text('descricao');
         });
     }

@@ -22,7 +22,7 @@ class SolicitacaoFactory extends Factory
             'estudante_id' => $this->faker->numberBetween(15000, 50000),
             'estudante_nome' => $this->faker->name(),
             'estudante_email' => $this->faker->unique()->safeEmail(),
-            'estudante_telefone' => $this->faker->numberBetween(910000000, 969999999),
+            'estudante_telefone' => $this->faker->phoneNumber(),
             'descricao' => $this->faker->text(10000)
         ];
     }

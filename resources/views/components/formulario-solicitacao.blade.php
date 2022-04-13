@@ -83,7 +83,7 @@
                 <b>Contacto Telefónico</b>
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
-                type="number" 
+                type="text" 
                 name="estudante_telefone" 
                 id="estudante_telefone" 
                 value="{{ old('estudante_telefone')}}" 
@@ -103,7 +103,7 @@
                     required>
                 <option value="nenhum">Não se aplica</option>
                 <option value="estudante">Estudante</option>
-                <option value="oldEstudante">Ex-Estudante</option>
+                <option value="ex_estudante">Ex-Estudante</option>
                 <option value="candidato">Candidato</option>
                 <option value="outro">Outro</option>
             </select>
@@ -129,7 +129,7 @@
             <b>Descrição da Ocorrência <span style="color:red">*</span></b>
         </label>
         <textarea class="w3-input w3-border w3-round w3-margin-bottom"
-            rows="10" 
+            rows="15" 
             name="descricao" 
             id="descricao" 
             autocomplete="off" 

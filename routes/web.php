@@ -28,11 +28,12 @@ Route::get('dashboard', [DashboardController::class, 'show'])->middleware('auth'
 Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
 
 # Solicitações
+    # Registar nova solicitação
 Route::get('/solicitacao/novo', [SolicitacaoController::class, 'showForm'])->middleware('auth');
 Route::post('/solicitacao/guardar', [SolicitacaoController::class, 'storeForm'])->middleware('auth');
-
-Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'show'])->middleware('auth');
-
+    # Consultar solicitação
+Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'consultar'])->middleware('auth');
+    # Editar solicitação
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

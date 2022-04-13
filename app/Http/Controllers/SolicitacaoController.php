@@ -10,9 +10,9 @@ use Illuminate\Validation\Rule;
 
 class SolicitacaoController extends Controller
 {
-    public function show(Solicitacao $solicitacao)
+    public function consultar(Solicitacao $solicitacao)
     {
-        return view('solicitacao.showOne', ['solicitacao' => $solicitacao]);
+        return view('solicitacao.consultar', ['solicitacao' => $solicitacao]);
     }
 
     public function showForm()
@@ -30,7 +30,7 @@ class SolicitacaoController extends Controller
             'estudante_id' => 'nullable|numeric',
             'estudante_nome' => 'required|max:255',
             'estudante_email' => 'required|email',
-            'estudante_telefone' => 'nullable|numeric',
+            'estudante_telefone' => 'nullable|max:255',
             'descricao' => 'required',  
 
         ]);

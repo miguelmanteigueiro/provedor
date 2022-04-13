@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Solicitacao;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function show(){
-        return view('solicitacao.show', ['solicitacoes' => Solicitacao::all()]);
+        return view('solicitacao.show', ['solicitacoes' => Solicitacao::paginate(15) ]);
     }
     public function definicoes(){
         return view('dashboard.definicoes');

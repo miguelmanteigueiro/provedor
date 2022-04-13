@@ -8,7 +8,7 @@
     <td> {{ $solicitacao->estudante_nome }} </td>
     <td> {{ $solicitacao->estudante_email }} </td>
     <td> {{ $solicitacao->estudante_telefone }} </td>
-    <td> <x-botao-tabela function="Consultar" /> </td>
-    <td> <x-botao-tabela function="Editar" /> </td>
-    <td> <x-botao-tabela function="Arquivar" /> </td>
+    <td> <x-botao-tabela function="Consultar" id="{{ $solicitacao->solicitacao_id }}" /> </td>
+    <td> <x-botao-tabela function="Editar" id="{{ $solicitacao->solicitacao_id }}" /> </td>
+    <td> <x-botao-tabela function="Arquivar" id="{{ $solicitacao->solicitacao_id }}" /> </td>
 </tr>
