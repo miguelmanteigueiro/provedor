@@ -1,4 +1,4 @@
-<form id="novoPedido" method="POST" action="/solicitacao/guardar">
+<form id="novoPedido" method="POST" action="/solicitacao/guardar" enctype="multipart/form-data">
     @csrf
     <div class="w3-row-padding">
         <div class="w3-third">
@@ -111,7 +111,7 @@
 
         <div class="w3-third">
             <label>
-                <b>Número <!-- <span style="color:red">*</span> --></b>
+                <b>Número de Estudante <!-- <span style="color:red">*</span> --></b>
             </label>
             <input class="w3-input w3-border w3-round w3-margin-bottom" 
                 type="number" 
@@ -143,10 +143,10 @@
         </label>
         <input class="w3-input" 
             type="file" 
-            name="ficheiros" 
+            name="ficheiros[]" 
             id="ficheiros" 
             autocomplete="off" 
-            multiple
+            multiple="multiple"
         >
     </div>
 

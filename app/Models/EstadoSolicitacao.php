@@ -17,11 +17,13 @@ class EstadoSolicitacao extends Model
     protected $table = 'estado_solicitacao';
     public $timestamps = false;
 
+    protected $guarded = [];
+
     /**
      * Define uma relação entre EstadoSolicitacao e Solicitação.
      * Um estado de solicitação pertence a apenas uma solicitação.
      */
     public function solicitacao(){
-        return $this->belongsTo(Solicitacao::class);
+        return $this->belongsTo(Solicitacao::class, 'solicitacao_id', 'solicitacao_id');
     }
 }

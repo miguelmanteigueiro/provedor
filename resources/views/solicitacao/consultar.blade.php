@@ -1,7 +1,7 @@
 <x-layout>
         <h2 class="w3-text w3-center">Consultar Solicitação</h2>
         <div class="w3-responsive w3-section">
-            <form id="consultar" method="" action="">
+            <form id="consultar">
                 @csrf
                 <div class="w3-row-padding">
                     <div class="w3-third">
@@ -101,15 +101,14 @@
                         <input class="w3-select w3-border w3-round w3-margin-bottom" 
                                 name="situacao_academica" 
                                 id="situacao_academica" 
-                                value="{{ $solicitacao->situacao_academica }}" 
-                                {{-- FALTA MUTATOR --}}
+                                value=" {{ $solicitacao->situacao_academica }}"
                                 autocomplete="off" 
                                 disabled>
                     </div>
             
                     <div class="w3-third">
                         <label>
-                            <b>Número</b>
+                            <b>Número de Estudante</b>
                         </label>
                         <input class="w3-input w3-border w3-round w3-margin-bottom" 
                             type="number" 

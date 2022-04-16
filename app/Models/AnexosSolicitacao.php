@@ -17,6 +17,8 @@ class AnexosSolicitacao extends Model
     protected $table = 'anexos_solicitacao';
     public $timestamps = false;
 
+    protected $guarded = [];
+
     /**
      * Define uma relação entre AnexoSolicitação e Solicitação.
      * Um anexo pertence a apenas uma solicitação.

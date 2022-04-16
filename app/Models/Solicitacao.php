@@ -39,6 +39,22 @@ class Solicitacao extends Model
     public const SITUACAO_ACADEMICA = ['nenhum', 'estudante', 'ex_estudante', 'candidato', 'outro'];
 
     /**
+    * Devolve a situação académica numa string legível
+    *
+    * @return string
+    */
+    public function getSituacaoAcademicaAttribute()
+    {
+        if($this->attributes['situacao_academica'] === "ex_estudante"){
+            return "Ex-Estudante";
+        }
+        if($this->attributes['situacao_academica'] === "nenhum"){
+            return "Não se aplica";
+        }
+        return ucwords($this->attributes['situacao_academica']);
+    }
+
+    /**
      * Define uma relação entre Solicitação e Utilizador 
      * Uma solicitação apenas pertence a um utilizador
      */
