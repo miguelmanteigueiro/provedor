@@ -1,10 +1,13 @@
 <x-layout>
     @if ($errors->any())
-        <section class="w3-panel w3-red w3-round-large">
-            <h3 class="">Os seguintes erros devem ser corrigidos:</h3>
+        <section class="w3-display-container w3-panel w3-red w3-round-large">
+			<span onclick="this.parentElement.style.display='none'"
+			class="w3-button w3-display-topright">&times;</span>
+            
+			<h3 class="">Os seguintes erros devem ser corrigidos:</h3>
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li>{!! $error !!}</li>
                 @endforeach
             </ul>
         </section>
@@ -17,20 +20,3 @@
                 de preenchimento obrigatório.</i></h6>
     </div>
 </x-layout>
-
-{{-- <!-- Script para preenchimento da analítica -->
-<script>
-function mostrarAnalitica() {
-  var analitica = document.getElementById("analitica");
-  var botao = document.getElementById("botaoAnalitica");
-  if (analitica.style.display === "none") {
-    analitica.style.display = "block";
-    botaoAnalitica.innerHTML = "Esconder Analítica"
-  } else {
-    analitica.style.display = "none";
-    botaoAnalitica.innerHTML = "Adicionar Analítica"
-    var formulario = document.getElementById("analiticaSolicitacao");
-    formulario.reset();
-  }
-}
-</script> --}}
