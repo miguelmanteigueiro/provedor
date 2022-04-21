@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
 use Illuminate\Support\Facades\Route;

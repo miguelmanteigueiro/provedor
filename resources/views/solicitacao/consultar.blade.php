@@ -40,7 +40,7 @@
                             type="date" 
                             name="data_inicio" 
                             id="data_inicio" 
-                            {{-- value="{{ }}"  --}}
+                            value="{{ $estado->data_inicio ?? '' }}"
                             autocomplete="off" 
                             disabled
                         >
@@ -135,10 +135,32 @@
                 </div>
             
                 <div class="w3-container">
-                    <label>
-                        <b>Ficheiros Anexados</b>
-                    </label>
-                    TODO
+                    @if($anexos->isNotEmpty())
+                        <label>
+                            <b>Ficheiros Anexados (click para <i>download</i>)</b>
+                        </label>
+                        @foreach ($anexos as $anexo)
+                            @php
+                                $path = "anexos/" . $solicitacao->solicitacao_id . "/";
+                                $filename = str_replace($path, "", $anexo->path);
+                            @endphp
+                            <p></p>
+                            {{-- <a href={{route('download', $anexo->path)}}>
+                                <b>{!! $filename !!}</b>
+                            </a> --}}
+                            @php
+                            #dd($anexo->path);
+                            @endphp
+                            <a href={{ asset("storage/" . $anexo->path) }}>
+                                <b>{!! $filename !!}</b>
+                            </a>
+                        @endforeach
+                    @else
+                        <label>
+                            <b>Ficheiros Anexados</b>
+                        </label>
+                        <p>Não foram anexados ficheiros.</p>
+                    @endif
                 </div>
             </form>
         </div>

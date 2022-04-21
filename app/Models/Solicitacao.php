@@ -75,7 +75,7 @@ class Solicitacao extends Model
      * Uma solicitação pode ter vários anexos.
      */
     public function anexo_solicitacao(){
-        return $this->hasMany(AnexosSolicitacao::class);
+        return $this->hasMany(AnexosSolicitacao::class, null, 'solicitacao_id');
     }
 
     /**
@@ -91,7 +91,7 @@ class Solicitacao extends Model
      * Uma solicitação tem apenas um estado.
      */
     public function estado_solicitacao(){
-        return $this->hasOne(EstadoSolicitacao::class);
+        return $this->hasOne(EstadoSolicitacao::class, null, 'solicitacao_id');
     }
 
     /**

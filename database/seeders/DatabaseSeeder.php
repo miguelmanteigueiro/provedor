@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $USER_SEED_QUANTITY = 2;
-        $SEED_QUANTITY = 5;
+        $USER_SEED_QUANTITY = 3;
+        $SEED_QUANTITY = 50;
 
         \App\Models\User::factory($USER_SEED_QUANTITY)->create();
         \App\Models\Solicitacao::factory($SEED_QUANTITY)->create();

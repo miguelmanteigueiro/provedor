@@ -8,18 +8,20 @@ use App\Models\Solicitacao;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SolicitacaoController extends Controller
 {
     // Consultar uma solicitação
     public function consultar(Solicitacao $solicitacao)
     {
-        // Ir buscar EstadoSolicitacao e AnexosSolicitacao
-        
-        // Mostrar a página de consulta
-        return view('solicitacao.consultar', ['solicitacao' => $solicitacao]);
-    }
+        // Receber o estado da solicitação e os seus anexos
+        $estado = $solicitacao->estado_solicitacao;
+        $anexos = $solicitacao->anexo_solicitacao;
 
+        // Mostrar a página de consulta
+        return view('solicitacao.consultar', ['solicitacao' => $solicitacao, 'estado' => $estado, 'anexos' => $anexos]);
+    }
     // Mostrar o formulário para criar uma solicitação
     public function showForm()
     {
@@ -77,9 +79,11 @@ class SolicitacaoController extends Controller
 
             foreach($request->file('ficheiros') as $file){
                 $filename = $file->getClientOriginalName();
-                $file->storeAs($path, $filename);
 
-                $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $path . $filename]);
+                $storedFilePath = $file->storeAs($path, $filename);
+                $parsedFilePath = str_replace("public", "", $storedFilePath);
+                
+                $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
                 $anexos_solicitacao->save();
             }
         }
