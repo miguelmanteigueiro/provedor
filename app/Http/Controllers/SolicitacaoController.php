@@ -90,4 +90,22 @@ class SolicitacaoController extends Controller
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
     }
+
+    // Mostrar o formulário para editar uma solicitação
+    public function showEditForm(Solicitacao $solicitacao)
+    {
+        // Receber o estado da solicitação e os seus anexos
+        $estado = $solicitacao->estado_solicitacao;
+        $anexos = $solicitacao->anexo_solicitacao;
+
+        // Mostrar a página de consulta
+        return view('solicitacao.edit', ['solicitacao' => $solicitacao, 'estado' => $estado, 'anexos' => $anexos]);
+    }
+
+    // Mostrar o formulário para editar uma solicitação
+    public function confirmEditForm()
+    {
+        dd("OK!");
+    }
+
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
+use App\Models\Solicitacao;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,8 @@ Route::post('/solicitacao/guardar', [SolicitacaoController::class, 'storeForm'])
     # Consultar solicitação
 Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'consultar'])->middleware('auth');
     # Editar solicitação
+Route::get('/solicitacao/editar/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'showEditForm'])->middleware('auth');
+Route::post('/solicitacao/editar', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');
