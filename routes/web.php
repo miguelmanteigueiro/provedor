@@ -37,7 +37,8 @@ Route::post('/solicitacao/guardar', [SolicitacaoController::class, 'storeForm'])
 Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'consultar'])->middleware('auth');
     # Editar solicitação
 Route::get('/solicitacao/editar/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'showEditForm'])->middleware('auth');
-Route::post('/solicitacao/editar', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
+Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
+#Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

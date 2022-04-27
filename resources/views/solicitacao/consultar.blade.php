@@ -144,14 +144,8 @@
                                 $path = "anexos/" . $solicitacao->solicitacao_id . "/";
                                 $filename = str_replace($path, "", $anexo->path);
                             @endphp
-                            <p></p>
-                            {{-- <a href={{route('download', $anexo->path)}}>
-                                <b>{!! $filename !!}</b>
-                            </a> --}}
-                            @php
-                            #dd($anexo->path);
-                            @endphp
-                            <a href={{ asset("storage/" . $anexo->path) }}>
+                            <br>
+                            <a href={{ asset("storage/" . $anexo->path) }} download>
                                 <b>{!! $filename !!}</b>
                             </a>
                         @endforeach
@@ -163,5 +157,24 @@
                     @endif
                 </div>
             </form>
+
+            {{-- Botões --}}
+            <div class="w3-bar w3-container w3-margin-top">
+                <button class="w3-button w3-right w3-theme w3-round w3-margin-left" type="submit">
+                    Adicionar Comentário
+                </button>
+                
+                <a 
+                    <button class="w3-button w3-right w3-blue w3-round w3-margin-left" type="button">
+                        Editar Solicitação
+                    </button>
+
+
+                <a href="/dashboard">
+                    <button class="w3-button w3-red w3-round" type="button">
+                        Voltar
+                    </button>
+                </a>
+            </div>
         </div>
 </x-layout>
