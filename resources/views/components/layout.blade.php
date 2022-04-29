@@ -15,6 +15,18 @@
             <p><b>{{ session('sucesso') }}</b></p>
         </section>
         @endif
+
+        @if (session()->has('aviso'))
+        <section x-data="{ show: true }" 
+                x-init="setTimeout(() => show = false, 5000)" 
+                x-show="show" 
+                x-transition.duration.500ms
+                class="w3-panel w3-amber w3-round-large"
+        >
+            <h3>Aviso!</h3>
+            <p><b>{{ session('aviso') }}</b></p>
+        </section>
+        @endif
     
         {{ $slot }}
     </section>

@@ -33,6 +33,9 @@ class SolicitacaoController extends Controller
     // Guardar uma solicitação
     public function storeForm(Request $request)
     {
+        $id = $request->solicitacao_id;
+        $failedUploads = 0;
+
         $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
                       'situacao_academica' => '<b>Situação Académica</b>',
                       'estudante_id' => '<b>Número de Estudante</b>',
@@ -65,46 +68,40 @@ class SolicitacaoController extends Controller
         $solicitacao = new Solicitacao($request->except('_token', 'data_inicio', 'ficheiros'));
         $solicitacao->utilizador_id = Auth::user()->id;
         $solicitacao->save();
-        $id = $solicitacao->id;
 
         // Adicionar o estado da solicitação e adicionar a data de início
         $estado_solicitacao = new EstadoSolicitacao($request->only('data_inicio'));
         $estado_solicitacao->estado = 'aberto';
-        $estado_solicitacao->solicitacao_id = $solicitacao->id;
+        $estado_solicitacao->solicitacao_id = $id;
         $estado_solicitacao->save();
 
         // Caso haja ficheiros, guardar os mesmos
-        if($request->hasfile('ficheiros')){
+        if($request->hasfile('ficheiros')){ 
 
             // Caminho único para cada solicitação
             $path = "anexos/" . $id;
 
             foreach($request->file('ficheiros') as $file){
                 $filename = $file->getClientOriginalName();
-
-                $storedFilePath = $file->storeAs($path, $filename);
-                $parsedFilePath = str_replace("public", "", $storedFilePath);
-
-                $ficheiroExistente = AnexosSolicitacao::where('path', '=', $parsedFilePath)->first();
                 
-                if ($ficheiroExistente === null) {
+                // Verificar se o ficheiro já foi carregado
+                if(Storage::exists($path . "/" . $filename)){
+                    $failedUploads++;
+                }
+
+                else{
+                    $storedFilePath = $file->storeAs($path, $filename);
+                    $parsedFilePath = str_replace("public", "", $storedFilePath);
+                 
                     $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
                     $anexos_solicitacao->save();
                 }
-                else{
-                    dd("ja foste");
-                }
             }
+        }
 
-            // foreach($request->file('ficheiros') as $file){
-            //     $filename = $file->getClientOriginalName();
-
-            //     $storedFilePath = $file->storeAs($path, $filename);
-            //     $parsedFilePath = str_replace("public", "", $storedFilePath);
-                
-            //     $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
-            //     $anexos_solicitacao->save();
-            // }
+        // Mensagem de aviso, se houver ficheiros não carregados
+        if($failedUploads !== 0){
+            return redirect('/dashboard')->with('aviso', 'A solicitação foi guardada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados.');
         }
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
@@ -124,6 +121,8 @@ class SolicitacaoController extends Controller
     // Mostrar o formulário para editar uma solicitação
     public function confirmEditForm(Request $request)
     {
+        $id = $request->solicitacao_id;
+        $failedUploads = 0;
 
         $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
         'situacao_academica' => '<b>Situação Académica</b>',
@@ -159,33 +158,38 @@ class SolicitacaoController extends Controller
         }
 
         // Guardar a solicitação editada em caso de sucesso
-        Solicitacao::where('solicitacao_id', $request->solicitacao_id)->update($request->except('_token', 'data_inicio', 'ficheiros', 'motivo_edicao'));
-        EstadoSolicitacao::where('solicitacao_id', $request->solicitacao_id)->update(['data_inicio' => $request->get('data_inicio')]);
+        Solicitacao::where('solicitacao_id', $id)->update($request->except('_token', 'data_inicio', 'ficheiros', 'motivo_edicao'));
+        EstadoSolicitacao::where('solicitacao_id', $id)->update(['data_inicio' => $request->get('data_inicio')]);
 
-        // Caso haja ficheiros, guardar os mesmos
-        if($request->hasfile('ficheiros')){
+       // Caso haja ficheiros, guardar os mesmos
+       if($request->hasfile('ficheiros')){ 
 
-            // Caminho único para cada solicitação
-            $path = "anexos/" . $request->solicitacao_id;
+        // Caminho único para cada solicitação
+        $path = "anexos/" . $id;
+
+        foreach($request->file('ficheiros') as $file){
+            $filename = $file->getClientOriginalName();
             
-            // Adicionar ficheiros e verificar se estes não são repetidos
-            foreach($request->file('ficheiros') as $file){
-                $filename = $file->getClientOriginalName();
+            // Verificar se o ficheiro já foi carregado
+            if(Storage::exists($path . "/" . $filename)){
+                $failedUploads++;
+            }
 
+            else{
                 $storedFilePath = $file->storeAs($path, $filename);
                 $parsedFilePath = str_replace("public", "", $storedFilePath);
-                
-                if (AnexosSolicitacao::where('path', '=', $parsedFilePath)->exists()) {
-                    return back()->withErrors("O ficheiro <b>" . $filename . "</b> já está guardado.")->withInput($request->all());
-                }
-                else{
-                    $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $request->solicitacao_id, 'path' => $parsedFilePath]);
-                    $anexos_solicitacao->save();                    
-                }
+             
+                $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
+                $anexos_solicitacao->save();
             }
         }
-
-        return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
     }
 
+    // Mensagem de aviso, se houver ficheiros não carregados
+    if($failedUploads !== 0){
+        return redirect('/dashboard')->with('aviso', 'A solicitação foi editada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados.');
+    }
+
+    return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
+    }
 }

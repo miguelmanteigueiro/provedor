@@ -163,7 +163,7 @@
                     $filename = str_replace($path, "", $anexo->path);
                 @endphp
                 <br>
-                <a href={{ asset("storage/" . $anexo->path) }} download>
+                <a href="{{ asset("storage/" . $anexo->path) }}" download>
                     <b>{!! $filename !!}</b>
                 </a>
             @endforeach
