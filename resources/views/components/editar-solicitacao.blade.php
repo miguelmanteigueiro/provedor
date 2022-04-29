@@ -14,7 +14,7 @@
                 type="text" 
                 name="referencia_interna" 
                 id="referencia_interna" 
-                value="{{ $solicitacao->referencia_interna }}" 
+                value="{{ old('referencia_interna') ?? $solicitacao->referencia_interna }}" 
                 autocomplete="off" 
             >
         </div>
@@ -41,7 +41,7 @@
                 type="date" 
                 name="data_inicio" 
                 id="data_inicio" 
-                value="{{ $estado->data_inicio ?? '' }}"
+                value="{{ old('data_inicio') ?? ($estado->data_inicio ?? '') }}"
                 autocomplete="off" 
                 required
             >
@@ -59,7 +59,7 @@
                 type="text" 
                 name="estudante_nome" 
                 id="estudante_nome" 
-                value="{{ $solicitacao->estudante_nome }}" 
+                value="{{ old('estudante_nome') ?? $solicitacao->estudante_nome }}" 
                 autocomplete="off" 
                 required
             >
@@ -73,7 +73,7 @@
                 type="email" 
                 name="estudante_email" 
                 id="estudante_email" 
-                value="{{ $solicitacao->estudante_email }}" 
+                value="{{ old('estudante_email') ?? $solicitacao->estudante_email }}" 
                 autocomplete="off" 
                 required
             >
@@ -89,7 +89,7 @@
                 type="text" 
                 name="estudante_telefone" 
                 id="estudante_telefone" 
-                value="{{ $solicitacao->estudante_telefone }}" 
+                value="{{ old('estudante_telefone') ?? $solicitacao->estudante_telefone }}" 
                 autocomplete="off" 
             >
         </div>
@@ -101,7 +101,7 @@
             <select class="w3-select w3-border w3-round w3-margin-bottom" 
                     name="situacao_academica" 
                     id="situacao_academica" 
-                    value="{{ $solicitacao->situacao_academica }}" 
+                    value="{{ old('situacao_academica') ?? $solicitacao->situacao_academica }}" 
                     autocomplete="off" 
                     required>
                 <option value="nenhum">Não se aplica</option>
@@ -120,7 +120,7 @@
                 type="number" 
                 name="estudante_id" 
                 id="estudante_id" 
-                value="{{ $solicitacao->estudante_id }}" 
+                value="{{ old('estudante_id') ?? $solicitacao->estudante_id }}" 
                 autocomplete="off" 
             >
         </div>
@@ -136,7 +136,7 @@
             id="descricao" 
             autocomplete="off" 
             required
-        >{!! ($solicitacao->descricao) !!}</textarea>
+        >{{ old('descricao') ?? $solicitacao->descricao }}</textarea>
     </div>
 
     <div class="w3-container">

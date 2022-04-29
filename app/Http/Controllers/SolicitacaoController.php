@@ -84,10 +84,27 @@ class SolicitacaoController extends Controller
 
                 $storedFilePath = $file->storeAs($path, $filename);
                 $parsedFilePath = str_replace("public", "", $storedFilePath);
+
+                $ficheiroExistente = AnexosSolicitacao::where('path', '=', $parsedFilePath)->first();
                 
-                $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
-                $anexos_solicitacao->save();
+                if ($ficheiroExistente === null) {
+                    $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
+                    $anexos_solicitacao->save();
+                }
+                else{
+                    dd("ja foste");
+                }
             }
+
+            // foreach($request->file('ficheiros') as $file){
+            //     $filename = $file->getClientOriginalName();
+
+            //     $storedFilePath = $file->storeAs($path, $filename);
+            //     $parsedFilePath = str_replace("public", "", $storedFilePath);
+                
+            //     $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
+            //     $anexos_solicitacao->save();
+            // }
         }
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
@@ -107,7 +124,6 @@ class SolicitacaoController extends Controller
     // Mostrar o formulário para editar uma solicitação
     public function confirmEditForm(Request $request)
     {
-        #dd($request);
 
         $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
         'situacao_academica' => '<b>Situação Académica</b>',
@@ -139,8 +155,37 @@ class SolicitacaoController extends Controller
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput($request->all());
         }
+
+        // Guardar a solicitação editada em caso de sucesso
+        Solicitacao::where('solicitacao_id', $request->solicitacao_id)->update($request->except('_token', 'data_inicio', 'ficheiros', 'motivo_edicao'));
+        EstadoSolicitacao::where('solicitacao_id', $request->solicitacao_id)->update(['data_inicio' => $request->get('data_inicio')]);
+
+        // Caso haja ficheiros, guardar os mesmos
+        if($request->hasfile('ficheiros')){
+
+            // Caminho único para cada solicitação
+            $path = "anexos/" . $request->solicitacao_id;
+            
+            // Adicionar ficheiros e verificar se estes não são repetidos
+            foreach($request->file('ficheiros') as $file){
+                $filename = $file->getClientOriginalName();
+
+                $storedFilePath = $file->storeAs($path, $filename);
+                $parsedFilePath = str_replace("public", "", $storedFilePath);
+                
+                if (AnexosSolicitacao::where('path', '=', $parsedFilePath)->exists()) {
+                    return back()->withErrors("O ficheiro <b>" . $filename . "</b> já está guardado.")->withInput($request->all());
+                }
+                else{
+                    $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $request->solicitacao_id, 'path' => $parsedFilePath]);
+                    $anexos_solicitacao->save();                    
+                }
+            }
+        }
+
+        return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
     }
 
 }

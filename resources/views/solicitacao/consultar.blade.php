@@ -164,11 +164,11 @@
                     Adicionar Comentário
                 </button>
                 
-                <a 
+                <a href="{{route('editar', ['solicitacao' => $solicitacao])}}">
                     <button class="w3-button w3-right w3-blue w3-round w3-margin-left" type="button">
                         Editar Solicitação
                     </button>
-
+                </a>
 
                 <a href="/dashboard">
                     <button class="w3-button w3-red w3-round" type="button">
