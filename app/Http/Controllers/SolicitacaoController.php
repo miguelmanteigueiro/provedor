@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Notification;
 use App\Models\AnexosSolicitacao;
 use App\Models\EstadoSolicitacao;
 use App\Models\Solicitacao;
+use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Ramsey\Uuid\Type\Integer;
+use Swift_TransportException;
 
 class SolicitacaoController extends Controller
 {
@@ -33,7 +37,6 @@ class SolicitacaoController extends Controller
     // Guardar uma solicitação
     public function storeForm(Request $request)
     {
-        $id = $request->solicitacao_id;
         $failedUploads = 0;
 
         $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
@@ -68,6 +71,7 @@ class SolicitacaoController extends Controller
         $solicitacao = new Solicitacao($request->except('_token', 'data_inicio', 'ficheiros'));
         $solicitacao->utilizador_id = Auth::user()->id;
         $solicitacao->save();
+        $id = $solicitacao->id;
 
         // Adicionar o estado da solicitação e adicionar a data de início
         $estado_solicitacao = new EstadoSolicitacao($request->only('data_inicio'));
@@ -99,13 +103,27 @@ class SolicitacaoController extends Controller
             }
         }
 
-        // Mensagem de aviso, se houver ficheiros não carregados
+        // Envio de notificação por email aquando da inserção de uma solicitação
+        // Notificação no dashboard sobre possíveis erros
+        try{
+            Mail::bcc(User::all('email'))
+            ->queue(new Notification());
+        }
+        catch(Exception $e) {
+            if($failedUploads !== 0){
+                return redirect('/dashboard')->with('aviso', 'A solicitação foi guardada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados. O aviso por email não foi enviado.');
+            }
+
+            return redirect('/dashboard')->with('aviso', 'A solicitação foi guardada com sucesso, mas o aviso por email não foi enviado.');
+        }
+
         if($failedUploads !== 0){
             return redirect('/dashboard')->with('aviso', 'A solicitação foi guardada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados.');
         }
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
     }
+
 
     // Mostrar o formulário para editar uma solicitação
     public function showEditForm(Solicitacao $solicitacao)
@@ -171,25 +189,25 @@ class SolicitacaoController extends Controller
             $filename = $file->getClientOriginalName();
             
             // Verificar se o ficheiro já foi carregado
-            if(Storage::exists($path . "/" . $filename)){
-                $failedUploads++;
-            }
+                if(Storage::exists($path . "/" . $filename)){
+                    $failedUploads++;
+                }
 
-            else{
-                $storedFilePath = $file->storeAs($path, $filename);
-                $parsedFilePath = str_replace("public", "", $storedFilePath);
-             
-                $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
-                $anexos_solicitacao->save();
+                else{
+                    $storedFilePath = $file->storeAs($path, $filename);
+                    $parsedFilePath = str_replace("public", "", $storedFilePath);
+                
+                    $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
+                    $anexos_solicitacao->save();
+                }
             }
+        }   	
+
+        // Mensagem de aviso, se houver ficheiros não carregados
+        if($failedUploads !== 0){
+            return redirect('/dashboard')->with('aviso', 'A solicitação foi editada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados.');
         }
-    }
 
-    // Mensagem de aviso, se houver ficheiros não carregados
-    if($failedUploads !== 0){
-        return redirect('/dashboard')->with('aviso', 'A solicitação foi editada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados.');
-    }
-
-    return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
+        return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
     }
 }
