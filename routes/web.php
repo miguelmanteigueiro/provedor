@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 # Página de Autenticação e Controlo de Sessões
 Route::redirect('/', 'login');
 Route::get('login', [SessionsController::class, 'create'])->middleware('guest')->name('login');
-Route::post('verify', [SessionsController::class, 'store'])->middleware('guest');
+Route::post('verify', [SessionsController::class, 'auth'])->middleware('guest');
 Route::get('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
 # Utilizador geral
@@ -36,6 +36,8 @@ Route::get('/solicitacao/{solicitacao:solicitacao_id}', [SolicitacaoController::
     # Editar solicitação
 Route::get('/solicitacao/editar/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'showEditForm'])->middleware('auth')->name('editar');
 Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
+    # Consultar arquivo
+Route::get('arquivo', [DashboardController::class, 'arquivo'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

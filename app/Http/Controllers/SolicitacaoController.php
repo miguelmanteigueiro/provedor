@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Notification;
 use App\Models\AnexosSolicitacao;
 use App\Models\EstadoSolicitacao;
+use App\Models\Log;
 use App\Models\Solicitacao;
 use App\Models\User;
 use Exception;
@@ -51,7 +52,7 @@ class SolicitacaoController extends Controller
             // Campos da solicitação
             'referencia_interna' => 'max:12|unique:solicitacoes|nullable',
             'situacao_academica' => 'required',
-            'estudante_id' => 'nullable|numeric', // PRECISA DE FIX!!!!!!!!!!!!!!!!!!!!!!!!
+            'estudante_id' => 'nullable|integer|max:100000',
             'estudante_nome' => 'required|max:255',
             'estudante_email' => 'required|email|max:255',
             'estudante_telefone' => 'nullable|max:255',
@@ -158,7 +159,7 @@ class SolicitacaoController extends Controller
                 'nullable',
                 Rule::unique('solicitacoes')->ignore($request->solicitacao_id, 'solicitacao_id')],
             'situacao_academica' => 'required',
-            'estudante_id' => 'nullable|numeric', // PRECISA DE FIX!!!!!!!!!!!!!!!!!!!!!!!!
+            'estudante_id' => 'nullable|integer|max:100000',
             'estudante_nome' => 'required|max:255',
             'estudante_email' => 'required|email|max:255',
             'estudante_telefone' => 'nullable|max:255',
@@ -179,8 +180,12 @@ class SolicitacaoController extends Controller
         Solicitacao::where('solicitacao_id', $id)->update($request->except('_token', 'data_inicio', 'ficheiros', 'motivo_edicao'));
         EstadoSolicitacao::where('solicitacao_id', $id)->update(['data_inicio' => $request->get('data_inicio')]);
 
-       // Caso haja ficheiros, guardar os mesmos
-       if($request->hasfile('ficheiros')){ 
+        // Guardar no log o motivo da edição
+        $log = new Log();
+        $log->save();
+
+        // Caso haja ficheiros, guardar os mesmos
+        if($request->hasfile('ficheiros')){ 
 
         // Caminho único para cada solicitação
         $path = "anexos/" . $id;

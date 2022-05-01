@@ -1,7 +1,6 @@
 <header class="w3-bar w3-theme">
     <a href="/dashboard" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i> Início</a>
     <a href="/solicitacao/novo" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-file-alt"></i> Nova Solicitação</a>
-    <a href="#" class="w3-bar-item w3-button w3-mobile">Link 2</a>
     <a href="#" class="w3-bar-item w3-button w3-mobile">Link 3</a>
 
     <div class="w3-dropdown-hover w3-right">
@@ -20,4 +19,6 @@
             </a>
           </div>
       </div>
+
+      <a href="/arquivo" class="w3-bar-item w3-button w3-mobile w3-right"><i class="fa fa-archive"></i> Arquivo</a>
 </header>

@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('ultimo_nome');
             $table->string('email')->unique();
             $table->string('password');
+            $table->timestamp('last_login')->nullable();
+            
+            $table->boolean('administrador')->default(false);
+            $table->boolean('conta_ativa')->default(true);
         });
     }
 

@@ -19,7 +19,6 @@ class User extends Authenticatable
     public $timestamps = false;
 
     protected $guarded = [];
-
     protected $hidden = ['password'];
 
     /**
@@ -42,18 +41,10 @@ class User extends Authenticatable
 
     /**
      * Define uma relação entre Utilizador e Solicitação.
-     * Um utilizador pode ter várias solicitações
+     * Um utilizador pode ter várias solicitações.
      */
     public function solicitacao(){
         return $this->hasMany(Solicitacao::class);
-    }
-
-    /**
-     * Define uma relação entre Utilizador e InfoUtilizador.
-     * Um utilizador tem apenas uma informação (ID, data de criação, superadmin, conta ativa e último login)
-     */
-    public function informacao(){
-        return $this->hasOne(InfoUtilizador::class);
     }
 
     /**

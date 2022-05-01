@@ -4,6 +4,17 @@
     <x-dashboard-header/>
 
     <section class="w3-container dashboard-content">
+        @if (session()->has('login'))
+        <section x-data="{ show: true }" 
+                x-init="setTimeout(() => show = false, 2500)" 
+                x-show="show" 
+                x-transition.duration.500ms
+                class="w3-panel w3-green w3-round-large"
+        >
+            <h3>{{ session('login') }}</h3>
+        </section>
+        @endif
+
         @if (session()->has('sucesso'))
         <section x-data="{ show: true }" 
                 x-init="setTimeout(() => show = false, 2500)" 
