@@ -14,10 +14,10 @@ class CreateLogsTable extends Migration
     public function up()
     {
         Schema::create('logs', function (Blueprint $table) {
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
             $table->id('log_id');
-            $table->bigInteger('utilizador_id');
-            $table->timestamp('data_edicao')->useCurrent();
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
+            $table->foreignId('utilizador_id')->constrained('users')->references('id');
+            $table->timestamp('data_edicao');
             $table->string('motivo_edicao');
         });
     }

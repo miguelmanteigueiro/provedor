@@ -16,6 +16,8 @@ class Log extends Model
     protected $table = 'logs';
     public $timestamps = false;
 
+    protected $guarded = [];
+
     /**
      * Define uma relação entre Log e Solicitação.
      * Um log apenas pertence a uma solicitação.

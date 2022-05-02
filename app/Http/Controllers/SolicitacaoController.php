@@ -8,6 +8,7 @@ use App\Models\EstadoSolicitacao;
 use App\Models\Log;
 use App\Models\Solicitacao;
 use App\Models\User;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -181,31 +182,31 @@ class SolicitacaoController extends Controller
         EstadoSolicitacao::where('solicitacao_id', $id)->update(['data_inicio' => $request->get('data_inicio')]);
 
         // Guardar no log o motivo da edição
-        $log = new Log();
+        $log = new Log(['solicitacao_id' => $id, 'utilizador_id' => Auth::user()->id, 'data_edicao' => new DateTime(), 'motivo_edicao' => $request->get('motivo_edicao')]);
         $log->save();
 
         // Caso haja ficheiros, guardar os mesmos
         if($request->hasfile('ficheiros')){ 
 
-        // Caminho único para cada solicitação
-        $path = "anexos/" . $id;
+            // Caminho único para cada solicitação
+            $path = "anexos/" . $id;
 
-        foreach($request->file('ficheiros') as $file){
-            $filename = $file->getClientOriginalName();
-            
-            // Verificar se o ficheiro já foi carregado
-                if(Storage::exists($path . "/" . $filename)){
-                    $failedUploads++;
-                }
-
-                else{
-                    $storedFilePath = $file->storeAs($path, $filename);
-                    $parsedFilePath = str_replace("public", "", $storedFilePath);
+            foreach($request->file('ficheiros') as $file){
+                $filename = $file->getClientOriginalName();
                 
-                    $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
-                    $anexos_solicitacao->save();
+                    // Verificar se o ficheiro já foi carregado
+                    if(Storage::exists($path . "/" . $filename)){
+                        $failedUploads++;
+                    }
+
+                    else{
+                        $storedFilePath = $file->storeAs($path, $filename);
+                        $parsedFilePath = str_replace("public", "", $storedFilePath);
+                    
+                        $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
+                        $anexos_solicitacao->save();
+                    }
                 }
-            }
         }   	
 
         // Mensagem de aviso, se houver ficheiros não carregados
