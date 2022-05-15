@@ -18,10 +18,10 @@ class CreateEstadoSolicitacaoTable extends Migration
 
             $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
             $table->enum('estado', $ESTADO);
-            $table->date('data_inicio');
-            $table->date('data_resposta')->nullable();
-            $table->date('data_fecho_previsto')->nullable();
-            $table->date('data_encerramento')->nullable();
+            $table->string('data_inicio');
+            $table->string('data_resposta')->nullable();
+            $table->string('data_fecho_previsto')->nullable();
+            $table->string('data_encerramento')->nullable();
         });
     }
 

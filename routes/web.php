@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,16 @@ Route::get('login', [SessionsController::class, 'create'])->middleware('guest')-
 Route::post('verify', [SessionsController::class, 'auth'])->middleware('guest');
 Route::get('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
+
 # Utilizador geral
 Route::get('dashboard', [DashboardController::class, 'show'])->middleware('auth');
+    # Consultar definições
 Route::get('definicoes', [DashboardController::class, 'definicoes'])->middleware('auth');
+    # Alterar dados pessoais
+Route::post('/definicoes/changeName', [DashboardController::class, 'changeName'])->middleware('auth');
+Route::post('/definicoes/changeEmail', [DashboardController::class, 'changeEmail'])->middleware('auth');
+Route::post('/definicoes/changePassword', [DashboardController::class, 'changePassword'])->middleware('auth');
+
 
 # Solicitações
     # Registar nova solicitação
@@ -38,6 +46,7 @@ Route::get('/solicitacao/editar/{solicitacao:solicitacao_id}', [SolicitacaoContr
 Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
     # Consultar arquivo
 Route::get('arquivo', [DashboardController::class, 'arquivo'])->middleware('auth');
+
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

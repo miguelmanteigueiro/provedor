@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Swift_TransportException;
 
 class SolicitacaoController extends Controller
 {
@@ -60,7 +59,7 @@ class SolicitacaoController extends Controller
             'descricao' => 'required',  
 
             'ficheiros.*' => 'mimes:pdf,jpg,jpeg,png',
-            'data_inicio' => 'required|date'
+            'data_inicio' => 'required|date_format:Y-m-d'
         ], [], $atributos);
 
         if ($validator->fails()) {
@@ -167,8 +166,8 @@ class SolicitacaoController extends Controller
             'descricao' => 'required',  
 
             'ficheiros.*' => 'mimes:pdf,jpg,jpeg,png',
-            'data_inicio' => 'required|date',
-            'motivo_edicao' => 'required|max:255'
+            'data_inicio' => 'required|date_format:Y-m-d',
+            'motivo_edicao' => 'required|min:8|max:255'
         ], [], $atributos);
 
         if ($validator->fails()) {

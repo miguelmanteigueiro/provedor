@@ -18,3 +18,9 @@
     <button formaction="/" class="w3-btn w3-red w3-round"> {!! $function !!} </button>
 </form>
 @endif
+
+@if(($function === "Desarquivar"))
+<form>
+    <button formaction="/" class="w3-btn w3-red w3-round"> {!! $function !!} </button>
+</form>
+@endif

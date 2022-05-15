@@ -40,6 +40,7 @@
         @endif
     
         {{ $slot }}
+        
     </section>
 
     <x-footer/>
