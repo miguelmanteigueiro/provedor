@@ -104,8 +104,8 @@
 
                                 <input class="w3-input w3-border w3-round w3-margin-bottom" 
                                        type="email" 
-                                       name="email_confirm" 
-                                       id="email_confirm" 
+                                       name="email_confirmation" 
+                                       id="email_confirmation" 
                                        placeholder="Confirme o endereço"
                                        autocomplete="off" 
                                        required>
@@ -120,21 +120,21 @@
                         <!-- Alterar Senha -->
                         <div x-show.transition.in="letter === 'b3'">
                             <hr>
-                            <form class="" method="POST" action="definicoes/changeEmail">
+                            <form class="" method="POST" action="definicoes/changePassword">
                                 @csrf
                                  
                                 <input class="w3-input w3-border w3-round w3-margin-bottom" 
                                        type="password" 
-                                       name="senha" 
-                                       id="senha" 
+                                       name="password" 
+                                       id="password" 
                                        placeholder="Nova password"
                                        autocomplete="off" 
                                        required>
 
                                 <input class="w3-input w3-border w3-round w3-margin-bottom" 
                                        type="password" 
-                                       name="senha_confirm" 
-                                       id="senha_confirm" 
+                                       name="password_confirmation" 
+                                       id="password_confirmation" 
                                        placeholder="Confirme a password"
                                        autocomplete="off" 
                                        required>

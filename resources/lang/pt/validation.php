@@ -84,6 +84,7 @@ return [
         'numeric' => 'O campo :attribute deverá ter um valor superior ou igual a :min.',
         'string'  => 'O campo :attribute deverá conter no mínimo :min caracteres.',
     ],
+    'mixedCase'            => 'Teste',
     'multiple_of'          => 'O :attribute deve ser um múltiplo de :value',
     'not_in'               => 'O campo :attribute contém um valor inválido.',
     'not_regex'            => 'O formato de :attribute não é válido',

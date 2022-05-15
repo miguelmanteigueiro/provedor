@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,15 @@ class DashboardController extends Controller
         return view('solicitacao.show', ['solicitacoes' => $solicitacoes]);
     }
 
+    public function arquivo()
+    {
+        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
+            $q->where("estado", '!=', "aberto");
+        })->paginate(15);
+
+        return view('solicitacao.arquivo', ['solicitacoes' => $solicitacoes]);
+    }
+    
     public function definicoes()
     {
         return view('dashboard.definicoes');
@@ -56,47 +66,48 @@ class DashboardController extends Controller
 
     public function changeEmail(Request $request)
     {
-        $atributos = ['email' => '<b>Endereço de Email</b>',
-                      'email_confirm' => '<b>Confirmação do Endereço de Email</b>'];
+        $atributos = ['email' => '<b>Endereço de Email</b>'];
 
         // Validar o email
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email|max:255',
-            'email_confirm' => 'required|email|unique:users,email|max:255',
+            'email' => 'required|confirmed|email|unique:users,email|max:255',
         ], [], $atributos);
  
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
-
-        if($request->get('email') != $request->get('email_confirm')){
-            return back()->with('erro', 'Os endereços de email não são iguais.');
-        }
         
         // Proceder à alteração do email
         else{
             $id = Auth::user()->id;
-            $user = User::find($id);
-
-            $user->email = $request->get('email');
-
             User::where('id', $id)->update($request->only('email'));
         };
 
         return redirect('/definicoes')->with('sucesso', 'O seu endereço de email foi alterado com sucesso!');
     }
 
-    public function changePassword()
+    public function changePassword(Request $request)
     {
-        return view('dashboard.definicoes');
-    }
+        $atributos = ['password' => '<b>Password</b>'];
 
-    public function arquivo()
-    {
-        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-            $q->where("estado", '!=', "aberto");
-        })->paginate(15);
+        // Validar a password
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'confirmed', 'max:255', Password::min(8)->mixedCase()->numbers()->symbols()],
+        ], [], $atributos);
+ 
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        
+        // Proceder à alteração da password
+        else{
+            $id = Auth::user()->id;
+            $user = User::find($id); 
+            
+            $user->setPasswordAttribute($request->get('password'));
+            $user->save();
+        };
 
-        return view('solicitacao.arquivo', ['solicitacoes' => $solicitacoes]);
+        return redirect('/definicoes')->with('sucesso', 'A sua palavra-passe foi alterada com sucesso!');
     }
 }
