@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
@@ -47,6 +48,10 @@ Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditF
     # Consultar arquivo
 Route::get('arquivo', [DashboardController::class, 'arquivo'])->middleware('auth');
 
+# Comentários
+    # Adicionar novo comentário
+Route::get('/comentario/novo/{solicitacao:solicitacao_id}', [ComentarioController::class, 'showCommentForm'])->middleware('auth')->name('novo_comentario');
+Route::post('/comentario/guardar', [ComentarioController::class, 'storeCommentForm'])->middleware('auth');
 
 # Administração
 Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');

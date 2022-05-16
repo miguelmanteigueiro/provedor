@@ -27,11 +27,13 @@ class SolicitacaoController extends Controller
         $anexos = $solicitacao->anexo_solicitacao;
 
         // Carregar os comentários de uma solicitação
-        $comentarios = $solicitacao->comentario();
-        dd($comentarios);
+        $comentarios = $solicitacao->comentario;
 
         // Mostrar a página de consulta
-        return view('solicitacao.consultar', ['solicitacao' => $solicitacao, 'estado' => $estado, 'anexos' => $anexos]);
+        return view('solicitacao.consultar',   ['solicitacao' => $solicitacao, 
+                                                'estado' => $estado, 
+                                                'anexos' => $anexos, 
+                                                'comentarios' => $comentarios]);
     }
     // Mostrar o formulário para criar uma solicitação
     public function showForm()

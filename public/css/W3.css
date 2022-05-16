@@ -2004,3 +2004,9 @@ a {
 .dashboard-content {
   flex: 1;
 }
+
+/** Resize none nas textareas **/
+
+textarea {
+    resize: none;
+}
