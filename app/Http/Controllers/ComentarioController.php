@@ -14,6 +14,6 @@ class ComentarioController extends Controller
 
     public function storeCommentForm (Request $request)
     {
-        // TODO
+        dd($request->all());
     }
 }
