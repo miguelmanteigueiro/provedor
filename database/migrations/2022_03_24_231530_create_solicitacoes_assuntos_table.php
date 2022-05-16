@@ -14,8 +14,8 @@ class CreateSolicitacoesAssuntosTable extends Migration
     public function up()
     {
         Schema::create('solicitacoes_assuntos', function (Blueprint $table) {
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
-            $table->foreignId('assunto_id')->constrained('assuntos')->references('assunto_id');
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
+            $table->foreignId('assunto_id')->constrained('assuntos')->references('assunto_id')->cascadeOnDelete();
         });
     }
 

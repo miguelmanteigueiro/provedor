@@ -19,7 +19,7 @@ class CreateAnaliticaTable extends Migration
             $FORMA_CONTACTO = ['email', 'correio_postal', 'formulario', 'presencial', 'telefone', 'outra'];
             $NATUREZA = ['academico_administrativa', 'acao_social', 'pedagogica', 'diversos', 'outra'];
 
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
             $table->enum('tipo_solicitacao', $TIPO_SOLICITACAO);
             $table->enum('apresentacao', $TIPO_APRESENTACAO);
             $table->enum('forma_contacto', $FORMA_CONTACTO);

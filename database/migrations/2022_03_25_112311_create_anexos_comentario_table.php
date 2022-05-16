@@ -15,7 +15,7 @@ class CreateAnexosComentarioTable extends Migration
     {
         Schema::create('anexos_comentario', function (Blueprint $table) {
             $table->id('anexo_comentario_id');
-            $table->foreignId('comentario_id')->constrained('comentarios')->references('comentario_id');
+            $table->foreignId('comentario_id')->constrained('comentarios')->references('comentario_id')->cascadeOnDelete();
             $table->string('path');
         });
     }

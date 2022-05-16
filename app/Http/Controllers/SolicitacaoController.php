@@ -26,6 +26,10 @@ class SolicitacaoController extends Controller
         $estado = $solicitacao->estado_solicitacao;
         $anexos = $solicitacao->anexo_solicitacao;
 
+        // Carregar os comentários de uma solicitação
+        $comentarios = $solicitacao->comentario();
+        dd($comentarios);
+
         // Mostrar a página de consulta
         return view('solicitacao.consultar', ['solicitacao' => $solicitacao, 'estado' => $estado, 'anexos' => $anexos]);
     }

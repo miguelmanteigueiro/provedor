@@ -1,7 +1,7 @@
 <x-layout>
-        <h2 class="w3-text w3-center">Consultar Solicitação</h2>
-        <div class="w3-responsive w3-section">
-            <form id="consultar">
+    <h2 class="w3-text w3-center">Consultar Solicitação</h2>
+    <div class="w3-responsive w3-section">
+        <form id="consultar">
                 @csrf
                 <div class="w3-row-padding">
                     <div class="w3-third">
@@ -156,25 +156,37 @@
                         <p>Não foram anexados ficheiros.</p>
                     @endif
                 </div>
-            </form>
+        </form>
 
-            {{-- Botões --}}
-            <div class="w3-bar w3-container w3-margin-top">
-                <button class="w3-button w3-right w3-theme w3-round w3-margin-left" type="submit">
-                    Adicionar Comentário
+        {{-- Comentários --}}
+        @if ($comentarios->count())
+            <x-load-comentarios :comentarios="$comentarios" />
+        @else
+            <h1 class="w3-center w3-display-middle">Não existem comentários para esta solicitação.</h1>
+        @endif
+        
+
+        {{-- Botões --}}
+        <div class="w3-bar w3-container w3-margin-top">
+            <hr style="height:2px;border-width:0;color:rgb(182, 182, 182);background-color:rgb(182, 182, 182)">
+            <button class="w3-button w3-right w3-theme w3-round w3-margin-left" type="submit">
+                Adicionar Comentário
+            </button>
+            
+            <a href="{{route('editar', ['solicitacao' => $solicitacao])}}">
+                <button class="w3-button w3-right w3-blue w3-round w3-margin-left" type="button">
+                    Editar Solicitação
                 </button>
-                
-                <a href="{{route('editar', ['solicitacao' => $solicitacao])}}">
-                    <button class="w3-button w3-right w3-blue w3-round w3-margin-left" type="button">
-                        Editar Solicitação
-                    </button>
-                </a>
+            </a>
 
-                <a href="/dashboard">
-                    <button class="w3-button w3-red w3-round" type="button">
-                        Voltar
-                    </button>
-                </a>
-            </div>
+            <a href="/dashboard">
+                <button class="w3-button w3-red w3-round" type="button">
+                    Voltar
+                </button>
+            </a>
         </div>
+
+        
+
+    </div>
 </x-layout>

@@ -15,7 +15,7 @@ class CreateAnexosSolicitacaoTable extends Migration
     {
         Schema::create('anexos_solicitacao', function (Blueprint $table) {
             $table->id('anexo_solicitacao_id');
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
             $table->string('path');
         });
     }

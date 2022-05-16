@@ -67,7 +67,7 @@ class Solicitacao extends Model
      * Uma solicitação pode ter vários comentários
      */
     public function comentario(){
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(Comentario::class, null, 'solicitacao_id');
     }
 
     /**

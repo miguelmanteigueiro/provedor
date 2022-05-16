@@ -14,15 +14,17 @@ class Comentario extends Model
      *
      * @var string
      */
-    protected $table = 'comentario';
+    protected $table = 'comentarios';
     public $timestamps = false;
+
+    protected $guarded = [];
 
     /**
      * Define uma relação entre Comentário e Solicitação.
      * Um comentário pertence a apenas uma solicitação.
      */
     public function solicitacao(){
-        return $this->belongsTo(Solicitacao::class);
+        return $this->belongsTo(Solicitacao::class, 'solicitacao_id', 'solicitacao_id');
     }
 
     /**
@@ -38,7 +40,7 @@ class Comentario extends Model
      * Um comentário pertence a apenas um utilizador.
      */
     public function utilizador(){
-        return $this->belongsTo(Utilizador::class);
+        return $this->belongsTo(User::class, 'utilizador_id', 'id');
     }
 }
 

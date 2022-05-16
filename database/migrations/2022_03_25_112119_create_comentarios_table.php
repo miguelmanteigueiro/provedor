@@ -14,10 +14,11 @@ class CreateComentariosTable extends Migration
     public function up()
     {
         Schema::create('comentarios', function (Blueprint $table) {
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
             $table->id('comentario_id');
-            $table->foreignId('utilizador_id')->constrained('users')->references('id');
-            $table->date('data_comentario')->default(now());
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
+            $table->foreignId('utilizador_id')->constrained('users')->references('id')->cascadeOnDelete();
+            $table->timestamp('data_comentario');
+            $table->text('comentario');
         });
     }
 

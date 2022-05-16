@@ -16,7 +16,7 @@ class CreateEstadoSolicitacaoTable extends Migration
         Schema::create('estado_solicitacao', function (Blueprint $table) {
             $ESTADO = ['aberto', 'encerrado', 'arquivado'];
 
-            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id');
+            $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
             $table->enum('estado', $ESTADO);
             $table->string('data_inicio');
             $table->string('data_resposta')->nullable();

@@ -17,7 +17,7 @@ class CreateSolicitacoesTable extends Migration
     {
         Schema::create('solicitacoes', function (Blueprint $table) {
             $table->id('solicitacao_id');
-            $table->foreignId('utilizador_id')->constrained('users')->references('id');
+            $table->foreignId('utilizador_id')->constrained('users')->references('id')->cascadeOnDelete();
             $table->string('referencia_interna')->nullable();
             $table->enum('situacao_academica', Solicitacao::SITUACAO_ACADEMICA);
             $table->integer('estudante_id')->nullable();
