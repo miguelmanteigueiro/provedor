@@ -1,4 +1,4 @@
-@props(['comentario'])
+@props(['comentario', 'id'])
 
 <div class="w3-card-4 w3-grey w3-padding">
     <p><b>{{ $comentario->utilizador->nome }}</b> escreveu no dia
@@ -8,14 +8,14 @@
         autocomplete="off" disabled style="resize='none'">{!! $comentario->comentario !!}
     </textarea>
 
-    {{-- <div class="w3-container">
-        @if ($anexos->isNotEmpty())
+    <div>
+        @if ($comentario->anexo->isNotEmpty())
             <label>
                 <b>Ficheiros Anexados (click para <i>download</i>)</b>
             </label>
-            @foreach ($anexos as $anexo)
+            @foreach ($comentario->anexo as $anexo)
                 @php
-                    $path = 'anexos/' . $solicitacao->solicitacao_id . '/';
+                    $path = 'anexos/' . $id . '/comentarios/';
                     $filename = str_replace($path, '', $anexo->path);
                 @endphp
                 <br>
@@ -23,13 +23,8 @@
                     <b>{!! $filename !!}</b>
                 </a>
             @endforeach
-        @else
-            <label>
-                <b>Ficheiros Anexados</b>
-            </label>
-            <p>Não foram anexados ficheiros.</p>
         @endif
-    </div> --}}
+    </div>
 </div>
 <br>
 

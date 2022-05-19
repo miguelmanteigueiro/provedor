@@ -20,6 +20,21 @@ class Comentario extends Model
     protected $guarded = [];
 
     /**
+     * Override ao método find()
+     * 
+     * @var string
+     */
+    public static function find($key){
+        $obj = Comentario::where('comentario_id', $key);
+
+        if ($obj->count() == 0)
+            return null;
+
+        $comentario = $obj->first();
+        return $comentario;
+    }
+
+    /**
      * Define uma relação entre Comentário e Solicitação.
      * Um comentário pertence a apenas uma solicitação.
      */
@@ -32,7 +47,7 @@ class Comentario extends Model
      * Um comentário pode ter vários anexos.
      */
     public function anexo(){
-        return $this->hasMany(AnexosComentario::class);
+        return $this->hasMany(AnexosComentario::class, null, "comentario_id");
     }
 
     /**

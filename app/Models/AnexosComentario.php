@@ -16,12 +16,29 @@ class AnexosComentario extends Model
      */
     protected $table = 'anexos_comentario';
     public $timestamps = false;
+    
+    protected $guarded = [];
+
+    /**
+     * Override ao método find()
+     * 
+     * @var string
+     */
+    public static function find($key){
+        $obj = AnexosComentario::where('anexo_comentario_id', $key);
+
+        if ($obj->count() == 0)
+            return null;
+
+        $anexo = $obj->first();
+        return $anexo;
+    }
 
     /**
      * Define uma relação entre AnexosComentário e Comentário.
      * Um anexo pertence a apenas um comentário.
      */
     public function comentario(){
-        return $this->belongsTo(Comentario::class);
+        return $this->belongsTo(Comentario::class, "comentario_id", "comentario_id");
     }
 }

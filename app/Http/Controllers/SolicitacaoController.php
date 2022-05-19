@@ -52,7 +52,8 @@ class SolicitacaoController extends Controller
                       'estudante_nome' => '<b>Nome</b>',
                       'estudante_email' => '<b>Endereço de Email</b>',
                       'estudante_telefone' => '<b>Contacto Telefónico</b>',
-                      'descricao' => '<b>Descrição da Ocorrência</b>'];
+                      'descricao' => '<b>Descrição da Ocorrência</b>',
+                      'ficheiros.*' => '<b>Ficheiros</b>'];
 
         $validator = Validator::make($request->all(), [
             // Campos da solicitação
@@ -64,7 +65,7 @@ class SolicitacaoController extends Controller
             'estudante_telefone' => 'nullable|max:255',
             'descricao' => 'required',  
 
-            'ficheiros.*' => 'mimes:pdf,jpg,jpeg,png',
+            'ficheiros.*' => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
             'data_inicio' => 'required|date_format:Y-m-d'
         ], [], $atributos);
 
@@ -156,7 +157,8 @@ class SolicitacaoController extends Controller
         'estudante_email' => '<b>Endereço de Email</b>',
         'estudante_telefone' => '<b>Contacto Telefónico</b>',
         'descricao' => '<b>Descrição da Ocorrência</b>',
-        'motivo_edicao' => '<b>Motivo da Edição</b>'];
+        'motivo_edicao' => '<b>Motivo da Edição</b>',
+        'ficheiros.*' => '<b>Ficheiros</b>'];
 
         $validator = Validator::make($request->all(), [
             // Campos da solicitação
@@ -171,7 +173,7 @@ class SolicitacaoController extends Controller
             'estudante_telefone' => 'nullable|max:255',
             'descricao' => 'required',  
 
-            'ficheiros.*' => 'mimes:pdf,jpg,jpeg,png',
+            'ficheiros.*' => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
             'data_inicio' => 'required|date_format:Y-m-d',
             'motivo_edicao' => 'required|min:8|max:255'
         ], [], $atributos);
@@ -220,5 +222,17 @@ class SolicitacaoController extends Controller
         }
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
+    }
+
+    public function arquivar(Solicitacao $solicitacao)
+    {
+        EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'arquivado']);
+        return redirect('/dashboard')->with('sucesso', 'A solicitação foi arquivada!');
+    }
+
+    public function desarquivar(Solicitacao $solicitacao)
+    {
+        EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'aberto']);
+        return redirect('/dashboard')->with('sucesso', 'A solicitação foi desarquivada!');
     }
 }

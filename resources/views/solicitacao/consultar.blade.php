@@ -117,7 +117,7 @@
 
             @if ($comentarios->count())
                 @foreach ($comentarios as $comentario)
-                    <x-load-comentario :comentario="$comentario" />
+                    <x-load-comentario :comentario="$comentario" :id="$solicitacao->solicitacao_id" />
                 @endforeach
             @else
                 <h1 class="w3-center w3-display-center">Não existem comentários para esta solicitação.</h1>

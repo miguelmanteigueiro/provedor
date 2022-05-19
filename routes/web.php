@@ -47,6 +47,9 @@ Route::get('/solicitacao/editar/{solicitacao:solicitacao_id}', [SolicitacaoContr
 Route::post('/solicitacao/editar/', [SolicitacaoController::class, 'confirmEditForm'])->middleware('auth');
     # Consultar arquivo
 Route::get('arquivo', [DashboardController::class, 'arquivo'])->middleware('auth');
+    # Arquivar e desarquivar
+Route::get('/solicitacao/arquivar/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'arquivar'])->middleware('auth');
+Route::get('/solicitacao/desarquivar/{solicitacao:solicitacao_id}', [SolicitacaoController::class, 'desarquivar'])->middleware('auth');
 
 # Comentários
     # Adicionar novo comentário
