@@ -38,6 +38,17 @@
             <p><b>{{ session('aviso') }}</b></p>
         </section>
         @endif
+
+        @if (session()->has('nova_conta'))
+        <section x-data="{ show: true }"  
+                x-show="show" 
+                x-transition.duration.500ms
+                class="w3-panel w3-green w3-round-large"
+        >
+            <h3>Registada uma Nova Conta!</h3>
+            <p><b>{!! session('nova_conta') !!}</b></p>
+        </section>
+        @endif
     
         {{ $slot }}
         

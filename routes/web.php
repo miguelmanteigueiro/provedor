@@ -57,7 +57,13 @@ Route::get('/comentario/novo/{solicitacao:solicitacao_id}', [ComentarioControlle
 Route::post('/comentario/guardar', [ComentarioController::class, 'storeCommentForm'])->middleware('auth');
 
 # Administração
-Route::get('/admin', [AdminController::class, 'admin_dashboard']);#->middleware('auth');
-
-Route::get('/admin/register', [AdminController::class, 'register']);#->middleware('auth');
-Route::post('/admin/register', [AdminController::class, 'store']);#->middleware('auth');
+    # Gerir contas
+Route::get('/admin/contas', [AdminController::class, 'view'])->middleware('admin');
+    # Editar uma conta
+Route::get('/admin/contas/editar/{user:id}', [AdminController::class, 'edit'])->middleware('admin');
+    # Ativar e desativar contas
+Route::get('/admin/contas/desativar/{user:id}', [AdminController::class, 'deactivate'])->middleware('admin');
+Route::get('/admin/contas/ativar/{user:id}', [AdminController::class, 'activate'])->middleware('admin');
+    # Registar novas contas
+Route::get('/admin/contas/registar', [AdminController::class, 'register'])->middleware('admin');
+Route::post('/admin/contas/registar', [AdminController::class, 'store'])->middleware('admin');
