@@ -60,7 +60,9 @@ Route::post('/comentario/guardar', [ComentarioController::class, 'storeCommentFo
     # Gerir contas
 Route::get('/admin/contas', [AdminController::class, 'view'])->middleware('admin');
     # Editar uma conta
-Route::get('/admin/contas/editar/{user:id}', [AdminController::class, 'edit'])->middleware('admin');
+Route::get('/admin/contas/editar/{user:id}', [AdminController::class, 'showEdit'])->middleware('admin');
+Route::post('/admin/contas/editar/', [AdminController::class, 'confirmEdit'])->middleware('admin');
+
     # Ativar e desativar contas
 Route::get('/admin/contas/desativar/{user:id}', [AdminController::class, 'deactivate'])->middleware('admin');
 Route::get('/admin/contas/ativar/{user:id}', [AdminController::class, 'activate'])->middleware('admin');

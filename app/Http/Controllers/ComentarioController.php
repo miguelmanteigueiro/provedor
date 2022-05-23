@@ -24,13 +24,13 @@ class ComentarioController extends Controller
 
         $failedUploads = 0;
 
-        $atributos = [  'comentario' => '<b>Comentário</b>',
-                        'ficheiros.*' => '<b>Ficheiros</b>' ];
+        $atributos = ['comentario'  => '<b>Comentário</b>',
+                      'ficheiros.*' => '<b>Ficheiros</b>'];
 
         $validator = Validator::make($request->all(), [
             // Campos do comentário
-            'comentario' => 'required',  
-            'ficheiros.*' => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
+            'comentario'    => 'required',  
+            'ficheiros.*'   => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
         ], [], $atributos);
 
         if ($validator->fails()) {

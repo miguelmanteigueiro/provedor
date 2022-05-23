@@ -41,6 +41,6 @@
 
 @if(($function === "Ativar Conta"))
 <form>
-    <button formaction="/admin/contas/ativar/{{ $id }}" class="w3-btn w3-red w3-round "> {!! $function !!} </button>
+    <button formaction="/admin/contas/ativar/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
 </form>
 @endif

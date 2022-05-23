@@ -5,6 +5,7 @@
     <td> {{ $user->primeiro_nome }} </td>
     <td> {{ $user->ultimo_nome }} </td>
     <td> {{ $user->email }} </td>
+    <td> {!! !empty($user->last_login) ? $user->last_login : "N/A" !!} </td>
     <td> {!! ($user->conta_ativa == 1) ? "Ativo" : "Desativada" !!} </td>
     <td> {!! ($user->administrador == 1) ? "Administrador" : "Utilizador" !!} </td>
     <td> <x-botao-tabela function="Editar Conta" id="{{ $user->id }}" /> </td>

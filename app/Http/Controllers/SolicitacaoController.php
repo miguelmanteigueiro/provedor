@@ -30,10 +30,10 @@ class SolicitacaoController extends Controller
         $comentarios = $solicitacao->comentario;
 
         // Mostrar a página de consulta
-        return view('solicitacao.consultar',   ['solicitacao' => $solicitacao, 
-                                                'estado' => $estado, 
-                                                'anexos' => $anexos, 
-                                                'comentarios' => $comentarios]);
+        return view('solicitacao.consultar',   ['solicitacao'   => $solicitacao, 
+                                                'estado'        => $estado, 
+                                                'anexos'        => $anexos, 
+                                                'comentarios'   => $comentarios]);
     }
     // Mostrar o formulário para criar uma solicitação
     public function showForm()
@@ -46,27 +46,26 @@ class SolicitacaoController extends Controller
     {
         $failedUploads = 0;
 
-        $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
-                      'situacao_academica' => '<b>Situação Académica</b>',
-                      'estudante_id' => '<b>Número de Estudante</b>',
-                      'estudante_nome' => '<b>Nome</b>',
-                      'estudante_email' => '<b>Endereço de Email</b>',
-                      'estudante_telefone' => '<b>Contacto Telefónico</b>',
-                      'descricao' => '<b>Descrição da Ocorrência</b>',
-                      'ficheiros.*' => '<b>Ficheiros</b>'];
+        $atributos = ['referencia_interna'  => '<b>Referência Interna</b>',
+                      'situacao_academica'  => '<b>Situação Académica</b>',
+                      'estudante_id'        => '<b>Número de Estudante</b>',
+                      'estudante_nome'      => '<b>Nome</b>',
+                      'estudante_email'     => '<b>Endereço de Email</b>',
+                      'estudante_telefone'  => '<b>Contacto Telefónico</b>',
+                      'descricao'           => '<b>Descrição da Ocorrência</b>',
+                      'ficheiros.*'         => '<b>Ficheiros</b>'];
 
         $validator = Validator::make($request->all(), [
             // Campos da solicitação
-            'referencia_interna' => 'max:12|unique:solicitacoes|nullable',
-            'situacao_academica' => 'required',
-            'estudante_id' => 'nullable|integer|max:100000',
-            'estudante_nome' => 'required|max:255',
-            'estudante_email' => 'required|email|max:255',
-            'estudante_telefone' => 'nullable|max:255',
-            'descricao' => 'required',  
-
-            'ficheiros.*' => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
-            'data_inicio' => 'required|date_format:Y-m-d'
+            'referencia_interna'    => 'max:12|unique:solicitacoes|nullable',
+            'situacao_academica'    => 'required',
+            'estudante_id'          => 'nullable|integer|max:100000',
+            'estudante_nome'        => 'required|max:255',
+            'estudante_email'       => 'required|email|max:255',
+            'estudante_telefone'    => 'nullable|max:255',
+            'descricao'             => 'required',  
+            'ficheiros.*'           => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
+            'data_inicio'           => 'required|date_format:Y-m-d'
         ], [], $atributos);
 
         if ($validator->fails()) {
@@ -113,10 +112,13 @@ class SolicitacaoController extends Controller
 
         // Envio de notificação por email aquando da inserção de uma solicitação
         // Notificação no dashboard sobre possíveis erros
+        // O envio é feito apenas para as contas ativas
+
         try{
-            Mail::bcc(User::all('email'))
+            Mail::bcc(User::where('conta_ativa', '=', '1')->get('email'))
             ->queue(new Notification());
         }
+
         catch(Exception $e) {
             if($failedUploads !== 0){
                 return redirect('/dashboard')->with('aviso', 'A solicitação foi guardada com sucesso, mas ' . $failedUploads . ' ficheiro(s) não foram carregados. O aviso por email não foi enviado.');
@@ -150,32 +152,33 @@ class SolicitacaoController extends Controller
         $id = $request->solicitacao_id;
         $failedUploads = 0;
 
-        $atributos = ['referencia_interna' => '<b>Referência Interna</b>',
-        'situacao_academica' => '<b>Situação Académica</b>',
-        'estudante_id' => '<b>Número de Estudante</b>',
-        'estudante_nome' => '<b>Nome</b>',
-        'estudante_email' => '<b>Endereço de Email</b>',
-        'estudante_telefone' => '<b>Contacto Telefónico</b>',
-        'descricao' => '<b>Descrição da Ocorrência</b>',
-        'motivo_edicao' => '<b>Motivo da Edição</b>',
-        'ficheiros.*' => '<b>Ficheiros</b>'];
+        $atributos = ['referencia_interna'  => '<b>Referência Interna</b>',
+                      'situacao_academica'  => '<b>Situação Académica</b>',
+                      'estudante_id'        => '<b>Número de Estudante</b>',
+                      'estudante_nome'      => '<b>Nome</b>',
+                      'estudante_email'     => '<b>Endereço de Email</b>',
+                      'estudante_telefone'  => '<b>Contacto Telefónico</b>',
+                      'descricao'           => '<b>Descrição da Ocorrência</b>',
+                      'motivo_edicao'       => '<b>Motivo da Edição</b>',
+                      'ficheiros.*'         => '<b>Ficheiros</b>'];
 
         $validator = Validator::make($request->all(), [
             // Campos da solicitação
             'referencia_interna' => [
                 'max:12', 
                 'nullable',
-                Rule::unique('solicitacoes')->ignore($request->solicitacao_id, 'solicitacao_id')],
-            'situacao_academica' => 'required',
-            'estudante_id' => 'nullable|integer|max:100000',
-            'estudante_nome' => 'required|max:255',
-            'estudante_email' => 'required|email|max:255',
-            'estudante_telefone' => 'nullable|max:255',
-            'descricao' => 'required',  
+                Rule::unique('solicitacoes')->ignore($request->solicitacao_id, 'solicitacao_id')
+            ],
 
-            'ficheiros.*' => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
-            'data_inicio' => 'required|date_format:Y-m-d',
-            'motivo_edicao' => 'required|min:8|max:255'
+            'situacao_academica'    => 'required',
+            'estudante_id'          => 'nullable|integer|max:100000',
+            'estudante_nome'        => 'required|max:255',
+            'estudante_email'       => 'required|email|max:255',
+            'estudante_telefone'    => 'nullable|max:255',
+            'descricao'             => 'required',  
+            'ficheiros.*'           => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
+            'data_inicio'           => 'required|date_format:Y-m-d',
+            'motivo_edicao'         => 'required|min:8|max:255'
         ], [], $atributos);
 
         if ($validator->fails()) {

@@ -15,8 +15,8 @@ class DashboardController extends Controller
     public function show()
     {
         $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-                $q->where("estado", "aberto");
-            })->paginate(15);
+            $q->where("estado", "aberto");
+        })->paginate(15);
 
         return view('solicitacao.show', ['solicitacoes' => $solicitacoes]);
     }
@@ -37,13 +37,13 @@ class DashboardController extends Controller
 
     public function changeName(Request $request)
     {
-        $atributos = ['primeiro_nome' => '<b>Nome</b>',
-                      'ultimo_nome' => '<b>Apelido</b>'];
+        $atributos = ['primeiro_nome'   => '<b>Nome</b>',
+                      'ultimo_nome'     => '<b>Apelido</b>'];
 
         // Validar o nome
         $validator = Validator::make($request->all(), [
             'primeiro_nome' => 'min:2|max:50',
-            'ultimo_nome' => 'min:2|max:50',
+            'ultimo_nome'   => 'min:2|max:50',
         ], [], $atributos);
  
         if ($validator->fails()) {
