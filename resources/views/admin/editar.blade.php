@@ -14,7 +14,7 @@
     <div class="w3-container">
 
         <form method="POST" action="/admin/contas/editar" style="width:50%;margin:auto;">
-            <h2 class="w3-text w3-center">Registo de Utilizador</h2>
+            <h2 class="w3-text w3-center">Editar Utilizador</h2>
             @csrf
 
             <!-- Enviar o ID do utilizador no POST Request -->
@@ -30,9 +30,20 @@
                 placeholder="Endereço de Email" value="{{ $user->email }}" autocomplete="off" required>
 
             <input class="w3-input w3-border w3-round w3-margin-bottom" type="email" name="email_confirmation"
-                id="email_confirmation" placeholder="Confirme o Email" value="{{ $user->email }}" autocomplete="off" required>
+                id="email_confirmation" placeholder="Confirme o Email" value="{{ $user->email }}" autocomplete="off"
+                required>
 
-            <button class="w3-btn w3-block w3-theme-l2 w3-round w3-section" type="submit">Registar Utilizador</button>
+            <input type="checkbox" name="resetPassword" value="true">
+            <label for="resetPassword">Repor password?</label>
+
+            @if ($user->administrador == 1)
+                <br><input type="checkbox" name="administrador"checked>
+            @else
+                <br><input type="checkbox" name="administrador">
+            @endif
+            <label for="resetPassword">Permissões de administração</label>
+
+            <button class="w3-btn w3-block w3-theme-l2 w3-round w3-section" type="submit">Confirmar Alteração</button>
         </form>
-        
+
 </x-layout>
