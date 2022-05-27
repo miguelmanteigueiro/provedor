@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnaliticaController;
+use App\Http\Controllers\BackupsController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,10 +63,17 @@ Route::get('/admin/contas', [AdminController::class, 'view'])->middleware('admin
     # Editar uma conta
 Route::get('/admin/contas/editar/{user:id}', [AdminController::class, 'showEdit'])->middleware('admin');
 Route::post('/admin/contas/editar/', [AdminController::class, 'confirmEdit'])->middleware('admin');
-
     # Ativar e desativar contas
 Route::get('/admin/contas/desativar/{user:id}', [AdminController::class, 'deactivate'])->middleware('admin');
 Route::get('/admin/contas/ativar/{user:id}', [AdminController::class, 'activate'])->middleware('admin');
     # Registar novas contas
 Route::get('/admin/contas/registar', [AdminController::class, 'register'])->middleware('admin');
 Route::post('/admin/contas/registar', [AdminController::class, 'store'])->middleware('admin');
+
+    # Backups
+Route::get('/admin/backups', [BackupsController::class, 'view'])->middleware('admin');
+
+    # Analítica
+Route::get('/admin/analitica', [AnaliticaController::class, 'view'])->middleware('admin');
+    # Gerir assuntos
+Route::get('/admin/analitica/assuntos', [AnaliticaController::class, 'showAssuntos'])->middleware('admin');

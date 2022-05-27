@@ -18,12 +18,15 @@ class CreateAnaliticaTable extends Migration
             $TIPO_APRESENTACAO = ['individual', 'coletiva'];
             $FORMA_CONTACTO = ['email', 'correio_postal', 'formulario', 'presencial', 'telefone', 'outra'];
             $NATUREZA = ['academico_administrativa', 'acao_social', 'pedagogica', 'diversos', 'outra'];
+            $CICLO_ESTUDOS = ['1_ciclo', '2_ciclo', 'mestrado_integrado', '3_ciclo'];
 
             $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
             $table->enum('tipo_solicitacao', $TIPO_SOLICITACAO);
             $table->enum('apresentacao', $TIPO_APRESENTACAO);
             $table->enum('forma_contacto', $FORMA_CONTACTO);
             $table->enum('natureza', $NATUREZA);
+            $table->enum('ciclo_estudos', $CICLO_ESTUDOS);
+            $table->string('curso');
         });
     }
 

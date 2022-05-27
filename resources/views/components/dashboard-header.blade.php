@@ -30,15 +30,15 @@
                     <i class="fa fa-users"></i>
                     Contas
                 </a>
-                <a href="#" class="w3-bar-item w3-button">
+                {{-- <a href="#" class="w3-bar-item w3-button">
                     <i class="fa fa-file-alt"></i>
                     Solicitações
-                </a>
-                <a href="#" class="w3-bar-item w3-button">
+                </a> --}}
+                <a href="/admin/analitica" class="w3-bar-item w3-button">
                     <i class="fa fa-chart-line"></i>
                     Analítica
                 </a>
-                <a href="#" class="w3-bar-item w3-button">
+                <a href="/admin/backups" class="w3-bar-item w3-button">
                     <i class="fa fa-database"></i>
                     <i>Backups</i>
                 </a>

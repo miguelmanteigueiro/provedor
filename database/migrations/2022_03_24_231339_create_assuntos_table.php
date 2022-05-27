@@ -18,7 +18,7 @@ class CreateAssuntosTable extends Migration
 
             $table->id('assunto_id');
             $table->enum('natureza_assunto', $NATUREZA_ASSUNTO);
-            $table->text('assunto_desc');
+            $table->text('descricao_assunto');
         });
     }
 
