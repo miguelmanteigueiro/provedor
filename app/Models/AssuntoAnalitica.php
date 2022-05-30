@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assunto extends Model
+class AssuntoAnalitica extends Model
 {
     //use HasFactory;
 
@@ -14,7 +14,7 @@ class Assunto extends Model
      *
      * @var string
      */
-    protected $table = 'assunto';
+    protected $table = 'assunto_analitica';
     public $timestamps = false;
 
     protected $guarded = [];
@@ -25,21 +25,13 @@ class Assunto extends Model
      * @var string
      */
     public static function find($key){
-        $obj = Assunto::where('assunto_id', $key);
+        $obj = AssuntoAnalitica::where('assunto_analitica_id', $key);
 
         if ($obj->count() == 0)
             return null;
 
-        $assunto = $obj->first();
-        return $assunto;
-    }
-
-    /**
-     * Define uma relação entre Assunto e Natureza.
-     * Um assunto pertence apenas a uma natureza.
-     */
-    public function natureza(){
-        return $this->belongsTo(Natureza::class, 'natureza_id', 'natureza_id');
+        $assunto_analitica = $obj->first();
+        return $assunto_analitica;
     }
 
 }

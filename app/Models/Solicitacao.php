@@ -83,7 +83,7 @@ class Solicitacao extends Model
      * Uma solicitação pode ter vários anexos.
      */
     public function analitica(){
-        return $this->hasOne(Analitica::class);
+        return $this->hasOne(Analitica::class, null, 'solicitacao_id');
     }
 
     /**
@@ -100,14 +100,6 @@ class Solicitacao extends Model
      */
     public function log(){
         return $this->hasMany(Log::class);
-    }
-
-    /**
-     * Define uma relação entre Solicitacao e SolicitacaoAssunto 
-     * Uma solicitação pode ter vários assuntos.
-     */
-    public function solicitacao_assunto(){
-        return $this->hasMany(SolicitacaoAssunto::class);
     }
 
 }

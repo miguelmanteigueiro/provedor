@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Analitica extends Model
+class Natureza extends Model
 {
     //use HasFactory;
+
     /**
      * Define a tabela associada à classe.
      *
      * @var string
      */
-    protected $table = 'analitica';
+    protected $table = 'natureza';
     public $timestamps = false;
+
+    protected $guarded = [];
 
     /**
      * Override ao método find()
@@ -22,20 +25,20 @@ class Analitica extends Model
      * @var string
      */
     public static function find($key){
-        $obj = Analitica::where('analitica_id', $key);
+        $obj = Natureza::where('natureza_id', $key);
 
         if ($obj->count() == 0)
             return null;
 
-        $analitica = $obj->first();
-        return $analitica;
+        $natureza = $obj->first();
+        return $natureza;
     }
 
     /**
-     * Define uma relação entre Analitica e Solicitação.
-     * Uma tabela com analítica pertence a apenas uma solicitação.
+     * Define uma relação entre Natureza e Assunto 
+     * Uma natureza pertence a vários assuntos.
      */
-    public function solicitacao(){
-        return $this->belongsTo(Solicitacao::class, 'solicitacao_id', 'solicitacao_id');
+    public function assunto(){
+        return $this->hasMany(Assunto::class, 'natureza_id', 'natureza_id');
     }
 }

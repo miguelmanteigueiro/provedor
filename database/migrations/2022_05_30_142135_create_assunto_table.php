@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssuntosTable extends Migration
+class CreateAssuntoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateAssuntosTable extends Migration
      */
     public function up()
     {
-        Schema::create('assuntos', function (Blueprint $table) {
-            $NATUREZA_ASSUNTO = ['academico_administrativa', 'acao_social', 'pedagogica', 'diversos', 'outra'];
-
+        Schema::create('assunto', function (Blueprint $table) {
             $table->id('assunto_id');
-            $table->enum('natureza_assunto', $NATUREZA_ASSUNTO);
-            $table->text('descricao_assunto');
+            $table->foreignId('natureza_id')->constrained('natureza')->references('natureza_id')->cascadeOnDelete();
+            $table->string('descricao');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateAssuntosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assuntos');
+        Schema::dropIfExists('assunto');
     }
 }
