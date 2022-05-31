@@ -54,7 +54,8 @@ class GerarConta extends Command
             'primeiro_nome' => $primeiro_nome,
             'ultimo_nome' => $ultimo_nome,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'administrador' => 1
         ]);
 
         $this->info("Foi criado o utilizador $user->nome");

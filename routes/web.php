@@ -73,7 +73,23 @@ Route::post('/admin/contas/registar', [AdminController::class, 'store'])->middle
     # Backups
 Route::get('/admin/backups', [BackupsController::class, 'view'])->middleware('admin');
 
+
     # Analítica
 Route::get('/admin/analitica', [AnaliticaController::class, 'view'])->middleware('admin');
     # Gerir assuntos
 Route::get('/admin/analitica/assuntos', [AnaliticaController::class, 'showAssuntos'])->middleware('admin');
+    # Adicionar assunto
+Route::get('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'showAddAssuntos'])->middleware('admin');
+Route::post('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'confirmAddAssuntos'])->middleware('admin');
+    # Editar assunto
+#Route::get('/admin/analitica/assuntos/editar/{assunto:assunto_id}', [AnaliticaController::class, 'editAssunto'])->middleware('admin');
+#Route::post('/admin/analitica/assuntos/editar/', [AnaliticaController::class, 'confirmEditAssunto'])->middleware('admin');
+
+    # Gerir naturezas
+Route::get('/admin/analitica/naturezas', [AnaliticaController::class, 'showNaturezas'])->middleware('admin');
+    # Adicionar natureza
+Route::get('/admin/analitica/naturezas/adicionar', [AnaliticaController::class, 'showAddNatureza'])->middleware('admin');
+Route::post('/admin/analitica/naturezas/adicionar', [AnaliticaController::class, 'confirmAddNatureza'])->middleware('admin');
+    # Editar natureza
+Route::get('/admin/analitica/naturezas/editar/{natureza:natureza_id}', [AnaliticaController::class, 'editNatureza'])->middleware('admin');
+Route::post('/admin/analitica/naturezas/editar/', [AnaliticaController::class, 'confirmEditNatureza'])->middleware('admin');
