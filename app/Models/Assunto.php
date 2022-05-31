@@ -42,4 +42,12 @@ class Assunto extends Model
         return $this->belongsTo(Natureza::class, 'natureza_id', 'natureza_id');
     }
 
+    /**
+     * Define uma relação entre Assunto e AssuntoAnalitica.
+     * Um assunto pode pertencer a várias analíticas.
+     */
+    public function assunto_analitica(){
+        return $this->hasMany(AssuntoAnalitica::class, 'assunto_id', 'assunto_id');
+    }
+
 }

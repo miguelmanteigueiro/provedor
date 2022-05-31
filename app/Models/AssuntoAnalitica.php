@@ -34,4 +34,19 @@ class AssuntoAnalitica extends Model
         return $assunto_analitica;
     }
 
+    /**
+     * Define uma relação entre AssuntoAnalitica e Assunto.
+     * Um assunto_analitica pertence apenas a um assunto.
+     */
+    public function assunto(){
+        return $this->belongsTo(Assunto::class, 'assunto_id', 'assunto_id');
+    }
+
+    /**
+     * Define uma relação entre AssuntoAnalitica e Analitica.
+     * Um assunto_analitica pertence apenas a uma analítica.
+     */
+    public function analitica(){
+        return $this->belongsTo(Analitica::class, 'analitica_id', 'analitica_id');
+    }
 }

@@ -38,4 +38,13 @@ class Analitica extends Model
     public function solicitacao(){
         return $this->belongsTo(Solicitacao::class, 'solicitacao_id', 'solicitacao_id');
     }
+
+    /**
+     * Define uma relação entre Analitica e AssuntoAnalitica.
+     * Uma analítica pode ter vários assuntos.
+     */
+    public function assunto_analitica(){
+        return $this->hasMany(AssuntoAnalitica::class, 'analitica_id', 'analitica_id');
+    }
+
 }
