@@ -82,8 +82,8 @@ Route::get('/admin/analitica/assuntos', [AnaliticaController::class, 'showAssunt
 Route::get('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'showAddAssuntos'])->middleware('admin');
 Route::post('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'confirmAddAssuntos'])->middleware('admin');
         # Editar assunto
-#Route::get('/admin/analitica/assuntos/editar/{assunto:assunto_id}', [AnaliticaController::class, 'editAssunto'])->middleware('admin');
-#Route::post('/admin/analitica/assuntos/editar/', [AnaliticaController::class, 'confirmEditAssunto'])->middleware('admin');
+Route::get('/admin/analitica/assuntos/editar/{assunto:assunto_id}', [AnaliticaController::class, 'editAssunto'])->middleware('admin');
+Route::post('/admin/analitica/assuntos/editar/', [AnaliticaController::class, 'confirmEditAssunto'])->middleware('admin');
         # Gerir naturezas
 Route::get('/admin/analitica/naturezas', [AnaliticaController::class, 'showNaturezas'])->middleware('admin');
         # Adicionar natureza

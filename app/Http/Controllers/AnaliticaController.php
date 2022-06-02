@@ -72,9 +72,41 @@ class AnaliticaController extends Controller
         return back()->with('sucesso', 'O tipo de natureza foi editada!');
 
     }
+    
     public function showAddAssuntos(){
         $natureza = Natureza::all();
         return view('components.assunto.adicionar-assunto', ['natureza' => $natureza]);
+    }
+
+    public function editAssunto(Assunto $assunto){
+        $natureza = Natureza::all();
+        return view('components.assunto.editar-assunto', ['assunto' => $assunto, 'natureza' => $natureza]);
+    }
+
+    public function confirmEditAssunto(Request $request){
+        $atributos = ['subcategoria' => '<b>Subcategoria</b>',
+                        'descricao'  => '<b>Descrição do Assunto</b>'];
+
+        $id = $request->get('assunto_id');
+
+        $validator = Validator::make($request->all(), [
+            'subcategoria' => [
+                'min:2',
+                'max:255',
+                Rule::unique('assunto')->ignore($id, 'assunto_id'),
+            ],
+            'descricao' => 'required'
+        ], [], $atributos);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        Assunto::find($id)->update(['natureza_id'   => $request->get('natureza_id'),
+                                    'subcategoria'  => $request->get('subcategoria'),
+                                    'descricao'     => $request->get('descricao')]);
+        
+        return back()->with('sucesso', 'O assunto foi editado!');
     }
 
     public function confirmAddAssuntos(Request $request){
