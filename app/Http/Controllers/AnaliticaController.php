@@ -93,7 +93,9 @@ class AnaliticaController extends Controller
             'subcategoria' => [
                 'min:2',
                 'max:255',
-                Rule::unique('assunto')->ignore($id, 'assunto_id'),
+                Rule::unique('assunto')->ignore($id, 'assunto_id')->where(
+                    fn ($query) => $query->where('natureza_id', $request->get('natureza_id'))
+                ),
             ],
             'descricao' => 'required'
         ], [], $atributos);
@@ -115,7 +117,13 @@ class AnaliticaController extends Controller
     
         // Adicionar uma natureza à base de dados
         $validator = Validator::make($request->all(), [
-            'subcategoria' => 'min:2|max:255|unique:assunto,subcategoria',
+            'subcategoria' => [
+                'min:2',
+                'max:255',
+                Rule::unique('assunto')->where(
+                    fn ($query) => $query->where('natureza_id', $request->get('natureza'))
+                ),
+            ],
             'descricao' => 'required'
         ], [], $atributos);
 
