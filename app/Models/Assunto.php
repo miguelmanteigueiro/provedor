@@ -15,24 +15,10 @@ class Assunto extends Model
      * @var string
      */
     protected $table = 'assunto';
+    protected $primaryKey = 'assunto_id';
     public $timestamps = false;
 
     protected $guarded = [];
-
-    /**
-     * Override ao método find()
-     * 
-     * @var string
-     */
-    public static function find($key){
-        $obj = Assunto::where('assunto_id', $key);
-
-        if ($obj->count() == 0)
-            return null;
-
-        $assunto = $obj->first();
-        return $assunto;
-    }
 
     /**
      * Define uma relação entre Assunto e Natureza.
