@@ -138,5 +138,4 @@ class AnaliticaController extends Controller
         
         return back()->with('sucesso', 'Foi adicionada um novo assunto!');
     }
-    
 }
