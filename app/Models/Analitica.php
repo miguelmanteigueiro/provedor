@@ -16,6 +16,7 @@ class Analitica extends Model
     protected $table = 'analitica';
     public $timestamps = false;
 
+
     /**
      * Override ao método find()
      *
@@ -30,6 +31,7 @@ class Analitica extends Model
         $analitica = $obj->first();
         return $analitica;
     }
+
 
     /**
      * Devolve o tipo de solicitação numa string legível
@@ -57,6 +59,7 @@ class Analitica extends Model
         return ucwords($this->attributes['tipo_solicitacao']);
     }
 
+
     /**
      * Devolve o tipo de apresentação numa string legível
      *
@@ -66,6 +69,7 @@ class Analitica extends Model
     {
         return ucwords($this->attributes['apresentacao']);
     }
+
 
     /**
      * Devolve a forma de contacto numa string legível
@@ -122,6 +126,7 @@ class Analitica extends Model
     public function solicitacao(){
         return $this->belongsTo(Solicitacao::class, 'solicitacao_id', 'solicitacao_id');
     }
+
 
     /**
      * Define uma relação entre Analitica e AssuntoAnalitica.

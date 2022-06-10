@@ -11,47 +11,173 @@
             </ul>
         </section>
     @endif
-    <div class="w3-container">
-
-        <form method="POST" action="/admin/analitica/" style="width:50%;margin:auto;">
+    <div class="w3-responsive w3-section">
+        <form method="POST" action="/admin/analitica/">
             <h2 class="w3-text w3-center">Gestão de Analítica</h2>
             @csrf
+            <h4 class="w3-text w3-center">Dados da Solicitação</h4>
 
-{{--            <label>--}}
-{{--                Natureza--}}
-{{--            </label>--}}
-{{--            <select class="w3-select w3-border w3-round w3-margin-bottom"--}}
-{{--                    name="natureza"--}}
-{{--                    id="natureza"--}}
-{{--                    value="{{ old('natureza') }}"--}}
-{{--                    autocomplete="off"--}}
-{{--                    required>--}}
-{{--                @foreach ($natureza as $natureza)--}}
-{{--                    <option value="{{ $natureza->natureza_id }}" >--}}
-{{--                        {{ $natureza->descricao }}--}}
-{{--                    </option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
+            <!-- Enviar o ID da solicitacao no POST Request -->
+            <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->solicitacao_id }}">
 
-{{--            <label>--}}
-{{--                Subcategoria--}}
-{{--            </label>--}}
-{{--            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="subcategoria"--}}
-{{--                   id="subcategoria" value="{{ old('subcategoria') }}" autocomplete="off" required>--}}
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <label>
+                        <b>Referência Interna</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="text"
+                           name="referencia_interna"
+                           id="referencia_interna"
+                           value="{!! isset($solicitacao->referencia_interna) ? $solicitacao->referencia_interna : "N/A" !!}"
+                           autocomplete="off"
+                           disabled
+                    >
+                </div>
 
-{{--            <label>--}}
-{{--                Descrição do Assunto--}}
-{{--            </label>--}}
-{{--            <textarea class="w3-input w3-border w3-round w3-margin-bottom"--}}
-{{--                      rows="3"--}}
-{{--                      name="descricao"--}}
-{{--                      id="descricao"--}}
-{{--                      autocomplete="off"--}}
-{{--                      required--}}
-{{--            >{{ old('descricao')}}</textarea>--}}
+                <div class="w3-half">
+                    <label>
+                        <b>Funcionário</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="text"
+                           name="funcionario"
+                           id="funcionario"
+                           value="{{ $solicitacao->user->nome }}"
+                           autocomplete="off"
+                           disabled
+                    >
+                </div>
+            </div>
 
-{{--            <button class="w3-btn w3-block w3-theme-l2 w3-round w3-section" type="submit">Adicionar</button>--}}
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <label>
+                        <b>Nome</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="text"
+                           name="estudante_nome"
+                           id="estudante_nome"
+                           value="{{ $solicitacao->estudante_nome }}"
+                           autocomplete="off"
+                           disabled
+                    >
+                </div>
+
+                <div class="w3-half">
+                    <label>
+                        <b>Endereço de Email</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="email"
+                           name="estudante_email"
+                           id="estudante_email"
+                           value="{{ $solicitacao->estudante_email }}"
+                           autocomplete="off"
+                           disabled
+                    >
+                </div>
+            </div>
+
+            <h4 class="w3-text w3-center">Dados Analíticos</h4>
+
+            <div class="w3-row-padding">
+                <div class="w3-quarter">
+                    <label>
+                        <b>Data de Inserção</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="date"
+                           name="data_inicio"
+                           id="data_inicio"
+                           value="{{ $solicitacao->estado_solicitacao->data_inicio ?? '' }}"
+                           autocomplete="off">
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Data de Resposta</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="date"
+                           name="data_resposta"
+                           id="data_resposta"
+                           onchange="handler(event);"
+                           value="{{ $solicitacao->estado_solicitacao->data_resposta ?? '' }}"
+                           autocomplete="off">
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Data de Fecho Previsto</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="date"
+                           name="data_fecho_previsto"
+                           id="data_fecho_previsto"
+                           value="{{ $solicitacao->estado_solicitacao->data_fecho_previsto ?? '' }}"
+                           autocomplete="off">
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Data de Fecho</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="date"
+                           name="data_encerramento"
+                           id="data_encerramento"
+                           value="{{ $solicitacao->estado_solicitacao->data_encerramento ?? '' }}"
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <div class="w3-row-padding">
+
+            </div>
+
+
+
+            {{-- Botões --}}
+            <div class="w3-bar w3-container w3-margin-top">
+                <button class="w3-button w3-right w3-green w3-round w3-margin-left" type="submit">
+                    Guardar Alterações
+                </button>
+
+                <a href="/dashboard">
+                    <button class="w3-button w3-red w3-round" type="button">
+                        Cancelar
+                    </button>
+                </a>
+            </div>
         </form>
-
     </div>
+
+    <script>
+        function handler(e){
+            var dataIntroduzida = e.target.value;
+            var dataResposta = new Date(dataIntroduzida);
+
+            var dataPrevistoFecho = new Date(dataResposta);
+            var dataFecho = new Date(dataResposta);
+
+            dataPrevistoFecho.setDate(dataResposta.getDate() + 7);
+
+            var yyyy = dataPrevistoFecho.getFullYear();
+            var mm = ('0' + (dataPrevistoFecho.getMonth() + 1)).slice(-2);
+            var dd = ('0' + dataPrevistoFecho.getDate()).slice(-2);
+            dataPrevistoFecho = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('data_fecho_previsto').value = dataPrevistoFecho;
+
+            dataFecho.setDate(dataResposta.getDate() + 14);
+
+            yyyy = dataFecho.getFullYear();
+            mm = ('0' + (dataFecho.getMonth() + 1)).slice(-2);
+            dd = ('0' + dataFecho.getDate()).slice(-2);
+            dataFecho = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('data_encerramento').value = dataFecho;
+        }
+    </script>
+
 </x-layout>
