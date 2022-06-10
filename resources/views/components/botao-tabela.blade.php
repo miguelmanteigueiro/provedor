@@ -57,4 +57,10 @@
 </form>
 @endif
 
+@if(($function === "Gerir Analítica"))
+    <form>
+        <button formaction="/admin/analitica/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
+    </form>
+@endif
+
 

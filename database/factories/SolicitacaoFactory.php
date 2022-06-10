@@ -26,10 +26,10 @@ class SolicitacaoFactory extends Factory
             'descricao' => $this->faker->text(10000)
 
             // Adicionar o estado da solicitação e adicionar a data de início
-        $estado_solicitacao = new EstadoSolicitacao($request->only('data_inicio'));
-        $estado_solicitacao->estado = 'aberto';
-        $estado_solicitacao->solicitacao_id = $solicitacao->id;
-        $estado_solicitacao->save();
+            $estado_solicitacao = new EstadoSolicitacao($request->only('data_inicio'));
+            $estado_solicitacao->estado = 'aberto';
+            $estado_solicitacao->solicitacao_id = $solicitacao->id;
+            $estado_solicitacao->save();
         ];
     }
 }

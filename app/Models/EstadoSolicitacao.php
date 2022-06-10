@@ -20,6 +20,16 @@ class EstadoSolicitacao extends Model
     protected $guarded = [];
 
     /**
+     * Devolve o estado numa string legível
+     *
+     * @return string
+     */
+    public function getEstadoAttribute()
+    {
+        return ucwords($this->attributes['estado']);
+    }
+
+    /**
      * Define uma relação entre EstadoSolicitacao e Solicitação.
      * Um estado de solicitação pertence a apenas uma solicitação.
      */

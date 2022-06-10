@@ -19,21 +19,9 @@
         </div>
     </div>
 
-    <table class="w3-table-all w3-hoverable">
-        <tr class="w3-theme">
-            <th>ID</th>
-            <th>Tipo de Solicitação</th>
-            <th>Forma de Apresentação</th>
-            <th>Forma de Contacto</th>
-            <th>Natureza do Assunto</th>
-            <th>Estado</th>
-            <th>Permissões</th>
-            <th class="w3-right-align">Opções</th>
-            <th></th>
-        </tr>
-    </table>
+    <x-analitica.load-analitica :solicitacoes="$solicitacoes"/>
 
     <div class="w3-section">
-        {{-- {{ $users->links() }} --}}
+        {{ $solicitacoes->links() }}
     </div>
 </x-layout>

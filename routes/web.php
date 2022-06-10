@@ -92,3 +92,5 @@ Route::post('/admin/analitica/naturezas/adicionar', [AnaliticaController::class,
         # Editar natureza
 Route::get('/admin/analitica/naturezas/editar/{natureza:natureza_id}', [AnaliticaController::class, 'editNatureza'])->middleware('admin');
 Route::post('/admin/analitica/naturezas/editar/', [AnaliticaController::class, 'confirmEditNatureza'])->middleware('admin');
+        # Gerir analítica da solicitação
+Route::get('/admin/analitica/{solicitacao:solicitacao_id}', [AnaliticaController::class, 'manageAnalitica'])->middleware('admin');
