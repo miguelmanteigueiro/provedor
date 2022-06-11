@@ -244,7 +244,7 @@
                            type="text"
                            name="curso"
                            id="curso"
-                           value="{{ old('curso') }}"
+                           value="{{ old('curso') ?? $solicitacao->analitica->curso }}"
                            autocomplete="off"
                     >
                 </div>
@@ -267,11 +267,11 @@
 
     <script>
         function handler(e){
-            var dataIntroduzida = e.target.value;
-            var dataResposta = new Date(dataIntroduzida);
+            let dataIntroduzida = e.target.value;
+            let dataResposta = new Date(dataIntroduzida);
 
-            var dataPrevistoFecho = new Date(dataResposta);
-            var dataFecho = new Date(dataResposta);
+            let dataPrevistoFecho = new Date(dataResposta);
+            let dataFecho = new Date(dataResposta);
 
             dataPrevistoFecho.setDate(dataResposta.getDate() + 7);
 
@@ -290,8 +290,14 @@
             document.getElementById('data_encerramento').value = dataFecho;
         }
 
+        let apresentacao = '{!! isset($solicitacao->analitica->apresentacao) ? $solicitacao->analitica->getRawOriginal('apresentacao') : 'nenhum' !!}'.toLowerCase();
+        let tipo_solicitacao = '{!! isset($solicitacao->analitica->tipo_solicitacao) ? $solicitacao->analitica->getRawOriginal('tipo_solicitacao') : 'nenhum' !!}'.toLowerCase();
+        let forma_contacto = '{!! isset($solicitacao->analitica->forma_contacto) ? $solicitacao->analitica->getRawOriginal('forma_contacto') : 'nenhum' !!}'.toLowerCase();
+        let ciclo_estudos = '{!! isset($solicitacao->analitica->ciclo_estudos) ? $solicitacao->analitica->getRawOriginal('ciclo_estudos') : 'nenhum' !!}'.toLowerCase();
 
-        document.querySelector('#apresentacao').value = 'individual';
+        document.querySelector('#apresentacao').value = apresentacao;
+        document.querySelector('#tipo_solicitacao').value = tipo_solicitacao;
+        document.querySelector('#forma_contacto').value = forma_contacto;
+        document.querySelector('#ciclo_estudos').value = ciclo_estudos;
     </script>
-
 </x-layout>
