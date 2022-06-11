@@ -122,7 +122,7 @@
 
                 <div class="w3-quarter">
                     <label>
-                        <b>Data de Fecho</b>
+                        <b>Data de Encerramento</b>
                     </label>
                     <input class="w3-input w3-border w3-round w3-margin-bottom"
                            type="date"
@@ -134,10 +134,30 @@
             </div>
 
             <div class="w3-row-padding">
-
+                <div class="w3-third">
+                    <label>
+                        Estado
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="estado"
+                            id="estado"
+                            value="{{ old('estado') }}"
+                            autocomplete="off"
+                            required>
+                        @foreach ($estados as $estado)
+                            @if ($solicitacao->estado_solicitacao->estado == ucwords($estado))
+                                <option value="{{ $estado }}" selected>
+                                    {{ ucwords($estado) }}
+                                </option>
+                            @else
+                                <option value="{{ $estado }}" >
+                                    {{ ucwords($estado) }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
             </div>
-
-
 
             {{-- Botões --}}
             <div class="w3-bar w3-container w3-margin-top">

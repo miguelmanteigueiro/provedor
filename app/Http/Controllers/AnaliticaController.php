@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assunto;
+use App\Models\EstadoSolicitacao;
 use App\Models\Natureza;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class AnaliticaController extends Controller
     }
 
     public function manageAnalitica(Solicitacao $solicitacao){
-        return view('components.analitica.gerir-analitica', ['solicitacao' => $solicitacao]);
+        $estados = ['aberto', 'encerrado', 'arquivado'];
+        return view('components.analitica.gerir-analitica', ['solicitacao' => $solicitacao, 'estados' => $estados]);
     }
 
     public function showAssuntos(){
