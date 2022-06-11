@@ -18,8 +18,19 @@ class AnaliticaController extends Controller
     }
 
     public function manageAnalitica(Solicitacao $solicitacao){
-        $estados = ['aberto', 'encerrado', 'arquivado'];
-        return view('components.analitica.gerir-analitica', ['solicitacao' => $solicitacao, 'estados' => $estados]);
+        $ESTADOS = ['aberto', 'encerrado', 'arquivado'];
+        $TIPO_SOLICITACAO = ['aconselhamento', 'orientacao', 'informacao', 'mediacao', 'outro'];
+        $TIPO_APRESENTACAO = ['individual', 'coletiva'];
+        $FORMA_CONTACTO = ['email', 'correio_postal', 'formulario', 'presencial', 'telefone', 'outra'];
+        $CICLO_ESTUDOS = ['1_ciclo', '2_ciclo', 'mestrado_integrado', '3_ciclo'];
+
+        return view('components.analitica.gerir-analitica',
+            ['solicitacao'          => $solicitacao,
+             'estados'              => $ESTADOS,
+             'tipos_solicitacao'    => $TIPO_SOLICITACAO,
+             'tipos_apresentacao'   => $TIPO_APRESENTACAO,
+             'formas_contacto'      => $FORMA_CONTACTO,
+             'ciclos_estudos'       => $CICLO_ESTUDOS]);
     }
 
     public function showAssuntos(){

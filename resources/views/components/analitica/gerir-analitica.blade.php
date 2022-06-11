@@ -11,6 +11,7 @@
             </ul>
         </section>
     @endif
+
     <div class="w3-responsive w3-section">
         <form method="POST" action="/admin/analitica/">
             <h2 class="w3-text w3-center">Gestão de Analítica</h2>
@@ -134,9 +135,9 @@
             </div>
 
             <div class="w3-row-padding">
-                <div class="w3-third">
+                <div class="w3-quarter">
                     <label>
-                        Estado
+                        <b>Estado</b>
                     </label>
                     <select class="w3-select w3-border w3-round w3-margin-bottom"
                             name="estado"
@@ -156,6 +157,96 @@
                             @endif
                         @endforeach
                     </select>
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Tipo de Solicitação</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="tipo_solicitacao"
+                            id="tipo_solicitacao"
+                            value="{{ old('tipo_solicitacao') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="aconselhamento">Aconselhamento</option>
+                        <option value="orientacao">Orientação</option>
+                        <option value="informacao">Informação</option>
+                        <option value="mediacao">Mediação</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Forma de Contacto</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="forma_contacto"
+                            id="forma_contacto"
+                            value="{{ old('forma_contacto') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="email">Correio Eletrónico</option>
+                        <option value="correio_postal">Correio Postal</option>
+                        <option value="formulario">Formulário</option>
+                        <option value="presencial">Presencial</option>
+                        <option value="telefone">Telefone</option>
+                        <option value="outra">Outra</option>
+                    </select>
+                </div>
+
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Forma de Apresentação</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="apresentacao"
+                            id="apresentacao"
+                            value="{{ old('apresentacao') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="individual">Individual</option>
+                        <option value="coletiva">Coletiva</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <label>
+                        <b>Ciclo de Estudos</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="ciclo_estudos"
+                            id="ciclo_estudos"
+                            value="{{ old('ciclo_estudos') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="1_ciclo">1º Ciclo</option>
+                        <option value="2_ciclo">2º Ciclo</option>
+                        <option value="mestrado_integrado">Mestrado Integrado</option>
+                        <option value="3_ciclo">3º Ciclo</option>
+                    </select>
+                </div>
+
+                <div class="w3-half">
+                    <label>
+                        <b>Curso</b>
+                    </label>
+                    <input class="w3-input w3-border w3-round w3-margin-bottom"
+                           type="text"
+                           name="curso"
+                           id="curso"
+                           value="{{ old('curso') }}"
+                           autocomplete="off"
+                    >
                 </div>
             </div>
 
@@ -198,6 +289,9 @@
             dataFecho = yyyy + '-' + mm + '-' + dd;
             document.getElementById('data_encerramento').value = dataFecho;
         }
+
+
+        document.querySelector('#apresentacao').value = 'individual';
     </script>
 
 </x-layout>
