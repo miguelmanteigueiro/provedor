@@ -250,6 +250,10 @@
                 </div>
             </div>
 
+            <h4 class="w3-text w3-center">Natureza e Assuntos</h4>
+
+            <x-analitica.load-naturezas :naturezas="$naturezas" :assuntos="$assuntos"/>
+
             {{-- Botões --}}
             <div class="w3-bar w3-container w3-margin-top">
                 <button class="w3-button w3-right w3-green w3-round w3-margin-left" type="submit">
