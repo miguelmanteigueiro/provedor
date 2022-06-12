@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analitica;
 use App\Models\Assunto;
 use App\Models\EstadoSolicitacao;
 use App\Models\Natureza;
@@ -28,6 +29,89 @@ class AnaliticaController extends Controller
              'naturezas'            => $naturezas,
              'assuntos'             => $assuntos]
         );
+    }
+
+    public function saveAnalitica(Request $request){
+        dd($request);
+        $analitica = Analitica::where('solicitacao_id', $request->get('solicitacao_id'))->first();
+
+        $atributos =   ['data_inicio'           => '<b>Data de Inserção</b>',
+                        'data_resposta'         => '<b>Data de Resposta</b>',
+                        'data_fecho_previsto'   => '<b>Data de Fecho Previsto</b>',
+                        'data_encerramento'     => '<b>Data de Encerramento</b>',
+                        'estado'                => '<b>Estado</b>',
+                        'tipo_solicitacao'      => '<b>Tipo de Solicitação</b>',
+                        'forma_contacto'        => '<b>Forma de Contacto</b>',
+                        'apresentacao'          => '<b>Forma de Apresentação</b>',
+                        'ciclo_estudos'         => '<b>Ciclo de Estudos</b>',
+                        'curso'                 => '<b>Curso</b>'];
+
+        $validator = Validator::make($request->all(), [
+            'data_inicio'           => 'required|date_format:Y-m-d',
+            'data_resposta'         => 'nullable|date_format:Y-m-d',
+            'data_fecho_previsto'   => 'nullable|date_format:Y-m-d',
+            'data_encerramento'     => 'nullable|date_format:Y-m-d',
+            'estado'                => 'required',
+            'tipo_solicitacao'      => 'required',
+            'forma_contacto'        => 'required',
+            'apresentacao'          => 'required',
+            'ciclo_estudos'         => 'required',
+            'curso'                 => 'nullable|min:2|max:100'
+        ], [], $atributos);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput($request->all());
+        }
+
+        // Registar uma nova entrada na base de dados
+        if($analitica == null){
+            $a = new Analitica(['solicitacao_id'    => $request->get('solicitacao_id'),
+                                'tipo_solicitacao'  => $request->get('tipo_solicitacao'),
+                                'apresentacao'      => $request->get('apresentacao'),
+                                'forma_contacto'    => $request->get('forma_contacto'),
+                                'ciclo_estudos'     => $request->get('ciclo_estudos'),
+                                'curso'             => $request->get('curso')]);
+            $a->save();
+
+            EstadoSolicitacao::where('solicitacao_id', $request->get('solicitacao_id'))
+                ->update([  'data_inicio'           => $request->get('data_inicio'),
+                            'data_resposta'         => $request->get('data_resposta'),
+                            'data_fecho_previsto'   => $request->get('data_fecho_previsto'),
+                            'data_encerramento'     => $request->get('data_encerramento'),
+                            'estado'                => $request->get('estado')]
+                );
+
+            // Alterar as naturezas e assuntos:
+
+
+
+            return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
+        }
+
+        // Editar a entrada existente na base de dados
+        else{
+            Analitica::where('solicitacao_id', $request->get('solicitacao_id'))
+                ->update(['solicitacao_id'    => $request->get('solicitacao_id'),
+                          'tipo_solicitacao'  => $request->get('tipo_solicitacao'),
+                          'apresentacao'      => $request->get('apresentacao'),
+                          'forma_contacto'    => $request->get('forma_contacto'),
+                          'ciclo_estudos'     => $request->get('ciclo_estudos'),
+                          'curso'             => $request->get('curso')]);
+
+            EstadoSolicitacao::where('solicitacao_id', $request->get('solicitacao_id'))
+                ->update([  'data_inicio'           => $request->get('data_inicio'),
+                        'data_resposta'         => $request->get('data_resposta'),
+                        'data_fecho_previsto'   => $request->get('data_fecho_previsto'),
+                        'data_encerramento'     => $request->get('data_encerramento'),
+                        'estado'                => $request->get('estado')]
+                );
+
+            // Alterar as naturezas e assuntos:
+
+            return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
+        }
     }
 
     public function showAssuntos(){

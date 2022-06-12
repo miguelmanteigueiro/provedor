@@ -13,7 +13,7 @@
     @endif
 
     <div class="w3-responsive w3-section">
-        <form method="POST" action="/admin/analitica/">
+        <form method="POST" action="/analitica/guardar">
             <h2 class="w3-text w3-center">Gestão de Analítica</h2>
             @csrf
             <h4 class="w3-text w3-center">Dados da Solicitação</h4>
@@ -244,7 +244,7 @@
                            type="text"
                            name="curso"
                            id="curso"
-                           value="{{ old('curso') ?? $solicitacao->analitica->curso }}"
+                           value="{{ old('curso') ?? (isset($solicitacao->analitica->curso) ? $solicitacao->analitica->curso : '') }}"
                            autocomplete="off"
                     >
                 </div>
@@ -252,7 +252,7 @@
 
             <h4 class="w3-text w3-center">Natureza e Assuntos</h4>
 
-            <x-analitica.load-naturezas :naturezas="$naturezas" :assuntos="$assuntos"/>
+            <x-analitica.load-naturezas :naturezas="$naturezas" :assuntos="$assuntos" :solicitacao="$solicitacao"/>
 
             {{-- Botões --}}
             <div class="w3-bar w3-container w3-margin-top">

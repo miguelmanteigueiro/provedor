@@ -14,10 +14,10 @@ class CreateAnaliticaTable extends Migration
     public function up()
     {
         Schema::create('analitica', function (Blueprint $table) {
-            $TIPO_SOLICITACAO = ['aconselhamento', 'orientacao', 'informacao', 'mediacao', 'outro'];
-            $TIPO_APRESENTACAO = ['individual', 'coletiva'];
-            $FORMA_CONTACTO = ['email', 'correio_postal', 'formulario', 'presencial', 'telefone', 'outra'];
-            $CICLO_ESTUDOS = ['1_ciclo', '2_ciclo', 'mestrado_integrado', '3_ciclo'];
+            $TIPO_SOLICITACAO = ['nenhum', 'aconselhamento', 'orientacao', 'informacao', 'mediacao', 'outro'];
+            $TIPO_APRESENTACAO = ['nenhum', 'individual', 'coletiva'];
+            $FORMA_CONTACTO = ['nenhum', 'email', 'correio_postal', 'formulario', 'presencial', 'telefone', 'outra'];
+            $CICLO_ESTUDOS = ['nenhum', '1_ciclo', '2_ciclo', 'mestrado_integrado', '3_ciclo'];
 
             $table->id('analitica_id');
             $table->foreignId('solicitacao_id')->constrained('solicitacoes')->references('solicitacao_id')->cascadeOnDelete();
@@ -25,7 +25,8 @@ class CreateAnaliticaTable extends Migration
             $table->enum('apresentacao', $TIPO_APRESENTACAO);
             $table->enum('forma_contacto', $FORMA_CONTACTO);
             $table->enum('ciclo_estudos', $CICLO_ESTUDOS);
-            $table->string('curso');
+            $table->string('curso')->nullable();
+            $table->boolean('follow_up')->default(false);
         });
     }
 

@@ -15,27 +15,13 @@ class Natureza extends Model
      * @var string
      */
     protected $table = 'natureza';
+    protected $primaryKey = 'natureza_id';
     public $timestamps = false;
 
     protected $guarded = [];
 
     /**
-     * Override ao método find()
-     * 
-     * @var string
-     */
-    public static function find($key){
-        $obj = Natureza::where('natureza_id', $key);
-
-        if ($obj->count() == 0)
-            return null;
-
-        $natureza = $obj->first();
-        return $natureza;
-    }
-
-    /**
-     * Define uma relação entre Natureza e Assunto 
+     * Define uma relação entre Natureza e Assunto
      * Uma natureza pertence a vários assuntos.
      */
     public function assunto(){

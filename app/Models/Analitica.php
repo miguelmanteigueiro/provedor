@@ -16,6 +16,7 @@ class Analitica extends Model
     protected $table = 'analitica';
     public $timestamps = false;
 
+    protected $guarded = [];
 
     /**
      * Override ao método find()

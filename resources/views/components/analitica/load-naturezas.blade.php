@@ -1,60 +1,28 @@
-@props(['naturezas', 'assuntos'])
+@props(['naturezas', 'assuntos', 'solicitacao'])
 
-@if($naturezas->count() || $assuntos->count())
+@if($assuntos->count())
+    <div class="w3-row-padding">
+        <div class="w3-rest">
+            @foreach($naturezas as $natureza)
+                @if($natureza->assunto->count())
+                <fieldset>
+                    <legend><b>{!! $natureza->descricao !!}</b></legend>
 
-<div class="w3-row-padding">
-    <div class="w3-third">
-        <fieldset>
-            <legend>Choose your monster's features:</legend>
+                    @foreach($natureza->assunto as $assunto)
+                    <div>
+                        <input type="checkbox" id="{{$assunto->assunto_id}}" name="{{$assunto->assunto_id}}">
+                        <label for="{{$assunto->assunto_id}}">
+                            {!! $assunto->subcategoria !!}
+                        </label>
+                    </div>
+                    @endforeach
 
-            <div>
-                <input type="checkbox" id="scales" name="scales"
-                       checked>
-                <label for="scales">Scales</label>
-            </div>
+                </fieldset>
 
-            <div>
-                <input type="checkbox" id="horns" name="horns">
-                <label for="horns">Horns</label>
-            </div>
-        </fieldset>
+                @endif
+            @endforeach
+        </div>
     </div>
-
-    <div class="w3-third">
-        <fieldset>
-            <legend>Choose your monster's features:</legend>
-
-            <div>
-                <input type="checkbox" id="scales" name="scales"
-                       checked>
-                <label for="scales">Scales</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="horns" name="horns">
-                <label for="horns">Horns</label>
-            </div>
-        </fieldset>
-    </div>
-
-    <div class="w3-third">
-        <fieldset>
-            <legend>Choose your monster's features:</legend>
-
-            <div>
-                <input type="checkbox" id="scales" name="scales"
-                       checked>
-                <label for="scales">Scales</label>
-            </div>
-
-            <div>
-                <input type="checkbox" id="horns" name="horns">
-                <label for="horns">Horns</label>
-            </div>
-        </fieldset>
-    </div>
-</div>
-    
 @else
-<h2 class="w3-text w3-center">Ainda não existem naturezas ou assuntos criados.</h2>
+    <h2 class="w3-text w3-center">Ainda não foram criadas naturezas ou respetivos assuntos.</h2>
 @endif
