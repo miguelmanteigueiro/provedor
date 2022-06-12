@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Analitica;
 use App\Models\Assunto;
+use App\Models\AssuntoAnalitica;
 use App\Models\EstadoSolicitacao;
 use App\Models\Natureza;
 use App\Models\Solicitacao;
@@ -32,7 +33,6 @@ class AnaliticaController extends Controller
     }
 
     public function saveAnalitica(Request $request){
-        dd($request);
         $analitica = Analitica::where('solicitacao_id', $request->get('solicitacao_id'))->first();
 
         $atributos =   ['data_inicio'           => '<b>Data de Inserção</b>',
@@ -82,12 +82,6 @@ class AnaliticaController extends Controller
                             'data_encerramento'     => $request->get('data_encerramento'),
                             'estado'                => $request->get('estado')]
                 );
-
-            // Alterar as naturezas e assuntos:
-
-
-
-            return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
         }
 
         // Editar a entrada existente na base de dados
@@ -107,11 +101,32 @@ class AnaliticaController extends Controller
                         'data_encerramento'     => $request->get('data_encerramento'),
                         'estado'                => $request->get('estado')]
                 );
-
-            // Alterar as naturezas e assuntos:
-
-            return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
         }
+
+        // ID da analítica correspondente a uma solicitação
+        $id = Analitica::where('solicitacao_id', $request->get('solicitacao_id'))->first()->analitica_id;
+
+        // Retrieve em todos os assuntos existentes, bem como os que estão guardados para esta solicitação
+        $todosAssuntos = Assunto::all();
+        $assuntosExistentes = AssuntoAnalitica::where('analitica_id', $id)->get();
+
+        // Alterar as naturezas e assuntos:
+        foreach ($todosAssuntos as $assunto) {
+            // Assunto selecionado e não existe na base da dados == adicionar na base de dados
+            if($request->has($assunto->assunto_id) and !$assuntosExistentes->contains('assunto_id', '=', $assunto->assunto_id)){
+                $aa = new AssuntoAnalitica(['assunto_id' => $assunto->assunto_id, 'analitica_id' => $id]);
+                $aa->save();
+            }
+
+            // Assunto não selecionado e existe na base de dados == remover da base de dados
+            if(!$request->has($assunto->assunto_id) and $assuntosExistentes->contains('assunto_id', '=', $assunto->assunto_id)){
+               AssuntoAnalitica::where('assunto_id', $assunto->assunto_id)
+                   ->where('analitica_id', $id)
+                   ->delete();
+            }
+        }
+
+        return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
     }
 
     public function showAssuntos(){

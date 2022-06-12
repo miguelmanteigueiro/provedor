@@ -30,11 +30,12 @@ class SolicitacaoController extends Controller
         $comentarios = $solicitacao->comentario;
 
         // Mostrar a página de consulta
-        return view('solicitacao.consultar',   ['solicitacao'   => $solicitacao, 
-                                                'estado'        => $estado, 
-                                                'anexos'        => $anexos, 
+        return view('solicitacao.consultar',   ['solicitacao'   => $solicitacao,
+                                                'estado'        => $estado,
+                                                'anexos'        => $anexos,
                                                 'comentarios'   => $comentarios]);
     }
+
     // Mostrar o formulário para criar uma solicitação
     public function showForm()
     {
@@ -63,7 +64,7 @@ class SolicitacaoController extends Controller
             'estudante_nome'        => 'required|max:255',
             'estudante_email'       => 'required|email|max:255',
             'estudante_telefone'    => 'nullable|max:255',
-            'descricao'             => 'required',  
+            'descricao'             => 'required',
             'ficheiros.*'           => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
             'data_inicio'           => 'required|date_format:Y-m-d'
         ], [], $atributos);
@@ -87,14 +88,14 @@ class SolicitacaoController extends Controller
         $estado_solicitacao->save();
 
         // Caso haja ficheiros, guardar os mesmos
-        if($request->hasfile('ficheiros')){ 
+        if($request->hasfile('ficheiros')){
 
             // Caminho único para cada solicitação
             $path = "anexos/" . $id;
 
             foreach($request->file('ficheiros') as $file){
                 $filename = $file->getClientOriginalName();
-                
+
                 // Verificar se o ficheiro já foi carregado
                 if(Storage::exists($path . "/" . $filename)){
                     $failedUploads++;
@@ -103,7 +104,7 @@ class SolicitacaoController extends Controller
                 else{
                     $storedFilePath = $file->storeAs($path, $filename);
                     $parsedFilePath = str_replace("public", "", $storedFilePath);
-                 
+
                     $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
                     $anexos_solicitacao->save();
                 }
@@ -133,7 +134,6 @@ class SolicitacaoController extends Controller
 
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
     }
-
 
     // Mostrar o formulário para editar uma solicitação
     public function showEditForm(Solicitacao $solicitacao)
@@ -165,7 +165,7 @@ class SolicitacaoController extends Controller
         $validator = Validator::make($request->all(), [
             // Campos da solicitação
             'referencia_interna' => [
-                'max:12', 
+                'max:12',
                 'nullable',
                 Rule::unique('solicitacoes')->ignore($request->solicitacao_id, 'solicitacao_id')
             ],
@@ -175,7 +175,7 @@ class SolicitacaoController extends Controller
             'estudante_nome'        => 'required|max:255',
             'estudante_email'       => 'required|email|max:255',
             'estudante_telefone'    => 'nullable|max:255',
-            'descricao'             => 'required',  
+            'descricao'             => 'required',
             'ficheiros.*'           => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
             'data_inicio'           => 'required|date_format:Y-m-d',
             'motivo_edicao'         => 'required|min:8|max:255'
@@ -196,14 +196,14 @@ class SolicitacaoController extends Controller
         $log->save();
 
         // Caso haja ficheiros, guardar os mesmos
-        if($request->hasfile('ficheiros')){ 
+        if($request->hasfile('ficheiros')){
 
             // Caminho único para cada solicitação
             $path = "anexos/" . $id;
 
             foreach($request->file('ficheiros') as $file){
                 $filename = $file->getClientOriginalName();
-                
+
                     // Verificar se o ficheiro já foi carregado
                     if(Storage::exists($path . "/" . $filename)){
                         $failedUploads++;
@@ -212,12 +212,12 @@ class SolicitacaoController extends Controller
                     else{
                         $storedFilePath = $file->storeAs($path, $filename);
                         $parsedFilePath = str_replace("public", "", $storedFilePath);
-                    
+
                         $anexos_solicitacao = new AnexosSolicitacao(['solicitacao_id' => $id, 'path' => $parsedFilePath]);
                         $anexos_solicitacao->save();
                     }
                 }
-        }   	
+        }
 
         // Mensagem de aviso, se houver ficheiros não carregados
         if($failedUploads !== 0){
@@ -227,12 +227,14 @@ class SolicitacaoController extends Controller
         return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
     }
 
+    // Arquivar uma solicitação
     public function arquivar(Solicitacao $solicitacao)
     {
         EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'arquivado']);
         return redirect('/dashboard')->with('sucesso', 'A solicitação foi arquivada!');
     }
 
+    // Desarquivar uma solicitação
     public function desarquivar(Solicitacao $solicitacao)
     {
         EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'aberto']);
