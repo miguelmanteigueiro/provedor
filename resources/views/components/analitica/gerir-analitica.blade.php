@@ -250,6 +250,16 @@
                 </div>
             </div>
 
+            <div class="w3-row-padding">
+                <legend><b><i>Follow-up</i></b></legend>
+                <div>
+                    <input type="checkbox" id="follow_up" name="follow_up" {{ $solicitacao->analitica->follow_up == 1 ? 'checked' : '' }}>
+                    <label for="follow_up">
+                        <i>Follow-up</i> recebido?
+                    </label>
+                </div>
+            </div>
+
             <h4 class="w3-text w3-center">Natureza e Assuntos</h4>
 
             <x-analitica.load-naturezas :naturezas="$naturezas" :assuntos="$assuntos" :solicitacao="$solicitacao"/>
@@ -294,14 +304,14 @@
             document.getElementById('data_encerramento').value = dataFecho;
         }
 
-        let apresentacao = '{!! isset($solicitacao->analitica->apresentacao) ? $solicitacao->analitica->getRawOriginal('apresentacao') : 'nenhum' !!}'.toLowerCase();
-        let tipo_solicitacao = '{!! isset($solicitacao->analitica->tipo_solicitacao) ? $solicitacao->analitica->getRawOriginal('tipo_solicitacao') : 'nenhum' !!}'.toLowerCase();
-        let forma_contacto = '{!! isset($solicitacao->analitica->forma_contacto) ? $solicitacao->analitica->getRawOriginal('forma_contacto') : 'nenhum' !!}'.toLowerCase();
-        let ciclo_estudos = '{!! isset($solicitacao->analitica->ciclo_estudos) ? $solicitacao->analitica->getRawOriginal('ciclo_estudos') : 'nenhum' !!}'.toLowerCase();
+       let apresentacao = '{!! isset($solicitacao->analitica->apresentacao) ? $solicitacao->analitica->getRawOriginal('apresentacao') : 'nenhum' !!}'.toLowerCase();
+       let tipo_solicitacao = '{!! isset($solicitacao->analitica->tipo_solicitacao) ? $solicitacao->analitica->getRawOriginal('tipo_solicitacao') : 'nenhum' !!}'.toLowerCase();
+       let forma_contacto = '{!! isset($solicitacao->analitica->forma_contacto) ? $solicitacao->analitica->getRawOriginal('forma_contacto') : 'nenhum' !!}'.toLowerCase();
+       let ciclo_estudos = '{!! isset($solicitacao->analitica->ciclo_estudos) ? $solicitacao->analitica->getRawOriginal('ciclo_estudos') : 'nenhum' !!}'.toLowerCase();
 
-        document.querySelector('#apresentacao').value = apresentacao;
-        document.querySelector('#tipo_solicitacao').value = tipo_solicitacao;
-        document.querySelector('#forma_contacto').value = forma_contacto;
-        document.querySelector('#ciclo_estudos').value = ciclo_estudos;
+       document.querySelector('#apresentacao').value = apresentacao;
+       document.querySelector('#tipo_solicitacao').value = tipo_solicitacao;
+       document.querySelector('#forma_contacto').value = forma_contacto;
+       document.querySelector('#ciclo_estudos').value = ciclo_estudos;
     </script>
 </x-layout>

@@ -40,7 +40,7 @@ class SolicitacaoController extends Controller
     public function showForm()
     {
         return view('solicitacao.criar');
-    }
+    }npm
 
     // Guardar uma solicitação
     public function storeForm(Request $request)
