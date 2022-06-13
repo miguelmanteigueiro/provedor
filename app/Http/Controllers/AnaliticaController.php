@@ -44,7 +44,8 @@ class AnaliticaController extends Controller
                         'forma_contacto'        => '<b>Forma de Contacto</b>',
                         'apresentacao'          => '<b>Forma de Apresentação</b>',
                         'ciclo_estudos'         => '<b>Ciclo de Estudos</b>',
-                        'curso'                 => '<b>Curso</b>'];
+                        'curso'                 => '<b>Curso</b>',
+                        'follow_up'             => '<b><i>Follow-up</i></b>'];
 
         $validator = Validator::make($request->all(), [
             'data_inicio'           => 'required|date_format:Y-m-d',
@@ -56,7 +57,8 @@ class AnaliticaController extends Controller
             'forma_contacto'        => 'required',
             'apresentacao'          => 'required',
             'ciclo_estudos'         => 'required',
-            'curso'                 => 'nullable|min:2|max:100'
+            'curso'                 => 'nullable|min:2|max:100',
+            'follow_up'             => 'nullable'
         ], [], $atributos);
 
         if ($validator->fails()) {
@@ -72,7 +74,8 @@ class AnaliticaController extends Controller
                                 'apresentacao'      => $request->get('apresentacao'),
                                 'forma_contacto'    => $request->get('forma_contacto'),
                                 'ciclo_estudos'     => $request->get('ciclo_estudos'),
-                                'curso'             => $request->get('curso')]);
+                                'curso'             => $request->get('curso'),
+                                'follow_up'         => ($request->has('follow_up') ? 1 : 0)]);
             $a->save();
 
             EstadoSolicitacao::where('solicitacao_id', $request->get('solicitacao_id'))
@@ -92,7 +95,8 @@ class AnaliticaController extends Controller
                           'apresentacao'      => $request->get('apresentacao'),
                           'forma_contacto'    => $request->get('forma_contacto'),
                           'ciclo_estudos'     => $request->get('ciclo_estudos'),
-                          'curso'             => $request->get('curso')]);
+                          'curso'             => $request->get('curso'),
+                          'follow_up'         => ($request->has('follow_up') ? 1 : 0)]);
 
             EstadoSolicitacao::where('solicitacao_id', $request->get('solicitacao_id'))
                 ->update([  'data_inicio'           => $request->get('data_inicio'),

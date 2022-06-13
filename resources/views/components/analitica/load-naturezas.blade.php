@@ -10,7 +10,13 @@
 
                     @foreach($natureza->assunto as $assunto)
                     <div>
-                        <input type="checkbox" id="{{$assunto->assunto_id}}" name="{{$assunto->assunto_id}}">
+                        <input type="checkbox"
+                               id="{{$assunto->assunto_id}}"
+                               name="{{$assunto->assunto_id}}"
+                               @if($solicitacao->analitica)
+                                    {{ ($solicitacao->analitica->assunto_analitica->contains('assunto_id', $assunto->assunto_id)) ? 'checked' : '' }}
+                               @endif
+                        >
                         <label for="{{$assunto->assunto_id}}">
                             {!! $assunto->subcategoria !!}
                         </label>

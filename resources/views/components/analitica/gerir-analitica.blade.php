@@ -253,7 +253,7 @@
             <div class="w3-row-padding">
                 <legend><b><i>Follow-up</i></b></legend>
                 <div>
-                    <input type="checkbox" id="follow_up" name="follow_up" {{ $solicitacao->analitica->follow_up == 1 ? 'checked' : '' }}>
+                    <input type="checkbox" id="follow_up" name="follow_up" {{ (isset($solicitacao->analitica->follow_up) and $solicitacao->analitica->follow_up == 1) ? 'checked' : '' }}>
                     <label for="follow_up">
                         <i>Follow-up</i> recebido?
                     </label>
