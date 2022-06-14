@@ -60,7 +60,7 @@ class SolicitacaoController extends Controller
             // Campos da solicitação
             'referencia_interna'    => 'max:12|unique:solicitacoes|nullable',
             'situacao_academica'    => 'required',
-            'estudante_id'          => 'nullable|integer|max:100000',
+            'estudante_id'          => 'nullable|integer|gt:0|max:100000',
             'estudante_nome'        => 'required|max:255',
             'estudante_email'       => 'required|email|max:255',
             'estudante_telefone'    => 'nullable|max:255',
@@ -171,7 +171,7 @@ class SolicitacaoController extends Controller
             ],
 
             'situacao_academica'    => 'required',
-            'estudante_id'          => 'nullable|integer|max:100000',
+            'estudante_id'          => 'nullable|integer|gt:0|max:100000',
             'estudante_nome'        => 'required|max:255',
             'estudante_email'       => 'required|email|max:255',
             'estudante_telefone'    => 'nullable|max:255',

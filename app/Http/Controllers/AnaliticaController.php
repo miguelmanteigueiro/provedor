@@ -16,7 +16,7 @@ class AnaliticaController extends Controller
 {
     public function view(){
         $solicitacoes = Solicitacao::paginate(15);
-        return view('admin.analitica', ['solicitacoes' => $solicitacoes]);
+        return view('components.analitica.analitica', ['solicitacoes' => $solicitacoes]);
     }
 
     public function manageAnalitica(Solicitacao $solicitacao){
