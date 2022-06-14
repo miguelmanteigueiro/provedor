@@ -102,3 +102,6 @@ Route::post('/analitica/guardar', [AnaliticaController::class, 'saveAnalitica'])
         # Gerar gráficos
 Route::get('/graficos', [GraficoController::class, 'showGraficos'])->middleware('auth');
 Route::post('/graficos/obter', [GraficoController::class, 'obterGrafico'])->middleware('auth');
+Route::post('/graficos/obter/followup', [GraficoController::class, 'obterGraficoFollowUp'])->middleware('auth');
+Route::post('/graficos/obter/situacaoTipologia', [GraficoController::class, 'obterGraficoSituacaoTipologia'])->middleware('auth');
+Route::post('/graficos/obter/situacaoCicloEstudos', [GraficoController::class, 'obterGraficoSituacaoCicloEstudos'])->middleware('auth');

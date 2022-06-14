@@ -28,8 +28,40 @@
         </div>
 
         <div class="w3-row-padding">
-            <h6>Apenas são apresentadas as naturezas para as quais existem assuntos guardados.</h6>
+            <h6><i>Nota: Apenas são apresentadas as naturezas para as quais existem assuntos guardados.</i></h6>
         </div>
+
+        <div class="w3-row-padding">
+            <h3>Outras estatísticas:</h3>
+        </div>
+
+        <div class="w3-row-padding">
+            <form id="obterFollowUp" method="POST" action="/graficos/obter/followup">
+                @csrf
+                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                    Obter Gráfico de <i>Follow-up</i>
+                </button>
+            </form>
+        </div>
+
+        <div class="w3-row-padding">
+            <form id="obterSituacaoTipologia" method="POST" action="/graficos/obter/situacaoTipologia">
+                @csrf
+                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                    Obter Gráfico de Situação/Tipologia
+                </button>
+            </form>
+        </div>
+
+        <div class="w3-row-padding">
+            <form id="obterSituacaoCicloEstudos" method="POST" action="/graficos/obter/situacaoCicloEstudos">
+                @csrf
+                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                    Obter Gráfico de Situação/Ciclo de Estudos
+                </button>
+            </form>
+        </div>
+
     </div>
 
     <script>
