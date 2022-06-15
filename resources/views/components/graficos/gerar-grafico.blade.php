@@ -46,7 +46,8 @@
                         fontSize: 13,
                         bold: true,
                         italic: false
-                    }
+                    },
+                    format: '0'
                 },
                 vAxis: {
                     title: 'Quantidade',
@@ -54,7 +55,8 @@
                         fontSize: 13,
                         bold: true,
                         italic: false
-                    }
+                    },
+                    format: '0'
                 },
             };
 
