@@ -54,14 +54,14 @@
             ]);
 
             var options = {
-                title : 'Estatísticas por Situação/Tipologia',
+                title : 'Estatísticas por Natureza/Tipologia',
                 titleTextStyle: {
                     fontSize: 20,
                 },
                 width: 1000,
                 height: 500,
                 hAxis: {
-                    title: 'Assunto',
+                    title: 'Natureza',
                     titleTextStyle: {
                         fontSize: 13,
                         bold: true,

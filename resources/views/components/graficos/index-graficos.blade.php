@@ -48,7 +48,7 @@
             <form id="obterSituacaoTipologia" method="POST" action="/graficos/obter/situacaoTipologia">
                 @csrf
                 <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
-                    Obter Gráfico de Situação/Tipologia
+                    Obter Gráfico de Natureza/Tipologia
                 </button>
             </form>
         </div>
@@ -57,7 +57,7 @@
             <form id="obterSituacaoCicloEstudos" method="POST" action="/graficos/obter/situacaoCicloEstudos">
                 @csrf
                 <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
-                    Obter Gráfico de Situação/Ciclo de Estudos
+                    Obter Gráfico de Natureza/Ciclo de Estudos
                 </button>
             </form>
         </div>

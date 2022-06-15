@@ -69,6 +69,11 @@ class GraficoController extends Controller
     }
 
     public function obterGraficoSituacaoCicloEstudos(){
-        return view('components.graficos.gerar-grafico-situacao-cicloestudos');
+        $naturezas = Natureza::all();
+        $solicitacoes = Solicitacao::all();
+        return view('components.graficos.gerar-grafico-situacao-cicloestudos',
+            ['naturezas' => $naturezas,
+             'solicitacoes' => $solicitacoes]
+        );
     }
 }
