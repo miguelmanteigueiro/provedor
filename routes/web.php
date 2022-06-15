@@ -70,6 +70,8 @@ Route::get('/admin/contas/ativar/{user:id}', [AdminController::class, 'activate'
     # Registar novas contas
 Route::get('/admin/contas/registar', [AdminController::class, 'register'])->middleware('admin');
 Route::post('/admin/contas/registar', [AdminController::class, 'store'])->middleware('admin');
+    # Consultar logs
+Route::get('/admin/logs', [AdminController::class, 'showLogs'])->middleware('admin');
 
     # Backups
 Route::get('/admin/backups', [BackupsController::class, 'view'])->middleware('admin');

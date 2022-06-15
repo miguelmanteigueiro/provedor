@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,11 @@ class AdminController extends Controller
     public function view(){
         $users = User::paginate(15);
         return view('admin.contas', ['users' => $users]);
+    }
+
+    public function showLogs(){
+        $logs = Log::paginate(15);
+        return view('components.admin.logs', ['logs' => $logs]);
     }
 
     public function showEdit(User $user){

@@ -30,10 +30,10 @@
                     <i class="fa fa-users"></i>
                     Contas
                 </a>
-                {{-- <a href="#" class="w3-bar-item w3-button">
-                    <i class="fa fa-file-alt"></i>
-                    Solicitações
-                </a> --}}
+                <a href="/admin/logs" class="w3-bar-item w3-button">
+                    <i class="fa fa-file-shield"></i>
+                    <i>Logs</i>
+                </a>
                 <a href="/admin/backups" class="w3-bar-item w3-button">
                     <i class="fa fa-database"></i>
                     <i>Backups</i>
