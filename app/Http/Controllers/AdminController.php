@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Nette\Utils\Random;
@@ -14,6 +14,11 @@ class AdminController extends Controller
     public function view(){
         $users = User::paginate(15);
         return view('admin.contas', ['users' => $users]);
+    }
+
+    public function showLogs(){
+        $logs = Log::paginate(15);
+        return view('components.admin.logs', ['logs' => $logs]);
     }
 
     public function showEdit(User $user){
@@ -41,7 +46,7 @@ class AdminController extends Controller
                 Rule::unique('users')->ignore($id, 'id'),
             ]
         ], [], $atributos);
- 
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
@@ -58,7 +63,7 @@ class AdminController extends Controller
                 User::where('id', $id)->update(['administrador' => 0]);
             }
         }
-        
+
         // Proceder às alterações dos dados pessoais
         if($request->has('resetPassword')){
             User::where('id', $id)->update($request->only('primeiro_nome', 'ultimo_nome', 'email'));
@@ -71,7 +76,7 @@ class AdminController extends Controller
 
         else{
             User::where('id', $id)->update($request->only('primeiro_nome', 'ultimo_nome', 'email'));
-            
+
             return back()->with('sucesso', 'Foram alterados os dados do funcionário ' . $user->nome);
         };
     }
@@ -96,7 +101,7 @@ class AdminController extends Controller
         $atributos = ['email'         => '<b>Endereço de Email</b>',
                       'primeiro_nome' => '<b>Nome</b>',
                       'ultimo_nome'   => '<b>Apelido</b>'];
-    
+
         // Criar um utilizador na base de dados
         $validator = Validator::make($request->all(), [
             'primeiro_nome' => 'min:2|max:50',
@@ -107,7 +112,7 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
-        
+
         $tempPassword = Random::generate(10);
         $user = new User(['primeiro_nome' => $request->get('primeiro_nome'), 'ultimo_nome' => $request->get('ultimo_nome'), 'email' => $request->get('email')]);
         $user->password = $tempPassword;

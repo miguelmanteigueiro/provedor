@@ -13,24 +13,24 @@
     @endif
     <div class="w3-container">
 
-        <form method="POST" action="/admin/analitica/assuntos/adicionar" style="width:50%;margin:auto;">
+        <form method="POST" action="/analitica/assuntos/adicionar" style="width:50%;margin:auto;">
             <h2 class="w3-text w3-center">Adicionar Assunto</h2>
             @csrf
 
             <label>
                 Natureza
             </label>
-            <select class="w3-select w3-border w3-round w3-margin-bottom" 
-            name="natureza" 
-            id="natureza" 
-            value="{{ old('natureza') }}" 
-            autocomplete="off" 
+            <select class="w3-select w3-border w3-round w3-margin-bottom"
+            name="natureza"
+            id="natureza"
+            value="{{ old('natureza') }}"
+            autocomplete="off"
             required>
                 @foreach ($natureza as $natureza)
-                <option value="{{ $natureza->natureza_id }}" > 
-                    {{ $natureza->descricao }} 
+                <option value="{{ $natureza->natureza_id }}" >
+                    {{ $natureza->descricao }}
                 </option>
-                @endforeach    
+                @endforeach
             </select>
 
             <label>
@@ -43,10 +43,10 @@
                 Descrição do Assunto
             </label>
             <textarea class="w3-input w3-border w3-round w3-margin-bottom"
-                rows="3" 
-                name="descricao" 
-                id="descricao" 
-                autocomplete="off" 
+                rows="3"
+                name="descricao"
+                id="descricao"
+                autocomplete="off"
                 required
             >{{ old('descricao')}}</textarea>
 

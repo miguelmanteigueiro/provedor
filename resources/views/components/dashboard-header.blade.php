@@ -1,8 +1,8 @@
 <header class="w3-bar w3-theme">
     <a href="/dashboard" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i> Início</a>
-    <a href="/solicitacao/novo" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-file-alt"></i> Nova
-        Solicitação</a>
-    <a href="#" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-chart-line"></i> Analítica</a>
+    <a href="/solicitacao/novo" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-file-alt"></i> Nova Solicitação</a>
+    <a href="/analitica" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-magnifying-glass"></i> Analítica</a>
+    <a href="/graficos" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-chart-line"></i> Estatísticas</a>
 
     <div class="w3-dropdown-hover w3-right">
         <button class="w3-button">
@@ -30,13 +30,9 @@
                     <i class="fa fa-users"></i>
                     Contas
                 </a>
-                {{-- <a href="#" class="w3-bar-item w3-button">
-                    <i class="fa fa-file-alt"></i>
-                    Solicitações
-                </a> --}}
-                <a href="/admin/analitica" class="w3-bar-item w3-button">
-                    <i class="fa fa-chart-line"></i>
-                    Analítica
+                <a href="/admin/logs" class="w3-bar-item w3-button">
+                    <i class="fa fa-file-shield"></i>
+                    <i>Logs</i>
                 </a>
                 <a href="/admin/backups" class="w3-bar-item w3-button">
                     <i class="fa fa-database"></i>

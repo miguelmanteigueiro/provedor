@@ -15,6 +15,7 @@ class Log extends Model
      */
     protected $table = 'logs';
     public $timestamps = false;
+    protected $primaryKey = 'log_id';
 
     protected $guarded = [];
 

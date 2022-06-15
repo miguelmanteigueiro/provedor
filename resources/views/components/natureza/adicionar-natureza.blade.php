@@ -13,7 +13,7 @@
     @endif
     <div class="w3-container">
 
-        <form method="POST" action="/admin/analitica/naturezas/adicionar" style="width:50%;margin:auto;">
+        <form method="POST" action="/analitica/naturezas/adicionar" style="width:50%;margin:auto;">
             <h2 class="w3-text w3-center">Adicionar Natureza</h2>
             @csrf
 

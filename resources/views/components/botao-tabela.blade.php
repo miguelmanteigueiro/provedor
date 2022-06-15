@@ -47,14 +47,20 @@
 
 @if(($function === "Editar Natureza"))
 <form>
-    <button formaction="/admin/analitica/naturezas/editar/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
+    <button formaction="/analitica/naturezas/editar/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
 </form>
 @endif
 
 @if(($function === "Editar Assunto"))
 <form>
-    <button formaction="/admin/analitica/assuntos/editar/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
+    <button formaction="/analitica/assuntos/editar/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
 </form>
+@endif
+
+@if(($function === "Gerir Analítica"))
+    <form>
+        <button formaction="/analitica/{{ $id }}" class="w3-btn w3-green w3-round "> {!! $function !!} </button>
+    </form>
 @endif
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SolicitacaoController;
+use App\Http\Controllers\GraficoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,26 +70,40 @@ Route::get('/admin/contas/ativar/{user:id}', [AdminController::class, 'activate'
     # Registar novas contas
 Route::get('/admin/contas/registar', [AdminController::class, 'register'])->middleware('admin');
 Route::post('/admin/contas/registar', [AdminController::class, 'store'])->middleware('admin');
+    # Consultar logs
+Route::get('/admin/logs', [AdminController::class, 'showLogs'])->middleware('admin');
 
     # Backups
 Route::get('/admin/backups', [BackupsController::class, 'view'])->middleware('admin');
 
 
     # Analítica
-Route::get('/admin/analitica', [AnaliticaController::class, 'view'])->middleware('admin');
+Route::get('/analitica', [AnaliticaController::class, 'view'])->middleware('auth');
         # Gerir assuntos
-Route::get('/admin/analitica/assuntos', [AnaliticaController::class, 'showAssuntos'])->middleware('admin');
+Route::get('/analitica/assuntos', [AnaliticaController::class, 'showAssuntos'])->middleware('auth');
         # Adicionar assunto
-Route::get('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'showAddAssuntos'])->middleware('admin');
-Route::post('/admin/analitica/assuntos/adicionar', [AnaliticaController::class, 'confirmAddAssuntos'])->middleware('admin');
+Route::get('/analitica/assuntos/adicionar', [AnaliticaController::class, 'showAddAssuntos'])->middleware('auth');
+Route::post('/analitica/assuntos/adicionar', [AnaliticaController::class, 'confirmAddAssuntos'])->middleware('auth');
         # Editar assunto
-Route::get('/admin/analitica/assuntos/editar/{assunto:assunto_id}', [AnaliticaController::class, 'editAssunto'])->middleware('admin');
-Route::post('/admin/analitica/assuntos/editar/', [AnaliticaController::class, 'confirmEditAssunto'])->middleware('admin');
+Route::get('/analitica/assuntos/editar/{assunto:assunto_id}', [AnaliticaController::class, 'editAssunto'])->middleware('auth');
+Route::post('/analitica/assuntos/editar/', [AnaliticaController::class, 'confirmEditAssunto'])->middleware('auth');
+
         # Gerir naturezas
-Route::get('/admin/analitica/naturezas', [AnaliticaController::class, 'showNaturezas'])->middleware('admin');
+Route::get('/analitica/naturezas', [AnaliticaController::class, 'showNaturezas'])->middleware('auth');
         # Adicionar natureza
-Route::get('/admin/analitica/naturezas/adicionar', [AnaliticaController::class, 'showAddNatureza'])->middleware('admin');
-Route::post('/admin/analitica/naturezas/adicionar', [AnaliticaController::class, 'confirmAddNatureza'])->middleware('admin');
+Route::get('/analitica/naturezas/adicionar', [AnaliticaController::class, 'showAddNatureza'])->middleware('auth');
+Route::post('/analitica/naturezas/adicionar', [AnaliticaController::class, 'confirmAddNatureza'])->middleware('auth');
         # Editar natureza
-Route::get('/admin/analitica/naturezas/editar/{natureza:natureza_id}', [AnaliticaController::class, 'editNatureza'])->middleware('admin');
-Route::post('/admin/analitica/naturezas/editar/', [AnaliticaController::class, 'confirmEditNatureza'])->middleware('admin');
+Route::get('/analitica/naturezas/editar/{natureza:natureza_id}', [AnaliticaController::class, 'editNatureza'])->middleware('auth');
+Route::post('/analitica/naturezas/editar/', [AnaliticaController::class, 'confirmEditNatureza'])->middleware('auth');
+
+        # Gerir analítica da solicitação
+Route::get('/analitica/{solicitacao:solicitacao_id}', [AnaliticaController::class, 'manageAnalitica'])->middleware('auth');
+Route::post('/analitica/guardar', [AnaliticaController::class, 'saveAnalitica'])->middleware('auth');
+
+        # Gerar gráficos
+Route::get('/graficos', [GraficoController::class, 'showGraficos'])->middleware('auth');
+Route::post('/graficos/obter', [GraficoController::class, 'obterGrafico'])->middleware('auth');
+Route::post('/graficos/obter/followup', [GraficoController::class, 'obterGraficoFollowUp'])->middleware('auth');
+Route::post('/graficos/obter/situacaoTipologia', [GraficoController::class, 'obterGraficoSituacaoTipologia'])->middleware('auth');
+Route::post('/graficos/obter/situacaoCicloEstudos', [GraficoController::class, 'obterGraficoSituacaoCicloEstudos'])->middleware('auth');

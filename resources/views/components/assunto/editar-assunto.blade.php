@@ -13,7 +13,7 @@
     @endif
     <div class="w3-container">
 
-        <form method="POST" action="/admin/analitica/assuntos/editar" style="width:50%;margin:auto;">
+        <form method="POST" action="/analitica/assuntos/editar" style="width:50%;margin:auto;">
             <h2 class="w3-text w3-center">Editar Assunto</h2>
             @csrf
 
@@ -23,23 +23,23 @@
             <label>
                 Natureza
             </label>
-            <select class="w3-select w3-border w3-round w3-margin-bottom" 
-            name="natureza_id" 
-            id="natureza_id" 
-            value="{{ old('natureza_id') }}" 
-            autocomplete="off" 
+            <select class="w3-select w3-border w3-round w3-margin-bottom"
+            name="natureza_id"
+            id="natureza_id"
+            value="{{ old('natureza_id') }}"
+            autocomplete="off"
             required>
                 @foreach ($natureza as $natureza)
                     @if ($assunto->natureza->descricao == $natureza->descricao)
-                        <option value="{{ $natureza->natureza_id }}" selected> 
-                            {{ $natureza->descricao }} 
+                        <option value="{{ $natureza->natureza_id }}" selected>
+                            {{ $natureza->descricao }}
                         </option>
                     @else
-                        <option value="{{ $natureza->natureza_id }}" > 
-                            {{ $natureza->descricao }} 
+                        <option value="{{ $natureza->natureza_id }}" >
+                            {{ $natureza->descricao }}
                         </option>
                     @endif
-                @endforeach    
+                @endforeach
             </select>
 
             <label>
@@ -52,10 +52,10 @@
                 Descrição do Assunto
             </label>
             <textarea class="w3-input w3-border w3-round w3-margin-bottom"
-                rows="3" 
-                name="descricao" 
-                id="descricao" 
-                autocomplete="off" 
+                rows="3"
+                name="descricao"
+                id="descricao"
+                autocomplete="off"
                 required
             >{{ old('descricao') ?? $assunto->descricao }}</textarea>
 

@@ -6,7 +6,7 @@
             </div>
             <div class="w3-right-align w3-margin-top w3-container w3-third">
                 <form>
-                    <button formaction="/admin/analitica/naturezas/adicionar" class="w3-btn w3-green w3-round">Adicionar Natureza</button>
+                    <button formaction="/analitica/naturezas/adicionar" class="w3-btn w3-green w3-round">Adicionar Natureza</button>
                 </form>
             </div>
         </div>
