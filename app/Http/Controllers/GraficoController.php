@@ -29,8 +29,24 @@ class GraficoController extends Controller
         }
     }
 
-    public function obterGraficoFollowUp(){
-        $solicitacao = Solicitacao::all();
+    public function obterGraficoFollowUp(Request $request){
+        // Verificar as datas introduzidas
+        if($request->has('data_inicio') and $request->has('data_fim')){
+            // Verificar se as datas não são vazias
+            if($request->get('data_inicio') != null and $request->get('data_fim') != null){
+                // Por fim, verificar se a data inicial é menor que a data final
+                if(strtotime($request->get('data_inicio')) <= strtotime($request->get('data_fim'))) {
+                    // Selecionar as solicitações que se encontram entre as datas
+                   $solicitacao = Solicitacao::whereHas('estado_solicitacao', function ($query) use ($request) {
+                        $query->where('data_inicio', '>=', $request->get('data_inicio'))
+                            ->where('data_inicio', '<=', $request->get('data_fim'));
+                    })->get();
+                }
+            }
+        }
+        // Se não foram introduzidas datas, selecionar todas as solicitações
+        isset($solicitacao) ? $solicitacao : $solicitacao = Solicitacao::all();
+
         if($solicitacao->count()){
             $follow_up_sim = 0;
             $follow_up_nao = 0;
