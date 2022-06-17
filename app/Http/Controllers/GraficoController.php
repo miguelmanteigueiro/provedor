@@ -20,6 +20,8 @@ class GraficoController extends Controller
         if($request->hasAny($naturezas)){
             $natureza = $request->except('_token');
             $nome = array_search('on', $natureza);
+
+            // TODO: Filtrar por data
             return view('components.graficos.gerar-grafico',
                 ['natureza' => Natureza::where('descricao', $nome)->first()]);
         }
@@ -98,18 +100,20 @@ class GraficoController extends Controller
                     return back()->with('aviso', 'Para efetuar a filtragem, a data inicial deve ser menor que a data final.');
                 }
             }
-            else{
-                return back()->with('aviso', 'Para efetuar a filtragem por datas, deve introduzir um intervalo de datas.');
-            }
         }
         // Se não foram introduzidas datas, selecionar todas as solicitações
         isset($solicitacoes) ? $solicitacoes : $solicitacoes = Solicitacao::all();
         $naturezas = Natureza::all();
 
-        return view('components.graficos.gerar-grafico-situacao-tipologia',
-            ['naturezas' => $naturezas,
-             'solicitacoes' => $solicitacoes]
-        );
+        if($solicitacoes->count()) {
+            return view('components.graficos.gerar-grafico-situacao-tipologia',
+                ['naturezas' => $naturezas,
+                 'solicitacoes' => $solicitacoes]
+            );
+        }
+        else{
+            return back()->with('aviso', 'Não existem solicitações para gerar o gráfico!');
+        }
     }
 
     public function obterGraficoSituacaoCicloEstudos(Request $request){
@@ -129,17 +133,20 @@ class GraficoController extends Controller
                     return back()->with('aviso', 'Para efetuar a filtragem, a data inicial deve ser menor que a data final.');
                 }
             }
-            else{
-                return back()->with('aviso', 'Para efetuar a filtragem por datas, deve introduzir um intervalo de datas.');
-            }
         }
         // Se não foram introduzidas datas, selecionar todas as solicitações
         isset($solicitacoes) ? $solicitacoes : $solicitacoes = Solicitacao::all();
         $naturezas = Natureza::all();
 
-        return view('components.graficos.gerar-grafico-situacao-cicloestudos',
-            ['naturezas' => $naturezas,
-             'solicitacoes' => $solicitacoes]
-        );
+        if($solicitacoes->count()){
+            return view('components.graficos.gerar-grafico-situacao-cicloestudos',
+                ['naturezas' => $naturezas,
+                 'solicitacoes' => $solicitacoes]
+            );
+        }
+        else{
+            return back()->with('aviso', 'Não existem solicitações para gerar o gráfico!');
+        }
+
     }
 }
