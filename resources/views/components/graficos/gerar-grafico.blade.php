@@ -19,12 +19,32 @@
                 ['Assunto', 'Quantidade'],
                 @php
                 $index = 0;
-                foreach ($natureza->assunto as $assunto){
-                    ++$index;
-                    $label = strtolower(substr($natureza->descricao, 0, 1));
-                    $count = \App\Models\AssuntoAnalitica::where('assunto_id', $assunto->assunto_id)->count();
-                    echo "['". $label.$index."', $count],\n";
+                if(isset($data_inicio) and isset($data_fim)){
+                    $ids = \App\Models\EstadoSolicitacao::whereBetween('data_inicio',  [$data_inicio, $data_fim])->get('solicitacao_id');
+                    $solicitacoes = \App\Models\Solicitacao::whereIn('solicitacao_id', $ids)->get();
+                    $ids_analitica = collect();
+                    foreach($solicitacoes as $solicitacao){
+                        if($solicitacao->analitica){
+                            $ids_analitica->add($solicitacao->analitica->analitica_id);
+                        }
+                    }
+
+                    foreach ($natureza->assunto as $assunto){
+                        ++$index;
+                        $label = strtolower(substr($natureza->descricao, 0, 1));
+                        $count = \App\Models\AssuntoAnalitica::where('assunto_id', $assunto->assunto_id)->whereIn('analitica_id', $ids_analitica)->count();
+                        echo "['". $label.$index."', $count],\n";
+                    }
                 }
+                else{
+                    foreach ($natureza->assunto as $assunto){
+                        ++$index;
+                        $label = strtolower(substr($natureza->descricao, 0, 1));
+                        $count = \App\Models\AssuntoAnalitica::where('assunto_id', $assunto->assunto_id)->count();
+                        echo "['". $label.$index."', $count],\n";
+                    }
+                }
+
                 @endphp
                 ],
                 false); // 'false' means that the first row contains labels, not data.

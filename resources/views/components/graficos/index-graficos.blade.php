@@ -9,7 +9,7 @@
 
         </div>
 
-        <div class="w3-row-padding">
+        <div class="w3-row-padding w3-margin-top">
             <form id="obter" method="POST" action="/graficos/obter">
                 @csrf
                 @foreach($naturezas as $natureza)
@@ -21,19 +21,16 @@
                         <br>
                     @endif
                 @endforeach
-                <div class="w3-row w3-margin-top">
+                <div class="w3-margin-top">
+                    <button id="submit" class="w3-button w3-green w3-round" type="submit">
+                        Obter Gráfico
+                    </button>
                     <label for="data_inicio">Data de início:</label>
                     <input type="date" id="data_inicio" name="data_inicio">
-                </div>
 
-                <div class="w3-row w3-margin-top">
                     <label for="data_fim">Data de fim:</label>
                     <input type="date" id="data_fim" name="data_fim">
                 </div>
-
-                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
-                        Obter Gráfico
-                    </button>
             </form>
         </div>
 
