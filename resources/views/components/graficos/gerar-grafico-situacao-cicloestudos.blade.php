@@ -1,5 +1,5 @@
-<html>
-<head>
+@include('common._head')
+<div>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
@@ -81,8 +81,9 @@
             chart.draw(data, options);
         }
     </script>
-</head>
-<body>
+</div>
+
 <div id="chart_div"></div>
-</body>
-</html>
+<div class="w3-row-padding w3-margin-top w3-center">
+    <x-botao-tabela function="Voltar"></x-botao-tabela>
+</div>

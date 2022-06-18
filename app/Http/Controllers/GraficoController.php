@@ -65,9 +65,6 @@ class GraficoController extends Controller
                     return back()->with('aviso', 'Para efetuar a filtragem, a data inicial deve ser menor que a data final.');
                 }
             }
-            else{
-                return back()->with('aviso', 'Para efetuar a filtragem por datas, deve introduzir um intervalo de datas.');
-            }
         }
         // Se não foram introduzidas datas, selecionar todas as solicitações
         isset($solicitacao) ? $solicitacao : $solicitacao = Solicitacao::all();

@@ -1,5 +1,5 @@
-<html>
-<head>
+@include('common._head')
+<div>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -85,11 +85,21 @@
             chart.draw(data, options);
         }
     </script>
-</head>
-
-<body>
-<!--Div that will hold the pie chart-->
-<div id="chart_div">
 </div>
-</body>
-</html>
+
+<div id="chart_div"></div>
+<div class="w3-container">
+    <ul class="w3-ul">
+        @php
+        foreach ($natureza->assunto as $assunto){
+            ++$index;
+            $label = strtolower(substr($natureza->descricao, 0, 1));
+            echo "<li>".$label.$index." | <b>".$assunto->subcategoria."</b>"." - ".$assunto->descricao."</li>";
+        }
+        @endphp
+    </ul>
+</div>
+<div class="w3-row-padding w3-margin-top w3-center">
+    <x-botao-tabela function="Voltar"></x-botao-tabela>
+</div>
+
