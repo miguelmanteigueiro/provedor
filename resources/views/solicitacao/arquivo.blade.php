@@ -1,7 +1,14 @@
 <x-layout>
-    <div class="w3-section w3-row">
-        <div class="w3-row-padding">
-            <h2>Arquivo</h2>
+    <div class="w3-section w3-row-padding">
+        <h2 class="w3-twothird">Arquivo</h2>
+        <div class="w3-third">
+            <form method="GET" action="#">
+                <input  type="text" 
+                        name="search" 
+                        placeholder="Pesquisar por referência, nome ou email" 
+                        class="w3-input w3-border w3-round w3-margin-top"
+                        value="{{ request('search') }}">
+            </form>
         </div>
     </div>
 
@@ -14,6 +21,10 @@
         </div>
     </div>
     @else
-        <h1 class="w3-center w3-display-middle">Não existem solicitações arquivadas ou encerradas.</h1>
+        @if (request('search'))
+            <h1 class="w3-center w3-display-middle">Não existem solicitações para a filtragem efetuada.</h1>
+        @else
+            <h1 class="w3-center w3-display-middle">Não existem solicitações arquivadas.</h1>
+        @endif
     @endif
 </x-layout>

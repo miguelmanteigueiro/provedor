@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EstadoSolicitacao;
 use App\Models\Solicitacao;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,20 +15,42 @@ class DashboardController extends Controller
     
     public function show()
     {
-        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-            $q->where("estado", "aberto");
-        })->paginate(15);
+        if(request('search')){
+            $solicitacoes =  Solicitacao::whereHas('estado_solicitacao', function ($q) {
+                $q->where("estado", "aberto");
+            })->where(function($q){
+                $q->where('referencia_interna', 'like', '%' . request('search') . '%')
+                ->orWhere('estudante_nome', 'like', '%' . request('search') . '%')
+                ->orWhere('estudante_email', 'like', '%' . request('search') . '%');
+            });
+        }
+        else{
+            $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
+                $q->where("estado", "aberto");
+            });
+        }
 
-        return view('solicitacao.show', ['solicitacoes' => $solicitacoes]);
+        return view('solicitacao.show', ['solicitacoes' => $solicitacoes->paginate(15)]);
     }
 
     public function arquivo()
     {
-        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-            $q->where("estado", '!=', "aberto");
-        })->paginate(15);
+        if(request('search')){
+            $solicitacoes =  Solicitacao::whereHas('estado_solicitacao', function ($q) {
+                $q->where("estado", '!=', "aberto");
+            })->where(function($q){
+                $q->where('referencia_interna', 'like', '%' . request('search') . '%')
+                ->orWhere('estudante_nome', 'like', '%' . request('search') . '%')
+                ->orWhere('estudante_email', 'like', '%' . request('search') . '%');
+            });
+        }
+        else{
+            $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
+                $q->where("estado", '!=', "aberto");
+            });
+        }
 
-        return view('solicitacao.arquivo', ['solicitacoes' => $solicitacoes]);
+        return view('solicitacao.arquivo', ['solicitacoes' => $solicitacoes->paginate(15)]);
     }
     
     public function definicoes()
