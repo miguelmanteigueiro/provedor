@@ -91,6 +91,7 @@
 <div class="w3-container">
     <ul class="w3-ul">
         @php
+        $index = 0;
         foreach ($natureza->assunto as $assunto){
             ++$index;
             $label = strtolower(substr($natureza->descricao, 0, 1));

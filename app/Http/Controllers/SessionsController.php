@@ -30,6 +30,11 @@ class SessionsController extends Controller
             session()->regenerate();
             Auth::user()->last_login = new DateTime();
             Auth::user()->save();
+
+            // Verificar se existem solicitações que passaram a data de encerramento e não foram encerradas
+            $today = new DateTime();
+            $today = $today->format('Y-m-d');
+            #dd($today);
             return redirect('dashboard')->with('login', "Bem-vindo, " . Auth::user()->nome . "!");
         }
         
@@ -42,6 +47,6 @@ class SessionsController extends Controller
     public function destroy()
     {
         auth()->logout();
-        return redirect('/')->with('sucesso', 'Logout efetuado!');
+        return redirect('/');
     }
 }
