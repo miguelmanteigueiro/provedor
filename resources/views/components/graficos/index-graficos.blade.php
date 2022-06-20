@@ -9,7 +9,7 @@
 
         </div>
 
-        <div class="w3-row-padding">
+        <div class="w3-row-padding w3-margin-top">
             <form id="obter" method="POST" action="/graficos/obter">
                 @csrf
                 @foreach($naturezas as $natureza)
@@ -21,9 +21,16 @@
                         <br>
                     @endif
                 @endforeach
-                    <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                <div class="w3-margin-top">
+                    <button id="submit" class="w3-button w3-green w3-round" type="submit">
                         Obter Gráfico
                     </button>
+                    <label for="data_inicio">Data de início:</label>
+                    <input type="date" id="data_inicio" name="data_inicio">
+
+                    <label for="data_fim">Data de fim:</label>
+                    <input type="date" id="data_fim" name="data_fim">
+                </div>
             </form>
         </div>
 
@@ -35,30 +42,48 @@
             <h3>Outras estatísticas:</h3>
         </div>
 
-        <div class="w3-row-padding">
+        <div class="w3-row-padding w3-margin-top">
             <form id="obterFollowUp" method="POST" action="/graficos/obter/followup">
                 @csrf
-                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                <button id="submit" class="w3-button w3-green w3-round" type="submit">
                     Obter Gráfico de <i>Follow-up</i>
                 </button>
+
+                <label for="data_inicio">Data de início:</label>
+                <input type="date" id="data_inicio" name="data_inicio">
+
+                <label for="data_fim">Data de fim:</label>
+                <input type="date" id="data_fim" name="data_fim">
             </form>
         </div>
 
-        <div class="w3-row-padding">
+        <div class="w3-row-padding w3-margin-top">
             <form id="obterSituacaoTipologia" method="POST" action="/graficos/obter/situacaoTipologia">
                 @csrf
-                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                <button id="submit" class="w3-button w3-green w3-round" type="submit">
                     Obter Gráfico de Natureza/Tipologia
                 </button>
+
+                <label for="data_inicio">Data de início:</label>
+                <input type="date" id="data_inicio" name="data_inicio">
+
+                <label for="data_fim">Data de fim:</label>
+                <input type="date" id="data_fim" name="data_fim">
             </form>
         </div>
 
-        <div class="w3-row-padding">
-            <form id="obterSituacaoCicloEstudos" method="POST" action="/graficos/obter/situacaoCicloEstudos">
+        <div class="w3-row-padding w3-margin-top">
+            <form id="obterSituacaoTipologia" method="POST" action="/graficos/obter/situacaoCicloEstudos">
                 @csrf
-                <button id="submit" class="w3-button w3-green w3-round w3-margin-top" type="submit">
+                <button id="submit" class="w3-button w3-green w3-round" type="submit">
                     Obter Gráfico de Natureza/Ciclo de Estudos
                 </button>
+
+                <label for="data_inicio">Data de início:</label>
+                <input type="date" id="data_inicio" name="data_inicio">
+
+                <label for="data_fim">Data de fim:</label>
+                <input type="date" id="data_fim" name="data_fim">
             </form>
         </div>
 

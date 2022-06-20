@@ -1,5 +1,10 @@
 @props(['function', 'id'])
 
+@if(($function === "Voltar"))
+    <form>
+        <button formaction="/" class="w3-btn w3-green w3-round"> {!! $function !!} </button>
+    </form>
+@endif
 
 @if(($function === "Consultar"))
 <form>
