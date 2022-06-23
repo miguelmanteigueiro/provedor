@@ -29,8 +29,8 @@
                     fontSize: 20,
                     italic: true
                 },
-                width: 600,
-                height: 600,
+                width: 'auto',
+                height: 500,
                 is3D: true,
                 sliceVisibilityThreshold: 0,
                 pieSliceText: 'value'
