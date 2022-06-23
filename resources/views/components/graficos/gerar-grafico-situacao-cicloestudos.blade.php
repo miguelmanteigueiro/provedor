@@ -54,7 +54,7 @@
                 titleTextStyle: {
                     fontSize: 20,
                 },
-                width: 1000,
+                width: 'auto',
                 height: 500,
                 hAxis: {
                     title: 'Natureza',
@@ -84,6 +84,6 @@
 </div>
 
 <div id="chart_div"></div>
-<div class="w3-row-padding w3-margin-top w3-center">
+<div class="w3-row-padding w3-section w3-center">
     <x-botao-tabela function="Voltar"></x-botao-tabela>
 </div>

@@ -58,7 +58,7 @@
                 titleTextStyle: {
                     fontSize: 20,
                 },
-                width: 1000,
+                width: 'auto',
                 height: 500,
                 hAxis: {
                     title: 'Natureza',
