@@ -21,7 +21,7 @@
             <input type="hidden" name="natureza_id" value="{{ $natureza->natureza_id }}">
 
             <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="descricao"
-                id="descricao" placeholder="Tipo de Natureza" value={{ $natureza->descricao }} autocomplete="off" required>
+                id="descricao" placeholder="Tipo de Natureza" value="{{ $natureza->descricao }}" autocomplete="off" required>
 
             <button class="w3-btn w3-block w3-theme-l2 w3-round w3-section" type="submit">Confirmar Alteração</button>
         </form>

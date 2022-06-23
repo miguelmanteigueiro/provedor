@@ -34,10 +34,6 @@
                     <i class="fa fa-file-shield"></i>
                     <i>Logs</i>
                 </a>
-                <a href="/admin/backups" class="w3-bar-item w3-button">
-                    <i class="fa fa-database"></i>
-                    <i>Backups</i>
-                </a>
             </div>
         </div>
     @endif
