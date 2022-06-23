@@ -17,9 +17,19 @@ class GraficoController extends Controller
 
     public function obterGrafico(Request $request){
         $naturezas = Natureza::all('descricao')->toArray();
-        if($request->hasAny($naturezas)){
-            $natureza = $request->except('_token');
-            $nome = array_search('on', $natureza);
+        $search_array = $naturezas;
+
+        // Substituir todos os espaços por underscores
+        // Guardar o resultado num array auxiliar
+        foreach ($naturezas as $key => $value) {
+            $search_array[$key] = str_replace(' ', '_', $value);
+        }
+
+        if($request->hasAny($search_array)){
+            $request_params = $request->except('_token');
+            $nome = array_search('on', $request_params);
+            // Trocar os underscores por espaços
+            $nome = str_replace('_', ' ', $nome);
 
             // Verificar as datas introduzidas
             if($request->has('data_inicio') and $request->has('data_fim')) {
