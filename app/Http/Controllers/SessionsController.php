@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Utilizador;
+use App\Models\EstadoSolicitacao;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Hash;
-use Ramsey\Uuid\Type\Time;
 
 class SessionsController extends Controller
 {
@@ -30,6 +27,20 @@ class SessionsController extends Controller
             session()->regenerate();
             Auth::user()->last_login = new DateTime();
             Auth::user()->save();
+
+            // Verificar se existem solicitações que passaram a data de encerramento e não foram encerradas
+            $today = new DateTime();
+            $today = $today->format('Y-m-d');
+            
+            // Verificar a existência de solicitações cuja data de encerramento 
+            // seja inferior que a de hoje, e que o seu estado seja aberto.
+            $estados = EstadoSolicitacao::whereDate('data_encerramento', '<=', $today)->where('estado', 'aberto');
+            if($estados->count()){
+                return redirect('dashboard')
+                    ->with('login', "Bem-vindo, " . Auth::user()->nome . "!")
+                    ->with('aviso', "Existem ". $estados->count() . " solicitações que passaram a data de encerramento e não foram encerradas.");
+            }
+            
             return redirect('dashboard')->with('login', "Bem-vindo, " . Auth::user()->nome . "!");
         }
         
@@ -42,6 +53,6 @@ class SessionsController extends Controller
     public function destroy()
     {
         auth()->logout();
-        return redirect('/')->with('sucesso', 'Logout efetuado!');
+        return redirect('/');
     }
 }
