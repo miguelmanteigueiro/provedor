@@ -12,7 +12,11 @@ use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
-    
+    /**
+     * Devolver o dashboard principal
+     *
+     * @return view('solicitacao.show')
+     */
     public function show()
     {
         if(request('search')){
@@ -33,6 +37,11 @@ class DashboardController extends Controller
         return view('solicitacao.show', ['solicitacoes' => $solicitacoes->paginate(15)]);
     }
 
+    /**
+     * Devolver o arquivo de solicitações
+     *
+     * @return view('solicitacao.arquivo')
+     */
     public function arquivo()
     {
         if(request('search')){
@@ -52,12 +61,23 @@ class DashboardController extends Controller
 
         return view('solicitacao.arquivo', ['solicitacoes' => $solicitacoes->paginate(15)]);
     }
-    
+
+    /**
+     * Devolver a view da página de definições
+     *
+     * @return view('dashboard.definicoes')
+     */
     public function definicoes()
     {
         return view('dashboard.definicoes');
     }
 
+    /**
+     * Método para tratar a edição do nome do utilizador
+     *
+     * @param Request $request
+     * @return Confirmação de edição do nome
+     */
     public function changeName(Request $request)
     {
         $atributos = ['primeiro_nome'   => '<b>Nome</b>',
@@ -68,11 +88,11 @@ class DashboardController extends Controller
             'primeiro_nome' => 'min:2|max:50',
             'ultimo_nome'   => 'min:2|max:50',
         ], [], $atributos);
- 
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
-        
+
         // Proceder à alteração do nome
         else{
             $id = Auth::user()->id;
@@ -87,6 +107,12 @@ class DashboardController extends Controller
         return redirect('/definicoes')->with('sucesso', 'O seu nome foi alterado com sucesso!');
     }
 
+    /**
+     * Método para tratar a edição do email do utilizador
+     *
+     * @param Request $request
+     * @return Confirmação de edição do email
+     */
     public function changeEmail(Request $request)
     {
         $atributos = ['email' => '<b>Endereço de Email</b>'];
@@ -95,11 +121,11 @@ class DashboardController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|confirmed|email|unique:users,email|max:255',
         ], [], $atributos);
- 
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
-        
+
         // Proceder à alteração do email
         else{
             $id = Auth::user()->id;
@@ -109,6 +135,12 @@ class DashboardController extends Controller
         return redirect('/definicoes')->with('sucesso', 'O seu endereço de email foi alterado com sucesso!');
     }
 
+    /**
+     * Método para tratar a edição da password do utilizador
+     *
+     * @param Request $request
+     * @return Confirmação de edição da password
+     */
     public function changePassword(Request $request)
     {
         $atributos = ['password' => '<b>Password</b>'];
@@ -117,16 +149,16 @@ class DashboardController extends Controller
         $validator = Validator::make($request->all(), [
             'password' => ['required', 'confirmed', 'max:255', Password::min(8)->mixedCase()->numbers()->symbols()],
         ], [], $atributos);
- 
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
-        
+
         // Proceder à alteração da password
         else{
             $id = Auth::user()->id;
-            $user = User::find($id); 
-            
+            $user = User::find($id);
+
             $user->setPasswordAttribute($request->get('password'));
             $user->save();
         };

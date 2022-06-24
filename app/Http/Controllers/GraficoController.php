@@ -10,11 +10,22 @@ use Illuminate\Http\Request;
 
 class GraficoController extends Controller
 {
+    /**
+     * Devolver a página para gerar gráficos
+     *
+     * @return view('components.graficos.index-graficos')
+     */
     public function showGraficos(){
         $naturezas = Natureza::all();
         return view('components.graficos.index-graficos', ['naturezas' => $naturezas]);
     }
 
+    /**
+     * Método para gerar o gráfico de barras para uma determinada natureza
+     *
+     * @param Request $request
+     * @return view('components.graficos.grafico-barras')
+     */
     public function obterGrafico(Request $request){
         $naturezas = Natureza::all('descricao')->toArray();
         $search_array = $naturezas;
@@ -58,6 +69,12 @@ class GraficoController extends Controller
         }
     }
 
+    /**
+     * Método para gerar o gráfico circular para o follow-up
+     *
+     * @param Request $request
+     * @return view('components.graficos.gerar-grafico-follow-up')
+     */
     public function obterGraficoFollowUp(Request $request){
         // Verificar as datas introduzidas
         if($request->has('data_inicio') and $request->has('data_fim')){
@@ -107,6 +124,12 @@ class GraficoController extends Controller
 
     }
 
+    /**
+     * Método para gerar o gráfico combinado com a natureza/tipologia
+     *
+     * @param Request $request
+     * @return view('components.graficos.gerar-grafico-situacao-tipologia')
+     */
     public function obterGraficoSituacaoTipologia(Request $request){
         // Verificar as datas introduzidas
         if($request->has('data_inicio') and $request->has('data_fim')){
@@ -140,6 +163,12 @@ class GraficoController extends Controller
         }
     }
 
+    /**
+     * Método para gerar o gráfico combinado com a natureza/ciclo de estudos
+     *
+     * @param Request $request
+     * @return view('components.graficos.gerar-grafico-situacao-cicloestudos')
+     */
     public function obterGraficoSituacaoCicloEstudos(Request $request){
         // Verificar as datas introduzidas
         if($request->has('data_inicio') and $request->has('data_fim')){

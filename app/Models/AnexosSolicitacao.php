@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnexosSolicitacao extends Model
 {
-    //use HasFactory;
-
     /**
      * Define a tabela associada à classe.
      *
@@ -21,7 +19,7 @@ class AnexosSolicitacao extends Model
 
     /**
      * Override ao método find()
-     * 
+     *
      * @var string
      */
     public static function find($key){

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Solicitacao extends Model
 {
-    use HasFactory;
     /**
      * Define a tabela associada à classe.
      *
@@ -20,7 +19,7 @@ class Solicitacao extends Model
 
     /**
      * Override ao método find()
-     * 
+     *
      * @var string
      */
     public static function find($key){
@@ -32,7 +31,7 @@ class Solicitacao extends Model
         $solicitacao = $obj->first();
         return $solicitacao;
     }
-    
+
     /**
      * Define os Enums necessários para a DB
      */
@@ -55,7 +54,7 @@ class Solicitacao extends Model
     }
 
     /**
-     * Define uma relação entre Solicitação e Utilizador 
+     * Define uma relação entre Solicitação e Utilizador
      * Uma solicitação apenas pertence a um utilizador
      */
     public function user(){
@@ -63,7 +62,7 @@ class Solicitacao extends Model
     }
 
     /**
-     * Define uma relação entre Solicitação e Comentário 
+     * Define uma relação entre Solicitação e Comentário
      * Uma solicitação pode ter vários comentários
      */
     public function comentario(){

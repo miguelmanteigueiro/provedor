@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Analitica extends Model
 {
-    //use HasFactory;
     /**
      * Define a tabela associada à classe.
      *

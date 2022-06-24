@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AssuntoAnalitica extends Model
 {
-    //use HasFactory;
-
     /**
      * Define a tabela associada à classe.
      *
@@ -21,7 +19,7 @@ class AssuntoAnalitica extends Model
 
     /**
      * Override ao método find()
-     * 
+     *
      * @var string
      */
     public static function find($key){

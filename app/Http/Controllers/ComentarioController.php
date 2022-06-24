@@ -13,11 +13,23 @@ use Illuminate\Support\Facades\Validator;
 
 class ComentarioController extends Controller
 {
+    /**
+     * Devolver a view da página para adicionar um comentário
+     *
+     * @param Solicitacao $solicitacao
+     * @return view('comentario.novo')
+     */
     public function showCommentForm (Solicitacao $solicitacao)
     {
         return view('comentario.novo', ['solicitacao' => $solicitacao]);
     }
 
+    /**
+     * Método para tratar a adição de um comentário
+     *
+     * @param Request $request
+     * @return Confirmação de adição de comentário
+     */
     public function storeCommentForm (Request $request)
     {
         $id = $request->get('solicitacao_id');
@@ -29,7 +41,7 @@ class ComentarioController extends Controller
 
         $validator = Validator::make($request->all(), [
             // Campos do comentário
-            'comentario'    => 'required',  
+            'comentario'    => 'required',
             'ficheiros.*'   => 'file|max:2048|mimes:pdf,jpg,jpeg,png',
         ], [], $atributos);
 
@@ -47,14 +59,14 @@ class ComentarioController extends Controller
         $id_comentario = $comentario->id;
 
         // Caso haja ficheiros, guardar os mesmos
-        if($request->hasfile('ficheiros')){ 
+        if($request->hasfile('ficheiros')){
 
             // Caminho único para cada comentário
             $path = "anexos/" . $id . "/comentarios";
 
             foreach($request->file('ficheiros') as $file){
                 $filename = $file->getClientOriginalName();
-                
+
                     // Verificar se o ficheiro já foi carregado
                     if(Storage::exists($path . "/" . $filename)){
                         $failedUploads++;
@@ -63,12 +75,12 @@ class ComentarioController extends Controller
                     else{
                         $storedFilePath = $file->storeAs($path, $filename);
                         $parsedFilePath = str_replace("public", "", $storedFilePath);
-                    
+
                         $anexos_comentario = new AnexosComentario(['comentario_id' => $id_comentario, 'path' => $parsedFilePath]);
                         $anexos_comentario->save();
                     }
                 }
-        }   	
+        }
 
         // Mensagem de aviso, se houver ficheiros não carregados
         if($failedUploads !== 0){

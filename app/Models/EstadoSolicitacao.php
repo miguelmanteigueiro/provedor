@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstadoSolicitacao extends Model
 {
-    //use HasFactory;
-
     /**
      * Define a tabela associada à classe.
      *

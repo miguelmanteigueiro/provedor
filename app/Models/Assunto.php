@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assunto extends Model
 {
-    //use HasFactory;
-
     /**
      * Define a tabela associada à classe.
      *

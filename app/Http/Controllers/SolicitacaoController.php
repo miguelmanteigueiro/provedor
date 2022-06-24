@@ -19,7 +19,12 @@ use Illuminate\Validation\Rule;
 
 class SolicitacaoController extends Controller
 {
-    // Consultar uma solicitação
+    /**
+     * Método para consultar uma solicitação
+     *
+     * @param Solicitacao $solicitacao
+     * @return view('solicitacao.consultar')
+     */
     public function consultar(Solicitacao $solicitacao)
     {
         // Receber o estado da solicitação e os seus anexos
@@ -36,13 +41,22 @@ class SolicitacaoController extends Controller
                                                 'comentarios'   => $comentarios]);
     }
 
-    // Mostrar o formulário para criar uma solicitação
+    /**
+     * Devolver a view para criar uma solicitação
+     *
+     * @return view('solicitacao.criar')
+     */
     public function showForm()
     {
         return view('solicitacao.criar');
     }
 
-    // Guardar uma solicitação
+    /**
+     * Método para guardar uma solicitação
+     *
+     * @param Request $request
+     * @return Confirmação de criação da solicitação
+     */
     public function storeForm(Request $request)
     {
         $failedUploads = 0;
@@ -135,7 +149,12 @@ class SolicitacaoController extends Controller
         return redirect('/dashboard')->with('sucesso', 'Solicitação guardada com sucesso!');
     }
 
-    // Mostrar o formulário para editar uma solicitação
+    /**
+     * Devolve a view para editar uma solicitação
+     *
+     * @param Solicitacao $solicitacao
+     * @return view('solicitacao.edit')
+     */
     public function showEditForm(Solicitacao $solicitacao)
     {
         // Receber o estado da solicitação e os seus anexos
@@ -146,7 +165,12 @@ class SolicitacaoController extends Controller
         return view('solicitacao.edit', ['solicitacao' => $solicitacao, 'estado' => $estado, 'anexos' => $anexos]);
     }
 
-    // Mostrar o formulário para editar uma solicitação
+    /**
+     * Método para confirmar a edição de uma solicitação
+     *
+     * @param Request $request
+     * @return Confirmação de edição da solicitação
+     */
     public function confirmEditForm(Request $request)
     {
         $id = $request->solicitacao_id;
@@ -227,14 +251,24 @@ class SolicitacaoController extends Controller
         return redirect('/dashboard')->with('sucesso', 'Solicitação editada com sucesso!');
     }
 
-    // Arquivar uma solicitação
+    /**
+     * Método para arquivar uma solicitação
+     *
+     * @param Solicitacao $solicitacao
+     * @return Redirect para a página de dashboard com mensagem de sucesso
+     */
     public function arquivar(Solicitacao $solicitacao)
     {
         EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'arquivado']);
         return redirect('/dashboard')->with('sucesso', 'A solicitação foi arquivada!');
     }
 
-    // Desarquivar uma solicitação
+    /**
+     * Método para desarquivar uma solicitação
+     *
+     * @param Solicitacao $solicitacao
+     * @return Redirect para a página de dashboard com mensagem de sucesso
+     */
     public function desarquivar(Solicitacao $solicitacao)
     {
         EstadoSolicitacao::where('solicitacao_id', $solicitacao->solicitacao_id)->update(['estado' => 'aberto']);

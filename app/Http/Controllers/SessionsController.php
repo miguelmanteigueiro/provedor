@@ -8,11 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
+    /**
+     * Devolver a página de login
+     *
+     * @return view('login.login')
+     */
     public function create()
     {
         return view('login.login');
     }
 
+    /**
+     * Método para validar a autenticação do utilizador
+     *
+     * @return Redirect para a página de dashboard
+     */
     public function auth()
     {
         // Validar as credenciais
@@ -20,8 +30,8 @@ class SessionsController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
-        // Tentar autenticar o utilizador com base nas credenciais introduzidas, 
+
+        // Tentar autenticar o utilizador com base nas credenciais introduzidas,
         // bem como guardar uma timestamp do login.
         if(Auth::attempt(['email' => request('email'), 'password' => request('password'), 'conta_ativa' => 1])){
             session()->regenerate();
@@ -31,8 +41,8 @@ class SessionsController extends Controller
             // Verificar se existem solicitações que passaram a data de encerramento e não foram encerradas
             $today = new DateTime();
             $today = $today->format('Y-m-d');
-            
-            // Verificar a existência de solicitações cuja data de encerramento 
+
+            // Verificar a existência de solicitações cuja data de encerramento
             // seja inferior que a de hoje, e que o seu estado seja aberto.
             $estados = EstadoSolicitacao::whereDate('data_encerramento', '<=', $today)->where('estado', 'aberto');
             if($estados->count()){
@@ -40,16 +50,21 @@ class SessionsController extends Controller
                     ->with('login', "Bem-vindo, " . Auth::user()->nome . "!")
                     ->with('aviso', "Existem ". $estados->count() . " solicitações que passaram a data de encerramento e não foram encerradas.");
             }
-            
+
             return redirect('dashboard')->with('login', "Bem-vindo, " . Auth::user()->nome . "!");
         }
-        
+
         // Caso falhe a autenticação:
         return back()
             ->withInput($credenciais)
             ->withErrors(['email' => 'Falha na autenticação.']);
     }
 
+    /**
+     * Método para fazer logout do utilizador
+     *
+     * @return Redirect para a página de login
+     */
     public function destroy()
     {
         auth()->logout();

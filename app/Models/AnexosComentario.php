@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnexosComentario extends Model
 {
-    //use HasFactory;
-
     /**
      * Define a tabela associada à classe.
      *
@@ -16,12 +14,12 @@ class AnexosComentario extends Model
      */
     protected $table = 'anexos_comentario';
     public $timestamps = false;
-    
+
     protected $guarded = [];
 
     /**
      * Override ao método find()
-     * 
+     *
      * @var string
      */
     public static function find($key){

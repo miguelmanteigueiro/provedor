@@ -14,11 +14,21 @@ use Illuminate\Validation\Rule;
 
 class AnaliticaController extends Controller
 {
+    /**
+     * Devolver a view da página de gestão de analíticas para as solicitações
+     *
+     * @return view('components.analitica.analitica')
+     */
     public function view(){
         $solicitacoes = Solicitacao::paginate(15);
         return view('components.analitica.analitica', ['solicitacoes' => $solicitacoes]);
     }
 
+    /**
+     * Devolver a view da página de gestão de analíticas
+     *
+     * @return view('components.analitica.gerir-analitica')
+     */
     public function manageAnalitica(Solicitacao $solicitacao){
         $ESTADOS = ['aberto', 'encerrado', 'arquivado'];
         $naturezas = Natureza::all();
@@ -32,6 +42,12 @@ class AnaliticaController extends Controller
         );
     }
 
+    /**
+     * Método para guardar a analítica de uma solicitação
+     *
+     * @param Request $request
+     * @return Confirmação de criação de analítica
+     */
     public function saveAnalitica(Request $request){
         $analitica = Analitica::where('solicitacao_id', $request->get('solicitacao_id'))->first();
 
@@ -47,6 +63,7 @@ class AnaliticaController extends Controller
                         'curso'                 => '<b>Curso</b>',
                         'follow_up'             => '<b><i>Follow-up</i></b>'];
 
+        // Validar os dados
         $validator = Validator::make($request->all(), [
             'data_inicio'           => 'required|date_format:Y-m-d',
             'data_resposta'         => 'nullable|date_format:Y-m-d',
@@ -87,7 +104,7 @@ class AnaliticaController extends Controller
                 );
         }
 
-        // Editar a entrada existente na base de dados
+        // Se a entrada já existe, atualizar os dados referentes a essa
         else{
             Analitica::where('solicitacao_id', $request->get('solicitacao_id'))
                 ->update(['solicitacao_id'    => $request->get('solicitacao_id'),
@@ -133,20 +150,41 @@ class AnaliticaController extends Controller
         return back()->with('sucesso', 'A analítica foi alterada com sucesso!');
     }
 
+    /**
+     * Devolver a view da página dos assuntos
+     *
+     * @return view('admin.assuntos')
+     */
     public function showAssuntos(){
         $assunto = Assunto::paginate(15);
         return view('admin.assuntos', ['assunto' => $assunto]);
     }
 
+    /**
+     * Devolver a view da página das naturezas
+     *
+     * @return view('admin.naturezas')
+     */
     public function showNaturezas(){
         $natureza = Natureza::paginate(15);
         return view('admin.naturezas', ['natureza' => $natureza]);
     }
 
+    /**
+     * Devolver a view da página de adição de naturezas
+     *
+     * @return view('components.natureza.adicionar-natureza')
+     */
     public function showAddNatureza(){
         return view('components.natureza.adicionar-natureza');
     }
 
+    /**
+     * Método para adicionar uma natureza à base de dados
+     *
+     * @param Request $request
+     * @return Confirmação da adição de natureza
+     */
     public function confirmAddNatureza(Request $request){
         $atributos = ['descricao' => '<b>Tipo de Natureza</b>'];
 
@@ -165,10 +203,22 @@ class AnaliticaController extends Controller
         return back()->with('sucesso', 'Foi adicionada uma nova natureza!');
     }
 
+    /**
+     * Devolver a view da página de edição de naturezas
+     *
+     * @param Natureza $natureza
+     * @return view('components.natureza.editar-natureza')
+     */
     public function editNatureza(Natureza $natureza){
         return view('components.natureza.editar-natureza', ['natureza' => $natureza]);
     }
 
+    /**
+     * Método para atualizar uma natureza da base de dados
+     *
+     * @param Request $request
+     * @return Confirmação da atualização de natureza
+     */
     public function confirmEditNatureza(Request $request){
 
         $atributos = ['descricao' => '<b>Tipo de Natureza</b>'];
@@ -192,16 +242,33 @@ class AnaliticaController extends Controller
 
     }
 
+    /**
+     * Devolver a view da página de adição de assuntos
+     *
+     * @return view('components.assunto.adicionar-assunto')
+     */
     public function showAddAssuntos(){
         $natureza = Natureza::all();
         return view('components.assunto.adicionar-assunto', ['natureza' => $natureza]);
     }
 
+    /**
+     * Devolver a view da página de edição de assuntos
+     *
+     * @param Assunto $assunto
+     * @return view('components.assunto.editar-assunto')
+     */
     public function editAssunto(Assunto $assunto){
         $natureza = Natureza::all();
         return view('components.assunto.editar-assunto', ['assunto' => $assunto, 'natureza' => $natureza]);
     }
 
+    /**
+     * Método para atualizar um assunto da base de dados
+     *
+     * @param Request $request
+     * @return Confirmação da atualização de assunto
+     */
     public function confirmEditAssunto(Request $request){
         $atributos = ['subcategoria' => '<b>Subcategoria</b>',
                         'descricao'  => '<b>Descrição do Assunto</b>'];
@@ -229,7 +296,12 @@ class AnaliticaController extends Controller
 
         return back()->with('sucesso', 'O assunto foi editado!');
     }
-
+    /**
+     * Método para adicionar um assunto na base de dados
+     *
+     * @param Request $request
+     * @return Confirmação da adição de assunto
+     */
     public function confirmAddAssuntos(Request $request){
         $atributos = ['subcategoria' => '<b>Subcategoria</b>',
                         'descricao'  => '<b>Descrição do Assunto</b>'];
