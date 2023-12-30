@@ -200,6 +200,71 @@ class GraficoController extends Controller
         else{
             return back()->with('aviso', 'Não existem solicitações para gerar o gráfico!');
         }
+    }
 
+    public function obterGraficoSituacaoFaculdade(Request $request){
+        // Verificar as datas introduzidas
+        if($request->has('data_inicio') and $request->has('data_fim')){
+            // Verificar se as datas não são vazias
+            if($request->get('data_inicio') != null and $request->get('data_fim') != null){
+                // Por fim, verificar se a data inicial é menor que a data final
+                if(strtotime($request->get('data_inicio')) <= strtotime($request->get('data_fim'))) {
+                    // Selecionar as solicitações que se encontram entre as datas
+                    $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($query) use ($request) {
+                        $query->where('data_inicio', '>=', $request->get('data_inicio'))
+                            ->where('data_inicio', '<=', $request->get('data_fim'));
+                    })->get();
+                }
+                else{
+                    return back()->with('aviso', 'Para efetuar a filtragem, a data inicial deve ser menor que a data final.');
+                }
+            }
+        }
+        // Se não foram introduzidas datas, selecionar todas as solicitações
+        isset($solicitacoes) ? $solicitacoes : $solicitacoes = Solicitacao::all();
+        $naturezas = Natureza::all();
+
+        if($solicitacoes->count()){
+            return view('components.graficos.gerar-grafico-situacao-faculdade',
+                ['naturezas' => $naturezas,
+                 'solicitacoes' => $solicitacoes]
+            );
+        }
+        else{
+            return back()->with('aviso', 'Não existem solicitações para gerar o gráfico!');
+        }
+    }
+
+    public function obterGraficoSituacaoGenero(Request $request){
+        // Verificar as datas introduzidas
+        if($request->has('data_inicio') and $request->has('data_fim')){
+            // Verificar se as datas não são vazias
+            if($request->get('data_inicio') != null and $request->get('data_fim') != null){
+                // Por fim, verificar se a data inicial é menor que a data final
+                if(strtotime($request->get('data_inicio')) <= strtotime($request->get('data_fim'))) {
+                    // Selecionar as solicitações que se encontram entre as datas
+                    $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($query) use ($request) {
+                        $query->where('data_inicio', '>=', $request->get('data_inicio'))
+                            ->where('data_inicio', '<=', $request->get('data_fim'));
+                    })->get();
+                }
+                else{
+                    return back()->with('aviso', 'Para efetuar a filtragem, a data inicial deve ser menor que a data final.');
+                }
+            }
+        }
+        // Se não foram introduzidas datas, selecionar todas as solicitações
+        isset($solicitacoes) ? $solicitacoes : $solicitacoes = Solicitacao::all();
+        $naturezas = Natureza::all();
+
+        if($solicitacoes->count()){
+            return view('components.graficos.gerar-grafico-situacao-genero',
+                ['naturezas' => $naturezas,
+                 'solicitacoes' => $solicitacoes]
+            );
+        }
+        else{
+            return back()->with('aviso', 'Não existem solicitações para gerar o gráfico!');
+        }
     }
 }

@@ -5,7 +5,7 @@
             <form method="GET" action="#">
                 <input  type="text" 
                         name="search" 
-                        placeholder="Pesquisar por referência, nome ou email" 
+                        placeholder="Referência, nome, email, data de inserção" 
                         class="w3-input w3-border w3-round w3-margin-top"
                         value="{{ request('search') }}">
             </form>

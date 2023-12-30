@@ -4,7 +4,7 @@
     <tr class="w3-theme">
         <th>ID</th>
         <th>Referência</th>
-        <th>Criado Por</th>
+        <th>Data de Inserção</th>
         <th>Nº de Estudante</th>
         <th>Nome do Estudante</th>
         <th>Endereço de Email</th>

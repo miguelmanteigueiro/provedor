@@ -3,7 +3,7 @@
 <tr>
     <td> {{ $solicitacao->solicitacao_id }} </td>
     <td> {!! !empty($solicitacao->referencia_interna) ? $solicitacao->referencia_interna : "Não existe" !!} </td>
-    <td> {{ $solicitacao->user->nome }} </td>
+    <td> {{ $solicitacao->estado_solicitacao->data_inicio }} </td>
     <td> {!! !empty($solicitacao->estudante_id) ? $solicitacao->estudante_id: "N/A" !!} </td>
     <td> {{ $solicitacao->estudante_nome }} </td>
     <td> {{ $solicitacao->estudante_email }} </td>

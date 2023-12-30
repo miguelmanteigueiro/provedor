@@ -107,3 +107,5 @@ Route::post('/graficos/obter', [GraficoController::class, 'obterGrafico'])->midd
 Route::post('/graficos/obter/followup', [GraficoController::class, 'obterGraficoFollowUp'])->middleware('auth');
 Route::post('/graficos/obter/situacaoTipologia', [GraficoController::class, 'obterGraficoSituacaoTipologia'])->middleware('auth');
 Route::post('/graficos/obter/situacaoCicloEstudos', [GraficoController::class, 'obterGraficoSituacaoCicloEstudos'])->middleware('auth');
+Route::post('/graficos/obter/situacaoGenero', [GraficoController::class, 'obterGraficoSituacaoGenero'])->middleware('auth');
+Route::post('/graficos/obter/situacaoFaculdade', [GraficoController::class, 'obterGraficoSituacaoFaculdade'])->middleware('auth');

@@ -218,7 +218,7 @@
             </div>
 
             <div class="w3-row-padding">
-                <div class="w3-half">
+                <div class="w3-quarter">
                     <label>
                         <b>Ciclo de Estudos</b>
                     </label>
@@ -229,14 +229,16 @@
                             autocomplete="off"
                             required>
                         <option value="nenhum">N/A</option>
+                        <option value="candidato">Candidato</option>
                         <option value="1_ciclo">1º Ciclo</option>
                         <option value="2_ciclo">2º Ciclo</option>
                         <option value="mestrado_integrado">Mestrado Integrado</option>
                         <option value="3_ciclo">3º Ciclo</option>
+                        <option value="alumni">Alumni</option>
                     </select>
                 </div>
 
-                <div class="w3-half">
+                <div class="w3-quarter">
                     <label>
                         <b>Curso</b>
                     </label>
@@ -247,6 +249,42 @@
                            value="{{ old('curso') ?? (isset($solicitacao->analitica->curso) ? $solicitacao->analitica->curso : '') }}"
                            autocomplete="off"
                     >
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Género</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="genero"
+                            id="genero"
+                            value="{{ old('genero') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="w3-quarter">
+                    <label>
+                        <b>Faculdade</b>
+                    </label>
+                    <select class="w3-select w3-border w3-round w3-margin-bottom"
+                            name="faculdade"
+                            id="faculdade"
+                            value="{{ old('faculdade') }}"
+                            autocomplete="off"
+                            required>
+                        <option value="nenhum">N/A</option>
+                        <option value="fal">FAL</option>
+                        <option value="fc">FC</option>
+                        <option value="fcs">FCS</option>
+                        <option value="fcsh">FCSH</option>
+                        <option value="fe">FE</option>
+                    </select>
                 </div>
             </div>
 
@@ -308,10 +346,14 @@
        let tipo_solicitacao = '{!! isset($solicitacao->analitica->tipo_solicitacao) ? $solicitacao->analitica->getRawOriginal('tipo_solicitacao') : 'nenhum' !!}'.toLowerCase();
        let forma_contacto = '{!! isset($solicitacao->analitica->forma_contacto) ? $solicitacao->analitica->getRawOriginal('forma_contacto') : 'nenhum' !!}'.toLowerCase();
        let ciclo_estudos = '{!! isset($solicitacao->analitica->ciclo_estudos) ? $solicitacao->analitica->getRawOriginal('ciclo_estudos') : 'nenhum' !!}'.toLowerCase();
+       let genero = '{!! isset($solicitacao->analitica->genero) ? $solicitacao->analitica->getRawOriginal('genero') : 'nenhum' !!}'.toLowerCase();
+       let faculdade = '{!! isset($solicitacao->analitica->faculdade) ? $solicitacao->analitica->getRawOriginal('faculdade') : 'nenhum' !!}'.toLowerCase();
 
        document.querySelector('#apresentacao').value = apresentacao;
        document.querySelector('#tipo_solicitacao').value = tipo_solicitacao;
        document.querySelector('#forma_contacto').value = forma_contacto;
        document.querySelector('#ciclo_estudos').value = ciclo_estudos;
+       document.querySelector('#genero').value = genero;
+       document.querySelector('#faculdade').value = faculdade;
     </script>
 </x-layout>
