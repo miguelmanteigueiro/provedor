@@ -61,6 +61,8 @@ class AnaliticaController extends Controller
                         'apresentacao'          => '<b>Forma de Apresentação</b>',
                         'ciclo_estudos'         => '<b>Ciclo de Estudos</b>',
                         'curso'                 => '<b>Curso</b>',
+                        'genero'                => '<b>Género</b>',
+                        'faculdade'             => '<b>Faculdade</b>',
                         'follow_up'             => '<b><i>Follow-up</i></b>'];
 
         // Validar os dados
@@ -75,6 +77,8 @@ class AnaliticaController extends Controller
             'apresentacao'          => 'required',
             'ciclo_estudos'         => 'required',
             'curso'                 => 'nullable|min:2|max:100',
+            'genero'                => 'required',
+            'faculdade'             => 'required',
             'follow_up'             => 'nullable'
         ], [], $atributos);
 
@@ -92,6 +96,8 @@ class AnaliticaController extends Controller
                                 'forma_contacto'    => $request->get('forma_contacto'),
                                 'ciclo_estudos'     => $request->get('ciclo_estudos'),
                                 'curso'             => $request->get('curso'),
+                                'genero'            => $request->get('genero'),
+                                'faculdade'         => $request->get('faculdade'),
                                 'follow_up'         => ($request->has('follow_up') ? 1 : 0)]);
             $a->save();
 
@@ -113,6 +119,8 @@ class AnaliticaController extends Controller
                           'forma_contacto'    => $request->get('forma_contacto'),
                           'ciclo_estudos'     => $request->get('ciclo_estudos'),
                           'curso'             => $request->get('curso'),
+                          'genero'            => $request->get('genero'),
+                          'faculdade'         => $request->get('faculdade'),
                           'follow_up'         => ($request->has('follow_up') ? 1 : 0)]);
 
             EstadoSolicitacao::where('solicitacao_id', $request->get('solicitacao_id'))

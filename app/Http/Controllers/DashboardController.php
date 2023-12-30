@@ -12,6 +12,19 @@ use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
+
+    /**
+     * Função para verificar se a string é uma data
+     *
+     * @param string $string
+     * @return boolean
+     */
+    private function isDate($string)
+    {
+        return (bool)strtotime($string);
+    }
+
+
     /**
      * Devolver o dashboard principal
      *
@@ -19,23 +32,30 @@ class DashboardController extends Controller
      */
     public function show()
     {
-        if(request('search')){
-            $solicitacoes =  Solicitacao::whereHas('estado_solicitacao', function ($q) {
-                $q->where("estado", "aberto");
-            })->where(function($q){
-                $q->where('referencia_interna', 'like', '%' . request('search') . '%')
-                ->orWhere('estudante_nome', 'like', '%' . request('search') . '%')
-                ->orWhere('estudante_email', 'like', '%' . request('search') . '%');
+        $searchTerm = request('search');
+        $isDateSearch = $this->isDate($searchTerm);
+
+        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
+            $q->where("estado", "aberto");
+        });
+
+        if ($searchTerm && !$isDateSearch) {
+            $solicitacoes->where(function ($q) use ($searchTerm) {
+                $q->where('referencia_interna', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('estudante_nome', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('estudante_email', 'like', '%' . $searchTerm . '%');
             });
         }
-        else{
-            $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-                $q->where("estado", "aberto");
+
+        if ($isDateSearch) {
+            $solicitacoes->whereHas('estado_solicitacao', function ($q) use ($searchTerm) {
+                $q->where('data_inicio', 'like', '%' . $searchTerm . '%');
             });
         }
 
         return view('solicitacao.show', ['solicitacoes' => $solicitacoes->paginate(15)]);
     }
+
 
     /**
      * Devolver o arquivo de solicitações
@@ -44,18 +64,24 @@ class DashboardController extends Controller
      */
     public function arquivo()
     {
-        if(request('search')){
-            $solicitacoes =  Solicitacao::whereHas('estado_solicitacao', function ($q) {
-                $q->where("estado", '!=', "aberto");
-            })->where(function($q){
-                $q->where('referencia_interna', 'like', '%' . request('search') . '%')
-                ->orWhere('estudante_nome', 'like', '%' . request('search') . '%')
-                ->orWhere('estudante_email', 'like', '%' . request('search') . '%');
+        $searchTerm = request('search');
+        $isDateSearch = $this->isDate($searchTerm);
+
+        $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
+            $q->where("estado", '!=', "aberto");
+        });
+
+        if ($searchTerm && !$isDateSearch) {
+            $solicitacoes->where(function ($q) use ($searchTerm) {
+                $q->where('referencia_interna', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('estudante_nome', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('estudante_email', 'like', '%' . $searchTerm . '%');
             });
         }
-        else{
-            $solicitacoes = Solicitacao::whereHas('estado_solicitacao', function ($q) {
-                $q->where("estado", '!=', "aberto");
+
+        if ($isDateSearch) {
+            $solicitacoes->whereHas('estado_solicitacao', function ($q) use ($searchTerm) {
+                $q->where('data_inicio', 'like', '%' . $searchTerm . '%');
             });
         }
 

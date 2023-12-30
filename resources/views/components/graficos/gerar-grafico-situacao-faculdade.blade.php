@@ -8,44 +8,35 @@
         function drawVisualization() {
             // Some raw data (not necessarily accurate)
             var data = google.visualization.arrayToDataTable([
-                ['Natureza', 'Candidato', '1º Ciclo', '2º Ciclo', 'Mestrado Integrado', '3º Ciclo', 'Alumni', 'Sem Informação'],
-
+                ['Natureza', 'FC', 'FE', 'FCSH', 'FCS', 'FAL'],
                 @php
                     foreach ($naturezas as $natureza){
-                        $candidato = 0;
-                        $primeiro_ciclo = 0;
-                        $segundo_ciclo = 0;
-                        $mestrado_integrado = 0;
-                        $terceiro_ciclo = 0;
-                        $alumni = 0;
-                        $sem_informacao = 0;
+                        $fc = 0;
+                        $fe = 0;
+                        $fcsh = 0;
+                        $fcs = 0;
+                        $fal = 0;
                         if($natureza->assunto->count()){
                             foreach ($solicitacoes as $solicitacao){
                                 if($solicitacao->analitica){
                                     if($solicitacao->analitica->assunto_analitica){
                                         foreach ($solicitacao->analitica->assunto_analitica as $aa){
                                             if($natureza->assunto->contains($aa->assunto_id)){
-                                                switch ($solicitacao->analitica->getRawOriginal('ciclo_estudos')){
-                                                    case '1_ciclo':
-                                                        $primeiro_ciclo++;
+                                                switch ($solicitacao->analitica->getRawOriginal('faculdade')){
+                                                    case 'fc':
+                                                        $fc++;
                                                         break;
-                                                    case '2_ciclo':
-                                                        $segundo_ciclo++;
+                                                    case 'fe':
+                                                        $fe++;
                                                         break;
-                                                    case 'mestrado_integrado':
-                                                        $mestrado_integrado++;
+                                                    case 'fcsh':
+                                                        $fcsh++;
                                                         break;
-                                                    case '3_ciclo':
-                                                        $terceiro_ciclo++;
+                                                    case 'fcs':
+                                                        $fcs++;
                                                         break;
-                                                    case 'alumni':
-                                                        $alumni++;
-                                                        break;
-                                                    case 'candidato':
-                                                        $candidato++;
-                                                        break;
-                                                    case 'nenhum':
-                                                        $sem_informacao++;
+                                                    case 'fal':
+                                                        $fal++;
                                                         break;
                                                 }
                                                 break;
@@ -54,15 +45,14 @@
                                     }
                                 }
                             }
-                            echo "['$natureza->descricao', $candidato, $primeiro_ciclo, $segundo_ciclo, $mestrado_integrado, $terceiro_ciclo, $alumni, $sem_informacao],\n";
+                            echo "['$natureza->descricao', $fc, $fe, $fcsh, $fcs, $fal],\n";
                         }
                     }
                 @endphp
-
             ]);
 
             var options = {
-                title : 'Estatísticas por Natureza/Ciclo de Estudos',
+                title : 'Estatísticas por Natureza/Faculdade',
                 titleTextStyle: {
                     fontSize: 20,
                 },
@@ -71,26 +61,21 @@
                 hAxis: {
                     title: 'Natureza',
                     titleTextStyle: {
-                        fontSize: 13,
-                        bold: true,
-                        italic: false
+                        fontSize: 16,
                     },
-                    format: '0',
                 },
                 vAxis: {
-                    title: 'Quantidade',
+                    title: 'Número de Solicitações',
                     titleTextStyle: {
-                        fontSize: 13,
-                        bold: true,
-                        italic: false
+                        fontSize: 16,
                     },
-                    format: '0',
                 },
                 seriesType: 'bars',
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
             chart.draw(data, options);
+
         }
     </script>
 </div>

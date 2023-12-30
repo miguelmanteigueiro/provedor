@@ -116,6 +116,14 @@ class Analitica extends Model
         if($this->attributes['ciclo_estudos'] === "mestrado_integrado"){
             return "Mestrado Integrado";
         }
+
+        if($this->attributes['ciclo_estudos'] === "alumni"){
+            return "Alumni";
+        }
+
+        if($this->attributes['ciclo_estudos'] === "candidato"){
+            return "Candidato";
+        }
     }
 
 

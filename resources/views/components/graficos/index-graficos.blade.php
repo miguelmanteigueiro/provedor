@@ -73,7 +73,7 @@
         </div>
 
         <div class="w3-row-padding w3-margin-top">
-            <form id="obterSituacaoTipologia" method="POST" action="/graficos/obter/situacaoCicloEstudos">
+            <form id="obterSituacaoCicloEstudos" method="POST" action="/graficos/obter/situacaoCicloEstudos">
                 @csrf
                 <button id="submit" class="w3-button w3-green w3-round" type="submit">
                     Obter Gráfico de Natureza/Ciclo de Estudos
@@ -87,6 +87,35 @@
             </form>
         </div>
 
+        <div class="w3-row-padding w3-margin-top">
+            <form id="obterSituacaoGenero" method="POST" action="/graficos/obter/situacaoGenero">
+                @csrf
+                <button id="submit" class="w3-button w3-green w3-round" type="submit">
+                    Obter Gráfico de Natureza/Género
+                </button>
+
+                <label for="data_inicio">Data de início:</label>
+                <input type="date" id="data_inicio" name="data_inicio">
+
+                <label for="data_fim">Data de fim:</label>
+                <input type="date" id="data_fim" name="data_fim">
+            </form>
+        </div>
+
+        <div class="w3-row-padding w3-margin-top">
+            <form id="obterSituacaoFaculdade" method="POST" action="/graficos/obter/situacaoFaculdade">
+                @csrf
+                <button id="submit" class="w3-button w3-green w3-round" type="submit">
+                    Obter Gráfico de Natureza/Faculdade
+                </button>
+
+                <label for="data_inicio">Data de início:</label>
+                <input type="date" id="data_inicio" name="data_inicio">
+
+                <label for="data_fim">Data de fim:</label>
+                <input type="date" id="data_fim" name="data_fim">
+            </form>
+        </div>
     </div>
 
     <script>
